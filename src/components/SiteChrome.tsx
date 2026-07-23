@@ -69,7 +69,22 @@ export function IllegalAl() {
 
 export function Preloader({ onDone }: { onDone: () => void }) {
   useEffect(() => {
-    const t = window.setTimeout(onDone, 1800);
+    try {
+      if (sessionStorage.getItem("illegal-chips-entered") === "1") {
+        onDone();
+        return;
+      }
+    } catch {
+      // ignore
+    }
+    const t = window.setTimeout(() => {
+      try {
+        sessionStorage.setItem("illegal-chips-entered", "1");
+      } catch {
+        // ignore
+      }
+      onDone();
+    }, 1800);
     return () => window.clearTimeout(t);
   }, [onDone]);
 
@@ -89,7 +104,18 @@ export function Preloader({ onDone }: { onDone: () => void }) {
           <div className="line">----------------------------</div>
           <h3>* MSCHF DROP #61 *</h3>
           <div className="line">----------------------------</div>
-          <button type="button" className="enter" onClick={onDone}>
+          <button
+            type="button"
+            className="enter"
+            onClick={() => {
+              try {
+                sessionStorage.setItem("illegal-chips-entered", "1");
+              } catch {
+                // ignore
+              }
+              onDone();
+            }}
+          >
             Enter
           </button>
         </div>
