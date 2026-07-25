@@ -1,18 +1,20 @@
+import { asset } from "@/lib/asset";
+
 export function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-top">
           <div className="footer-buttons">
-            <a className="footer-button" href="/manifesto">
+            <a className="footer-button" href={asset("/manifesto/")}>
               Manifesto
             </a>
-            <a className="footer-button" href="/faq">
+            <a className="footer-button" href={asset("/faq/")}>
               FAQ
             </a>
           </div>
           <div className="footer-links">
-            <a className="footer-link" href="/toc.pdf" target="_blank" rel="noreferrer">
+            <a className="footer-link" href={asset("/toc.pdf")} target="_blank" rel="noreferrer">
               Terms & conditions
             </a>
           </div>
@@ -36,11 +38,11 @@ export function Footer() {
             </div>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="footer-bottom-label" src="/images/label.png" alt="Illegal Chips label" />
+          <img className="footer-bottom-label" src={asset("/images/label.png")} alt="Illegal Chips label" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="footer-bottom-snake"
-            src="/images/footer-image.png"
+            src={asset("/images/footer-image.png")}
             alt=""
           />
         </div>
@@ -53,12 +55,12 @@ export function TikTokBar() {
   return (
     <section className="tiktok">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="tiktok-al" src="/images/al-standing.png" alt="" />
+      <img className="tiktok-al" src={asset("/images/al-standing.png")} alt="" />
       <div className="tiktok-cta">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="tiktok-left" src="/images/tiktok.svg" alt="" />
+        <img className="tiktok-left" src={asset("/images/tiktok.svg")} alt="" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="tiktok-right" src="/images/tiktok.svg" alt="" />
+        <img className="tiktok-right" src={asset("/images/tiktok.svg")} alt="" />
         <div className="tiktok-cta-post">Post to TikTok</div>
         <a
           className="tiktok-cta-bttn"
@@ -67,7 +69,7 @@ export function TikTokBar() {
           rel="noreferrer"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/challenge.svg" alt="#illegalchipschallenge" />
+          <img src={asset("/images/challenge.svg")} alt="#illegalchipschallenge" />
         </a>
       </div>
       <div className="tiktok-quote">

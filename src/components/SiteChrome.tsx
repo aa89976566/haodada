@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { asset } from "@/lib/asset";
 
 export function Background() {
   return <div id="__bg" aria-hidden />;
@@ -12,7 +13,7 @@ export function Logo() {
   return (
     <Link href="/" className="logo" aria-label="Illegal Chips">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/logo.png" alt="Illegal Chips" />
+      <img src={asset("/images/logo.png")} alt="Illegal Chips" />
     </Link>
   );
 }
@@ -58,11 +59,11 @@ export function IllegalAl() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className={`illegal-al-quote${show ? " show" : ""}`}
-        src="/images/al-quote.png"
+        src={asset("/images/al-quote.png")}
         alt=""
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="illegal-al-img" src="/images/al.png" alt="" />
+      <img className="illegal-al-img" src={asset("/images/al.png")} alt="" />
     </div>
   );
 }
@@ -100,7 +101,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         <div className="marquee top">{marquee}</div>
         <div className="middle">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/drop-logo.png" alt="MSCHF" />
+          <img src={asset("/images/drop-logo.png")} alt="MSCHF" />
           <div className="line">----------------------------</div>
           <h3>* MSCHF DROP #61 *</h3>
           <div className="line">----------------------------</div>

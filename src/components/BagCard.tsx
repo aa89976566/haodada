@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import type { ChipItem } from "@/data/items";
+import { asset } from "@/lib/asset";
 
 function BagInfo({
   item,
@@ -12,7 +13,7 @@ function BagInfo({
 }) {
   const { info } = item;
   const starsSrc =
-    info.stars === 4.5 ? "/images/stars-4.5.svg" : "/images/stars-4.svg";
+    info.stars === 4.5 ? asset("/images/stars-4.5.svg") : asset("/images/stars-4.svg");
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -32,11 +33,11 @@ function BagInfo({
       />
       <div className={`info info-${info.position}`} role="dialog">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="info-arrow" src="/images/info-arrow.svg" alt="" />
+        <img className="info-arrow" src={asset("/images/info-arrow.svg")} alt="" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="info-x"
-          src="/images/x.svg"
+          src={asset("/images/x.svg")}
           alt="Close"
           onClick={onClose}
         />
@@ -106,13 +107,13 @@ export function BagCard({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="card-title"
-        src={`/images/${item.id}/title.png`}
+        src={asset(`/images/${item.id}/title.png`)}
         alt={item.name}
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="card-image"
-        src={`/images/${item.id}/bag.png`}
+        src={asset(`/images/${item.id}/bag.png`)}
         alt={`${item.name} chips`}
       />
       <div className="card-desc" style={{ color: item.textColor === "black" ? "#000" : "#fff" }}>

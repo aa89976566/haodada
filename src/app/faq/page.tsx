@@ -1,4 +1,5 @@
 import { TextPageShell } from "@/components/TextPage";
+import { asset } from "@/lib/asset";
 
 export default function FaqPage() {
   return (
@@ -6,7 +7,7 @@ export default function FaqPage() {
       <div className="text-page">
         <div className="al-wrapper">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="al-standing" src="/images/al-standing.png" alt="Illegal Al" />
+          <img className="al-standing" src={asset("/images/al-standing.png")} alt="Illegal Al" />
           <div className="al-quote">
             <div className="al-attr">Illegal al says:</div>
             <div className="al-quote-text">

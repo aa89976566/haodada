@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BOX_UNIT_PRICE, SOLD_OUT } from "@/data/items";
+import { asset } from "@/lib/asset";
 
 export function IllegalBox({
   className = "",
@@ -19,13 +20,13 @@ export function IllegalBox({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="header-box-header"
-        src="/images/illegal-box-header.png"
+        src={asset("/images/illegal-box-header.png")}
         alt="Illegal Box"
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="header-box-img"
-        src="/images/illegal-box.png"
+        src={asset("/images/illegal-box.png")}
         alt="Illegal Chips box"
       />
       <div className="header-box-tagline">
@@ -45,7 +46,7 @@ export function IllegalBox({
           onClick={() => setAmount((n) => Math.max(1, n - 1))}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/minus.svg" alt="" />
+          <img src={asset("/images/minus.svg")} alt="" />
         </button>
         <div className="header-box-input-num">{amount}</div>
         <button
@@ -56,7 +57,7 @@ export function IllegalBox({
           onClick={() => setAmount((n) => Math.min(10, n + 1))}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/plus.svg" alt="" />
+          <img src={asset("/images/plus.svg")} alt="" />
         </button>
       </div>
       {SOLD_OUT ? (

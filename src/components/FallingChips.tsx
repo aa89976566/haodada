@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { asset } from "@/lib/asset";
 
 type Chip = {
   originalX: number;
@@ -62,7 +63,7 @@ export function FallingChips() {
       chips.push(chip);
       const img = document.createElement("img");
       img.id = `chip-${chip.index}`;
-      img.src = `/images/chips/${Math.floor(11 * Math.random())}.png`;
+      img.src = asset(`/images/chips/${Math.floor(11 * Math.random())}.png`);
       img.alt = "";
       img.className = "chip";
       img.setAttribute("style", chipStyle(chip));

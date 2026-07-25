@@ -14,6 +14,7 @@ import {
   Menu,
   Preloader,
 } from "@/components/SiteChrome";
+import { asset } from "@/lib/asset";
 
 export function HomePage() {
   const [ready, setReady] = useState(false);
@@ -70,7 +71,7 @@ export function HomePage() {
             <img
               key={`ingredient-${item.id}`}
               className="ingredient"
-              src={`/images/${item.id}/ingredient.png`}
+              src={asset(`/images/${item.id}/ingredient.png`)}
               alt=""
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
@@ -80,7 +81,7 @@ export function HomePage() {
             <img
               key={`bag-${item.id}`}
               className="bag"
-              src={`/images/${item.id}/bag-isolated.png`}
+              src={asset(`/images/${item.id}/bag-isolated.png`)}
               alt=""
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
@@ -90,7 +91,7 @@ export function HomePage() {
             <img
               key={`eating-${item.id}`}
               className="eating"
-              src={`/images/${item.id}/eating.png`}
+              src={asset(`/images/${item.id}/eating.png`)}
               alt=""
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
@@ -98,17 +99,17 @@ export function HomePage() {
 
           <div className="headline">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="tagline" src="/images/tagline.png" alt="Illegal Chips" />
+            <img className="tagline" src={asset("/images/tagline.png")} alt="Illegal Chips" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="tagline-mobile"
-              src="/images/tagline-mobile.png"
+              src={asset("/images/tagline-mobile.png")}
               alt="Illegal Chips"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="tagline-down"
-              src="/images/down-arrow.png"
+              src={asset("/images/down-arrow.png")}
               alt="Scroll down"
               onClick={scrollToCards}
             />
@@ -128,7 +129,7 @@ export function HomePage() {
         <div className="content">
           <main className="main-content" id="meet">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="main-bags" src="/images/three-bags.png" alt="All three flavors" />
+            <img className="main-bags" src={asset("/images/three-bags.png")} alt="All three flavors" />
 
             <div className="main-al-quote">
               <div className="main-al-quote-text">
@@ -138,7 +139,7 @@ export function HomePage() {
             </div>
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="main-illegal-al" src="/images/al.png" alt="Illegal Al" />
+            <img className="main-illegal-al" src={asset("/images/al.png")} alt="Illegal Al" />
 
             <div className="header-illegal-box-mobile" id="buy">
               <IllegalBox mobile />
@@ -164,12 +165,12 @@ export function HomePage() {
               rel="noreferrer"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/wee.svg" alt="Weee!" width={77} height={40} />
+              <img src={asset("/images/wee.svg")} alt="Weee!" width={77} height={40} />
               <div className="wee-side">
                 <div className="wee-headline">
                   order a bag on <span className="wee-text">Weee!</span>{" "}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img className="wee-arrow" src="/images/wee-arrow.svg" alt="" />
+                  <img className="wee-arrow" src={asset("/images/wee-arrow.svg")} alt="" />
                 </div>
                 <div className="wee-desc">
                   Get $20 off and free delivery
