@@ -92,7 +92,7 @@ export const HIGHLIGHTS: ProductHighlight[] = [
       servingSize: "適量",
       totalFat: "安心",
       calories: "開心",
-      stars: 5,
+      stars: 4.5,
       position: "right",
     },
   },
