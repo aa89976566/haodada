@@ -18,7 +18,7 @@ import { asset } from "@/lib/asset";
 
 export function HomePage() {
   const [ready, setReady] = useState(false);
-  const [flavorIndex, setFlavorIndex] = useState(0);
+  const [flavorIndex, setFlavorIndex] = useState(1); // start on Fugu blue hero
   const [infoIndex, setInfoIndex] = useState<number | null>(null);
 
   const dismiss = useCallback(() => setReady(true), []);
@@ -66,16 +66,12 @@ export function HomePage() {
             ))}
           </div>
 
-          {ITEMS.map((item, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`ingredient-${item.id}`}
-              className="ingredient"
-              src={asset(`/images/${item.id}/ingredient.png`)}
-              alt=""
-              style={{ opacity: i === flavorIndex ? 1 : 0 }}
-            />
-          ))}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="ingredient dog-hero"
+            src={asset("/images/dog-hero.png")}
+            alt=""
+          />
           {ITEMS.map((item, i) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -86,16 +82,12 @@ export function HomePage() {
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
           ))}
-          {ITEMS.map((item, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`eating-${item.id}`}
-              className="eating"
-              src={asset(`/images/${item.id}/eating.png`)}
-              alt=""
-              style={{ opacity: i === flavorIndex ? 1 : 0 }}
-            />
-          ))}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="eating dog-hero"
+            src={asset("/images/dog-hero.png")}
+            alt=""
+          />
 
           <div className="headline">
             {/* eslint-disable-next-line @next/next/no-img-element */}
