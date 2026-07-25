@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BRAND } from "@/data/brand";
 import { asset } from "@/lib/asset";
 
 export function Background() {
@@ -11,9 +12,8 @@ export function Background() {
 
 export function Logo() {
   return (
-    <Link href="/" className="logo" aria-label="Illegal Chips">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={asset("/images/logo.png")} alt="Illegal Chips" />
+    <Link href="/" className="logo logo-text" aria-label={BRAND.name}>
+      <span className="logo-mark">{BRAND.name}</span>
     </Link>
   );
 }
@@ -26,13 +26,13 @@ export function Menu() {
         href="/manifesto"
         className={`menu-link${pathname === "/manifesto" ? " menu-link-highlight" : ""}`}
       >
-        Manifesto
+        品牌理念
       </Link>
       <Link
         href="/faq"
         className={`menu-link${pathname === "/faq" ? " menu-link-highlight" : ""}`}
       >
-        FAQ
+        常見問題
       </Link>
     </nav>
   );
@@ -55,15 +55,10 @@ export function IllegalAl() {
   }, []);
 
   return (
-    <div className="illegal-al" aria-hidden>
+    <div className={`illegal-al haodada-mascot${show ? " show" : ""}`} aria-hidden>
+      <div className={`mascot-bubble${show ? " show" : ""}`}>嚎！</div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className={`illegal-al-quote${show ? " show" : ""}`}
-        src={asset("/images/al-quote.png")}
-        alt=""
-      />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="illegal-al-img" src={asset("/images/al.png")} alt="" />
+      <img className="illegal-al-img" src={asset("/images/dog-hero.png")} alt="" />
     </div>
   );
 }
@@ -71,7 +66,7 @@ export function IllegalAl() {
 export function Preloader({ onDone }: { onDone: () => void }) {
   useEffect(() => {
     try {
-      if (sessionStorage.getItem("illegal-chips-entered") === "1") {
+      if (sessionStorage.getItem("haodada-entered") === "1") {
         onDone();
         return;
       }
@@ -80,44 +75,44 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     }
     const t = window.setTimeout(() => {
       try {
-        sessionStorage.setItem("illegal-chips-entered", "1");
+        sessionStorage.setItem("haodada-entered", "1");
       } catch {
         // ignore
       }
       onDone();
-    }, 1800);
+    }, 1600);
     return () => window.clearTimeout(t);
   }, [onDone]);
 
-  const marquee = Array.from({ length: 20 }, (_, i) => (
+  const marquee = Array.from({ length: 16 }, (_, i) => (
     <div key={i} className="inner">
-      {"///////// MSCHF DROP\u00A0"}
+      {`///////// ${BRAND.name}\u00A0`}
     </div>
   ));
 
   return (
-    <div id="MSCHFPreloader">
+    <div id="MSCHFPreloader" className="haodada-preloader">
       <div className="content">
         <div className="marquee top">{marquee}</div>
         <div className="middle">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={asset("/images/drop-logo.png")} alt="MSCHF" />
+          <img src={asset("/images/dog-hero.png")} alt={BRAND.name} />
           <div className="line">----------------------------</div>
-          <h3>* MSCHF DROP #61 *</h3>
+          <h3>* {BRAND.name} *</h3>
           <div className="line">----------------------------</div>
           <button
             type="button"
             className="enter"
             onClick={() => {
               try {
-                sessionStorage.setItem("illegal-chips-entered", "1");
+                sessionStorage.setItem("haodada-entered", "1");
               } catch {
                 // ignore
               }
               onDone();
             }}
           >
-            Enter
+            進入商店
           </button>
         </div>
         <div className="marquee bottom reverse">{marquee}</div>

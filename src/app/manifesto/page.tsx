@@ -1,3 +1,4 @@
+import { BRAND } from "@/data/brand";
 import { TextPageShell } from "@/components/TextPage";
 import { asset } from "@/lib/asset";
 
@@ -7,43 +8,26 @@ export default function ManifestoPage() {
       <div className="text-page">
         <div className="al-wrapper">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="al-standing" src={asset("/images/al-standing.png")} alt="Illegal Al" />
+          <img className="al-standing" src={asset("/images/dog-hero.png")} alt={BRAND.mascot} />
           <div className="al-quote">
-            <div className="al-attr">Illegal al says:</div>
-            <div className="al-quote-text">
-              &quot;Give me horse flavored chips or give me death!&quot;
-            </div>
+            <div className="al-attr">{BRAND.mascot}說：</div>
+            <div className="al-quote-text">「給我雞霸，不然我嚎！」</div>
           </div>
         </div>
 
         <p>
-          The distinction between food animals and non-food animals is a social construction. The
-          same, of course, can be said of law in general. In a Hobbesian state of nature, humans
-          live in constant conflict, eating whatever they feel like.
+          毛孩值得被認真對待的零食。不是隨便的碎屑餅乾，而是看得到肉纖維、咬得到紮實口感的原肉雞排。
         </p>
         <p>
-          Prohibitions create desire. The grass is always greener on the other side, and forbidden
-          fruit tastes sweetest. Illegal Chips compiles the flavors the government doesn’t want you
-          to try. And, buddy, do they ever taste good!
+          {BRAND.name}的起點很單純：嚎大大愛吃，我們才敢推薦。原肉製作、低溫烘培、無添加防腐劑——每一項都是寫給毛孩家長的承諾。
         </p>
         <p>
-          Technological advances free us from the mundane concerns of the past. Artificial
-          flavoring is the future, our path to disengaging food production from the deleterious
-          environmental effects of industrial agriculture and the sheer inefficiency of living
-          animals. Forget fully-automated luxury communism, our advances in food science will lead
-          us to the promised future: fully-synthetic luxury omnivorism!
+          獎勵不該是妥協。訓練成功的那一刻、回家進門的搖尾巴、睡前一口小點心——都值得一片香氣滿滿的雞霸。
         </p>
         <p>
-          Science is blinded by nostalgia for the past and the false idol of the familiar. Why
-          simulate when you can make new? What a waste to devote millions in R&amp;D funding to the
-          pursuit of artificial cow or chicken when all the animals of the earth stand arrayed
-          before us for inspiration. Better late than never–it’s time to move from food realism to
-          food modernism!
+          少一點來路不明的添加，多一點看得見的食材。讓毛孩開心嚎叫的，是真心好物，不是行銷話術。
         </p>
-        <p>
-          Born too late to explore the earth. Born too early to explore the cosmos. Born just in
-          time to eat horse chips.
-        </p>
+        <p>生得太晚，沒能和恐龍玩飛盤；生得剛好，可以大口咬嚎大大雞霸。</p>
       </div>
     </TextPageShell>
   );

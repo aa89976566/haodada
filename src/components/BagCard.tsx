@@ -1,19 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
-import type { ChipItem } from "@/data/items";
+import type { ProductHighlight } from "@/data/brand";
 import { asset } from "@/lib/asset";
 
 function BagInfo({
   item,
   onClose,
 }: {
-  item: ChipItem;
+  item: ProductHighlight;
   onClose: () => void;
 }) {
   const { info } = item;
   const starsSrc =
-    info.stars === 4.5 ? asset("/images/stars-4.5.svg") : asset("/images/stars-4.svg");
+    info.stars >= 4.5 ? asset("/images/stars-4.5.svg") : asset("/images/stars-4.svg");
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -28,7 +28,7 @@ function BagInfo({
       <button
         type="button"
         className="info-backdrop"
-        aria-label="Close info"
+        aria-label="關閉資訊"
         onClick={onClose}
       />
       <div className={`info info-${info.position}`} role="dialog">
@@ -38,12 +38,12 @@ function BagInfo({
         <img
           className="info-x"
           src={asset("/images/x.svg")}
-          alt="Close"
+          alt="關閉"
           onClick={onClose}
         />
         <div className="info-headline">{info.headline}</div>
         <div className="info-content">
-          <div className="info-does-not">Does not contain</div>
+          <div className="info-does-not">堅持不含</div>
           <div className="info-content-title">{info.doesNotContain}</div>
           <div className="info-divider" />
           <div className="info-desc">{info.desc}</div>
@@ -51,27 +51,24 @@ function BagInfo({
           <div className="info-stats">
             <div>
               <div className="info-stat-title">
-                {info.servingSize} <span className="info-stat-grams">bag</span>
+                <span className="info-stat-grams">{info.servingSize}</span>
               </div>
-              <div className="info-stat-desc">serving size</div>
+              <div className="info-stat-desc">份量建議</div>
             </div>
             <div>
-              <div className="info-stat-title">
-                {info.totalFat}
-                <span className="info-stat-grams">g</span>
-              </div>
-              <div className="info-stat-desc">total fat</div>
+              <div className="info-stat-title">{info.totalFat}</div>
+              <div className="info-stat-desc">工法</div>
             </div>
             <div>
               <div className="info-stat-title">{info.calories}</div>
-              <div className="info-stat-desc">calories</div>
+              <div className="info-stat-desc">亮點</div>
             </div>
           </div>
         </div>
         <div className="info-review">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="info-stars-img" src={starsSrc} alt={`${info.stars} stars`} />
-          <div className="info-review-text">{info.numReviews} reviews</div>
+          <img className="info-stars-img" src={starsSrc} alt={`${info.stars} 星`} />
+          <div className="info-review-text">{info.numReviews} 則毛孩家長評價</div>
         </div>
       </div>
     </>
@@ -83,7 +80,7 @@ export function BagCard({
   open,
   onToggle,
 }: {
-  item: ChipItem;
+  item: ProductHighlight;
   open: boolean;
   onToggle: () => void;
 }) {
@@ -99,44 +96,29 @@ export function BagCard({
         <button
           type="button"
           className={`card-info${open ? " card-info-selected" : ""}`}
-          aria-label={`Info about ${item.name}`}
+          aria-label={`關於${item.name}`}
           onClick={onToggle}
         />
         {open ? <BagInfo item={item} onClose={onToggle} /> : null}
       </div>
+      <div
+        className="card-title-text"
+        style={{ color: item.textColor === "black" ? "#111" : "#fff" }}
+      >
+        {item.name}
+      </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className="card-title"
-        src={asset(`/images/${item.id}/title.png`)}
+        className="card-image card-image-dog"
+        src={asset(item.image)}
         alt={item.name}
       />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="card-image"
-        src={asset(`/images/${item.id}/bag.png`)}
-        alt={`${item.name} chips`}
-      />
-      <div className="card-desc" style={{ color: item.textColor === "black" ? "#000" : "#fff" }}>
+      <div
+        className="card-desc"
+        style={{ color: item.textColor === "black" ? "#000" : "#fff" }}
+      >
         {item.desc}
-        <span className="card-until-now"> – until now!!</span>
       </div>
-      {item.showMythical ? (
-        <div className="card-link">
-          Visit{" "}
-          <a href="https://www.youtube.com/mythicalkitchen" target="_blank" rel="noreferrer">
-            mythicalkitchen.com
-          </a>
-          {item.link ? (
-            <a
-              className="card-play"
-              href={item.link}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Play video"
-            />
-          ) : null}
-        </div>
-      ) : null}
     </div>
   );
 }

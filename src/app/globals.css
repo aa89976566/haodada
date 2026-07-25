@@ -7,7 +7,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{font-family:Din,sans-serif;font-size:16px;word-spacing:1px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{width:100%;height:100%;margin:0;overscroll-behavior-y:none}
-body{background:#1742c4;color:#000}
+body{background:#e85d04;color:#000}
 a{color:inherit;text-decoration:none}
 button{font:inherit}
 img{max-width:100%;display:block}
@@ -70,10 +70,44 @@ img{max-width:100%;display:block}
 .fade-enter{opacity:0}.fade-enter-active{transition:opacity .3s}
 
 
-/* Dog hero cutout — blend into blue hero */
-.eating.dog-hero{bottom:80px;left:0;max-width:42%;max-height:58%;filter:drop-shadow(0 18px 28px rgba(0,0,0,.35));z-index:1}
-.ingredient.dog-hero{z-index:1;filter:drop-shadow(0 12px 18px rgba(0,0,0,.3))}
+/* ===== 嚎大大雞霸 brand overrides ===== */
+.logo-text{text-decoration:none;display:block;max-width:min(280px,42vw)}
+.logo-mark{display:block;font-family:Soft,Neue,sans-serif;font-size:clamp(22px,3.2vw,36px);line-height:1.05;color:#ffda22;text-transform:none;filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px 1px 0 #000);letter-spacing:.02em}
+.haodada-preloader{background:#c1121f!important}
+.haodada-preloader .enter{background:#000;color:#ffda22}
+.haodada-preloader .middle img{width:55vw;max-width:220px;border-radius:18px}
+
+.haodada-hero .bg{background:#e85d04!important}
+.hero-product{position:absolute;left:50%;top:46%;transform:translate(-54%,-50%) rotate(-6deg);width:min(52vw,520px);max-height:70vh;object-fit:contain;z-index:2;filter:drop-shadow(0 22px 34px rgba(0,0,0,.4));pointer-events:none}
+.haodada-headline{right:6%;top:48%;max-width:min(420px,38%);transform:translateY(-50%);text-align:left}
+.brand-lockup{font-family:Soft,Neue,sans-serif;font-size:clamp(40px,5vw,72px);line-height:.95;color:#ffda22;text-transform:none;filter:drop-shadow(3px 3px 0 #000) drop-shadow(-2px 2px 0 #000);margin-bottom:14px}
+.haodada-headline .tagline-2{max-width:100%;font-size:clamp(22px,2.4vw,36px);line-height:1.15;margin-top:0}
+.hero-sub{font-family:Neue,sans-serif;color:#fff;font-size:clamp(14px,1.4vw,20px);margin-top:14px;text-shadow:1px 1px 8px rgba(0,0,0,.7)}
+.shop-now-bttn{font-size:36px!important}
+
+.card-title-text{position:absolute;left:50%;top:0;transform:translate(-50%,-45%);font-family:Soft,Neue,sans-serif;font-size:clamp(26px,2.2vw,34px);text-transform:none;white-space:nowrap;filter:drop-shadow(2px 2px 0 #000)}
+.card-image-dog{max-width:240px!important;margin-top:56px!important;object-fit:contain}
+
+.header-box-brand-badge{position:absolute;top:0;left:50%;transform:translate(-50%,-55%);font-family:Soft,Neue,sans-serif;font-size:22px;color:#ffda22;background:#141414;padding:4px 14px;border:2px solid #ffda22;border-radius:999px;z-index:3;white-space:nowrap}
+.header-box-img-dog{max-width:180px!important;bottom:8px!important;left:-10px!important;margin-right:-20px!important;object-fit:contain}
+
+.main-dog{max-width:320px;margin:0 auto;display:block}
+.footer-dog{max-width:180px;object-fit:contain;margin:0 auto}
+.haodada-share{display:block!important;background:linear-gradient(180deg,hsla(0,0%,100%,.35),rgba(0,0,0,.35)),#c1121f}
+.tiktok-cta-hashtag{font-family:Neue,sans-serif;font-size:28px;color:#ffda22;margin-top:8px}
+.mascot-bubble{position:absolute;top:-54px;right:30px;background:#ffda22;color:#000;font-family:Soft,sans-serif;font-size:22px;padding:8px 14px;border-radius:18px;border:3px solid #000;opacity:0;transition:.3s linear}
+.mascot-bubble.show{opacity:1}
+.haodada-mascot .illegal-al-img{max-width:160px}
+
 @media only screen and (max-width:950px){
-  .ingredient.dog-hero{left:42%;bottom:62%;max-width:52%;max-height:48%;transform:translateY(50%) rotate(-8deg)}
-  .eating.dog-hero{display:none}
+  .hero-product{left:50%;top:38%;transform:translate(-50%,-50%) rotate(-8deg);width:78vw;max-height:46vh}
+  .haodada-headline{position:absolute;left:50%;right:auto;top:68%;transform:translateX(-50%);text-align:center;max-width:90%;width:100%}
+  .brand-lockup{font-size:42px}
+  .haodada-headline .tagline-2{font-size:22px;max-width:100%;margin-left:auto;margin-right:auto}
+  .hero-sub{font-size:15px}
+  .logo-mark{font-size:20px}
+  .header-box-brand-badge{font-size:18px}
+  .header-box-img-dog{position:static!important;max-width:240px!important;margin:30px auto 0!important;display:block}
+  .haodada-share{display:block!important}
+  .main-illegal-al{max-width:220px}
 }
