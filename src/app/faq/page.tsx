@@ -10,7 +10,7 @@ export default function FaqPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="al-standing"
-            src={asset("/images/haodada/hero-pomeranian.png")}
+            src={asset("/images/haodada/eat-bulldog.png")}
             alt={BRAND.mascot}
           />
           <div className="al-quote">
