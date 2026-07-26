@@ -3,22 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BRAND } from "@/data/brand";
+import { BRAND, MASCOT_IMAGE } from "@/data/brand";
 import { asset } from "@/lib/asset";
 
 export function Background() {
   return <div id="__bg" aria-hidden />;
 }
 
+/** Text logo only — no product photo (avoids hero duplication) */
 export function Logo() {
   return (
     <Link href="/" className="logo logo-text" aria-label={BRAND.name}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="logo-dog"
-        src={asset("/images/haodada/hero-pomeranian.png")}
-        alt=""
-      />
       <span className="logo-mark">{BRAND.name}</span>
     </Link>
   );
@@ -52,7 +47,7 @@ export function IllegalAl() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > 120);
+    const onScroll = () => setShow(window.scrollY > 160);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -60,15 +55,9 @@ export function IllegalAl() {
 
   return (
     <div className="illegal-al" aria-hidden>
-      <div className={`illegal-al-quote text-bubble${show ? " show" : ""}`}>
-        嚎！
-      </div>
+      <div className={`illegal-al-quote text-bubble${show ? " show" : ""}`}>嚎！</div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="illegal-al-img"
-        src={asset("/images/haodada/eat-bulldog.png")}
-        alt=""
-      />
+      <img className="illegal-al-img" src={asset(MASCOT_IMAGE)} alt="" />
     </div>
   );
 }
@@ -90,11 +79,11 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         // ignore
       }
       onDone();
-    }, 1800);
+    }, 1600);
     return () => window.clearTimeout(t);
   }, [onDone]);
 
-  const marquee = Array.from({ length: 20 }, (_, i) => (
+  const marquee = Array.from({ length: 18 }, (_, i) => (
     <div key={i} className="inner">
       {`///////// ${BRAND.name}\u00A0`}
     </div>
@@ -108,9 +97,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset("/images/haodada/hero-pomeranian.png")} alt={BRAND.name} />
           <div className="line">----------------------------</div>
-          <h3>
-            * {BRAND.dropLabel} *
-          </h3>
+          <h3>* {BRAND.name} {BRAND.dropLabel} *</h3>
           <div className="line">----------------------------</div>
           <button
             type="button"

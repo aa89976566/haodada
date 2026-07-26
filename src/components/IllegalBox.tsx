@@ -6,9 +6,11 @@ import { asset } from "@/lib/asset";
 
 export function IllegalBox({
   className = "",
+  productImage,
 }: {
   className?: string;
   mobile?: boolean;
+  productImage: string;
 }) {
   const [amount, setAmount] = useState(1);
   const price = amount * BRAND.price;
@@ -21,21 +23,21 @@ export function IllegalBox({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="header-box-img header-box-img-dog"
-        src={asset("/images/haodada/hero-pomeranian.png")}
+        src={asset(productImage)}
         alt={BRAND.name}
       />
       <div className="header-box-tagline">
-        每包都是
+        Each bag is
         <br />
-        原肉雞排
-        <br />+ 毛孩狂嚎
+        real chicken
+        <br />+ howling joy
       </div>
       <div className="header-box-input">
         <div className="header-box-input-title">Amount</div>
         <button
           type="button"
           className={`header-box-control${amount <= 1 ? " header-box-control-disabled" : ""}`}
-          aria-label="減少"
+          aria-label="decrease"
           disabled={amount <= 1 || BRAND.soldOut}
           onClick={() => setAmount((n) => Math.max(1, n - 1))}
         >
@@ -46,7 +48,7 @@ export function IllegalBox({
         <button
           type="button"
           className={`header-box-control${amount >= 10 ? " header-box-control-disabled" : ""}`}
-          aria-label="增加"
+          aria-label="increase"
           disabled={amount >= 10 || BRAND.soldOut}
           onClick={() => setAmount((n) => Math.min(10, n + 1))}
         >

@@ -1,7 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { BRAND, HIGHLIGHTS } from "@/data/brand";
+import {
+  BELOW_FOLD_IMAGE,
+  BRAND,
+  HIGHLIGHTS,
+  MASCOT_IMAGE,
+} from "@/data/brand";
 import { BagCard } from "@/components/BagCard";
 import { FallingChips } from "@/components/FallingChips";
 import { Footer, TikTokBar } from "@/components/Footer";
@@ -9,7 +14,6 @@ import { IllegalBox } from "@/components/IllegalBox";
 import {
   Background,
   CautionTape,
-  IllegalAl,
   Logo,
   Menu,
   Preloader,
@@ -22,11 +26,12 @@ export function HomePage() {
   const [infoIndex, setInfoIndex] = useState<number | null>(null);
 
   const dismiss = useCallback(() => setReady(true), []);
+  const active = HIGHLIGHTS[flavorIndex];
 
   useEffect(() => {
     const id = window.setInterval(() => {
       setFlavorIndex((i) => (i + 1) % HIGHLIGHTS.length);
-    }, 3500);
+    }, 3800);
     return () => window.clearInterval(id);
   }, []);
 
@@ -35,10 +40,9 @@ export function HomePage() {
   };
 
   const scrollToBuy = () => {
-    const el =
-      document.querySelector(".header-illegal-box-mobile") ||
-      document.querySelector(".header-illegal-box");
-    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    document
+      .getElementById("buy")
+      ?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -49,9 +53,9 @@ export function HomePage() {
       <Logo />
       <Menu />
       <CautionTape />
-      <IllegalAl />
 
       <div className={`container home-container${ready ? "" : " is-loading"}`}>
+        {/* ===== HERO — mirrors Illegal Chips header structure ===== */}
         <header className="header">
           <div className={`bg-wrapper${ready ? "" : " bg-wrapper-hide"}`}>
             {HIGHLIGHTS.map((item, i) => (
@@ -66,51 +70,58 @@ export function HomePage() {
             ))}
           </div>
 
-          {/* "ingredient" layer — secondary dog cutout (Illegal Chips pattern) */}
+          {/* mobile secondary layer (Illegal Chips: .ingredient) */}
           {HIGHLIGHTS.map((item, i) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={`ingredient-${item.id}`}
               className="ingredient"
-              src={asset(item.eatingImage)}
+              src={asset(item.sideImage)}
               alt=""
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
           ))}
 
-          {/* Main product = dog photo, same slot as chip BAG */}
+          {/* main product replaces chip BAG */}
           {HIGHLIGHTS.map((item, i) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={`bag-${item.id}`}
-              className="bag hero-dog-bag"
-              src={asset(item.bagImage)}
+              className="bag"
+              src={asset(item.image)}
               alt={item.name}
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
           ))}
 
-          {/* Desktop "eating" layer */}
+          {/* desktop left layer (Illegal Chips: .eating) */}
           {HIGHLIGHTS.map((item, i) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={`eating-${item.id}`}
               className="eating"
-              src={asset(item.eatingImage)}
+              src={asset(item.sideImage)}
               alt=""
               style={{ opacity: i === flavorIndex ? 1 : 0 }}
             />
           ))}
 
           <div className="headline">
-            <div className="tagline-text brand-title">{BRAND.name}</div>
-            <div className="tagline-2">{BRAND.tagline}</div>
-            <p className="hero-sub-line">{BRAND.heroLine}</p>
+            {/* desktop tagline block */}
+            <div className="tagline tagline-desktop-block">
+              <div className="brand-title">{BRAND.name}</div>
+              <div className="tagline-2">{BRAND.tagline}</div>
+            </div>
+            {/* mobile tagline block */}
+            <div className="tagline-mobile tagline-mobile-block">
+              <div className="brand-title">{BRAND.name}</div>
+              <div className="tagline-2">{BRAND.tagline}</div>
+            </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="tagline-down"
               src={asset("/images/down-arrow.png")}
-              alt="往下看"
+              alt=""
               onClick={scrollToCards}
             />
           </div>
@@ -121,17 +132,19 @@ export function HomePage() {
             </button>
           ) : null}
 
+          {/* desktop-only shop dock (hidden on mobile like original) */}
           <div className="header-illegal-box">
-            <IllegalBox />
+            <IllegalBox productImage={active.image} />
           </div>
         </header>
 
+        {/* ===== BELOW FOLD — mirrors Illegal Chips .content ===== */}
         <div className="content">
           <main className="main-content" id="meet">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="main-bags"
-              src={asset("/images/haodada/hero-pomeranian.png")}
+              src={asset(BELOW_FOLD_IMAGE)}
               alt={BRAND.name}
             />
 
@@ -145,12 +158,12 @@ export function HomePage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="main-illegal-al"
-              src={asset("/images/haodada/eat-bulldog.png")}
+              src={asset(MASCOT_IMAGE)}
               alt={BRAND.mascot}
             />
 
             <div className="header-illegal-box-mobile" id="buy">
-              <IllegalBox mobile />
+              <IllegalBox productImage={active.image} mobile />
             </div>
 
             <div className="meet">Meet the {BRAND.shortName}:</div>
@@ -171,18 +184,18 @@ export function HomePage() {
               <img
                 src={asset("/images/haodada/pack-brown.png")}
                 alt=""
-                width={90}
-                height={90}
+                width={88}
+                height={88}
                 style={{ objectFit: "contain" }}
               />
               <div className="wee-side">
                 <div className="wee-headline">
-                  立刻入手 <span className="wee-text">{BRAND.name}</span>
+                  order a bag of <span className="wee-text">{BRAND.shortName}</span>
                 </div>
                 <div className="wee-desc">
                   原肉低溫烘培
                   <br />
-                  無添加防腐劑，毛孩安心咬
+                  無添加防腐劑
                 </div>
               </div>
             </a>

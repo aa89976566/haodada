@@ -70,60 +70,141 @@ img{max-width:100%;display:block}
 .fade-enter{opacity:0}.fade-enter-active{transition:opacity .3s}
 
 
-/* ===== 嚎大大雞霸 — Illegal Chips font/CSS mimic ===== */
-.logo-text{display:flex;align-items:center;gap:8px;text-decoration:none;max-width:min(320px,46vw)}
-.logo-dog{width:48px;height:48px;object-fit:contain;filter:drop-shadow(2px 2px 0 #000)}
-.logo-mark{font-family:Soft,Neue,sans-serif;font-size:clamp(20px,2.6vw,32px);line-height:1;color:#ffda22;filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px 1px 0 #000)}
+/* ===== Haodada × Illegal Chips layout lock ===== */
+.logo-text{text-decoration:none;max-width:min(280px,55vw);display:block}
+.logo-mark{
+  font-family:Neue,Soft,sans-serif;
+  font-size:clamp(18px,2.4vw,28px);
+  line-height:1.05;
+  color:#ffda22;
+  text-transform:none;
+  letter-spacing:.02em;
+  filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px 1px 0 #000);
+}
 
 #MSCHFPreloader{background:#ff0400}
-#MSCHFPreloader .middle img{width:70vw;max-width:240px;object-fit:contain}
-#MSCHFPreloader .middle h3{font-family:"Space Mono",monospace;font-size:18px}
-#MSCHFPreloader button.enter{font-family:"Space Mono",monospace;background:#000;color:#ff0400}
+#MSCHFPreloader .middle img{max-width:220px;width:70vw;object-fit:contain}
+#MSCHFPreloader .middle h3{font-family:"Space Mono",monospace;font-size:15px;text-align:center;padding:0 12px}
+#MSCHFPreloader button.enter{font-family:"Space Mono",monospace}
 
-/* Dog replaces chip BAG slot */
-.bag.hero-dog-bag{bottom:90px;left:14%;max-width:46%;max-height:72%;transform:rotate(-4deg);object-fit:contain;filter:drop-shadow(0 18px 28px rgba(0,0,0,.45));z-index:2}
-.eating{bottom:70px;left:0;max-width:38%;max-height:55%;object-fit:contain;filter:drop-shadow(0 14px 22px rgba(0,0,0,.35));z-index:1}
-.ingredient{object-fit:contain;filter:drop-shadow(0 10px 16px rgba(0,0,0,.3))}
+/* Product cutouts in Illegal Chips bag/eating slots */
+.bag,.eating,.ingredient{background:transparent!important;mix-blend-mode:normal}
+.bag{object-fit:contain;filter:drop-shadow(0 16px 24px rgba(0,0,0,.4))}
+.eating{object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.35))}
+.ingredient{object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.3))}
 
-.tagline-text.brand-title{font-family:Soft,Neue,sans-serif;font-size:clamp(42px,5.2vw,78px);line-height:.92;color:#ffda22;text-transform:none;filter:drop-shadow(3px 3px 0 #000) drop-shadow(-2px 2px 0 #000);margin-bottom:10px}
-.headline .tagline-2{font-family:Neue,sans-serif;text-transform:uppercase;font-size:clamp(22px,2.6vw,44px);line-height:1.05;max-width:280px;color:#fff;text-shadow:2px 2px 14px rgba(0,0,0,.95)}
-.hero-sub-line{font-family:Din,sans-serif;color:#ffda22;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-top:12px;text-shadow:1px 1px 6px rgba(0,0,0,.8)}
+/* Headline typography — Neue for CJK stability (Soft lacks Chinese glyphs) */
+.brand-title{
+  font-family:Neue,sans-serif;
+  font-size:clamp(36px,4.8vw,64px);
+  line-height:1;
+  color:#ffda22;
+  text-transform:none;
+  filter:drop-shadow(3px 3px 0 #000) drop-shadow(-2px 2px 0 #000);
+  margin-bottom:10px;
+}
+.tagline-desktop-block .tagline-2,
+.tagline-mobile-block .tagline-2{
+  font-family:Neue,sans-serif;
+  text-transform:uppercase;
+  font-size:clamp(20px,2.4vw,40px);
+  line-height:1.1;
+  max-width:280px;
+  color:#fff;
+  text-shadow:2px 2px 14px rgba(0,0,0,.95);
+}
+.tagline-mobile-block{text-align:center}
+.tagline-mobile-block .brand-title{font-size:34px}
+.tagline-mobile-block .tagline-2{font-size:20px;max-width:100%;margin:0 auto}
 
-.shop-now-bttn{font-family:Oswald,sans-serif!important;text-transform:uppercase}
+.shop-now-bttn{font-family:Oswald,sans-serif!important}
 
-.card-title-text{position:absolute;left:50%;top:0;transform:translate(-50%,-52%);font-family:Soft,Neue,sans-serif;font-size:clamp(22px,2vw,30px);text-transform:none;white-space:nowrap;filter:drop-shadow(2px 2px 0 #000);z-index:2}
-.card .card-image{max-height:280px;object-fit:contain}
+.card-title-text{
+  position:absolute;left:50%;top:0;transform:translate(-50%,-52%);
+  font-family:Neue,Soft,sans-serif;font-size:clamp(20px,1.9vw,28px);
+  text-transform:none;white-space:nowrap;z-index:2;
+  filter:drop-shadow(2px 2px 0 #000);
+  max-width:90%;overflow:hidden;text-overflow:ellipsis;
+}
+.card .card-image{max-height:260px;width:auto;max-width:90%;object-fit:contain;margin-top:64px}
 
-.header-box-header-text{position:absolute;top:0;left:190px;transform:translateY(calc(-50% - 2px));z-index:2;font-family:Soft,Neue,sans-serif;font-size:26px;color:#ffda22;background:#141414;padding:2px 12px;border:2px solid #ffda22;white-space:nowrap}
-.header-box-img-dog{max-width:170px!important;bottom:10px!important;left:-24px!important;margin-right:-40px!important;object-fit:contain}
+.header-box-header-text{
+  position:absolute;top:0;left:190px;transform:translateY(calc(-50% - 2px));z-index:2;
+  font-family:Neue,sans-serif;font-size:22px;color:#ffda22;background:#141414;
+  padding:2px 12px;border:2px solid #ffda22;white-space:nowrap;
+}
+.header-box-img-dog{max-width:150px!important;object-fit:contain;bottom:12px!important;left:-20px!important;margin-right:-36px!important}
+.header-box-buy,.header-box-tagline{font-family:Oswald,Neue,sans-serif}
 .header-box-tagline{font-family:Neue,sans-serif}
-.header-box-buy{font-family:Oswald,sans-serif}
 
-.main-bags{max-width:280px;margin:0 auto;display:block;object-fit:contain}
-.main-illegal-al{max-width:200px;object-fit:contain}
-.footer-bottom-label,.footer-bottom-snake{max-width:200px;object-fit:contain}
+.main-bags,.main-illegal-al{object-fit:contain}
+.main-bags{max-width:260px;margin:0 auto;display:block}
+.footer-bottom-label,.footer-bottom-snake{max-width:180px;object-fit:contain}
 .haodada-share{display:block!important}
-.tiktok-cta-hashtag{font-family:Neue,sans-serif;font-size:28px;color:#ffda22;margin-top:8px}
-.text-bubble{font-family:Soft,sans-serif;font-size:28px;color:#ffda22;filter:drop-shadow(2px 2px 0 #000);text-align:center;max-width:120px!important;top:-70px!important;right:40px!important;background:transparent!important;opacity:0;transition:.3s linear}
-.text-bubble.show{opacity:1}
+.tiktok-cta-hashtag{font-family:Neue,sans-serif;font-size:26px;color:#ffda22;margin-top:6px}
+.text-bubble{
+  font-family:Soft,Neue,sans-serif;font-size:26px;color:#ffda22;
+  filter:drop-shadow(2px 2px 0 #000);text-align:center;
+  max-width:100px!important;top:-64px!important;right:36px!important;
+  background:transparent!important;width:auto!important;height:auto!important;
+}
 
-.meet{font-family:Neue,sans-serif}
-.footer-button,.menu-link{font-family:Din,sans-serif}
-.main-al-quote-text,.main-al-quote-attr,.tiktok-quote,.tiktok-attr,.al-quote-text,.al-attr{font-family:Soft,sans-serif}
-
+/* Critical: match Illegal Chips mobile — shop dock leaves the hero */
 @media only screen and (max-width:950px){
-  .bag.hero-dog-bag{left:50%;bottom:42%;transform:translate(-50%,50%) rotate(-10deg);max-width:78%;max-height:48%}
-  .ingredient{left:52%;bottom:58%;max-width:48%;max-height:40%;transform:translateY(50%) rotate(-10deg);display:block}
-  .eating{display:none}
-  .headline{left:50%;top:62%;transform:translateX(-50%);text-align:center;max-width:92%;width:100%}
-  .tagline-text.brand-title{font-size:40px}
-  .headline .tagline-2{font-size:24px;max-width:100%;margin-left:auto;margin-right:auto}
-  .hero-sub-line{font-size:12px}
-  .logo-text{width:auto;max-width:60vw}
-  .logo-dog{width:36px;height:36px}
-  .logo-mark{font-size:18px}
-  .header-box-header-text{left:50%;width:auto;transform:translateX(-50%);top:-28px;font-size:22px}
-  .header-box-img-dog{position:static!important;max-width:240px!important;margin:36px auto 0!important;display:block}
-  .haodada-share{display:block!important;padding-top:140px}
-  .tiktok-al{max-width:220px;height:auto}
+  .header-illegal-box{display:none!important}
+  .tagline-down{display:none!important}
+  .tagline{display:none!important}
+  .tagline-mobile{display:block!important}
+  .shop-now-bttn{display:block!important}
+  .header-illegal-box-mobile,.main-al-quote{display:block!important}
+  .main-bags,.main-illegal-al,.meet{display:block!important}
+
+  .bag{
+    left:50%!important;
+    bottom:46%!important;
+    transform:translate(-50%,50%) rotate(-12deg)!important;
+    max-width:72%!important;
+    max-height:46%!important;
+    z-index:2;
+  }
+  .ingredient{
+    display:block!important;
+    left:54%!important;
+    bottom:62%!important;
+    transform:translateY(50%) rotate(-12deg)!important;
+    max-width:42%!important;
+    max-height:34%!important;
+    z-index:1;
+  }
+  .eating{display:none!important}
+
+  .headline{
+    position:absolute;
+    left:50%;
+    top:64%;
+    transform:translateX(-50%);
+    text-align:center;
+    max-width:340px;
+    width:92%;
+    z-index:3;
+  }
+
+  .header-box{
+    position:relative!important;
+    display:block!important;
+    transform:none!important;
+    text-align:center;
+    left:auto!important;
+    bottom:auto!important;
+    height:auto!important;
+    padding:0!important;
+    margin-top:68px;
+  }
+  .header-box-header-text{left:50%;transform:translateX(-50%);top:-32px;font-size:20px}
+  .header-box-img-dog{position:static!important;max-width:220px!important;margin:40px auto 0!important;display:block}
+  .header-box-tagline{margin-left:0;margin-top:16px}
+  .haodada-share{display:block!important;padding-top:150px}
+  .tiktok-al{max-width:200px;height:auto;object-fit:contain}
+  .logo{top:12px;left:12px;width:auto}
+  .logo-mark{font-size:16px}
 }

@@ -22,10 +22,11 @@ export function Footer() {
         <div className="footer-bottom">
           <div>
             <div className="footer-bottom-drop-title">
-              {BRAND.name} is <span className="yellow-highlight">匠寵</span> {BRAND.dropLabel}
+              {BRAND.name} is <span className="yellow-highlight">匠寵</span>{" "}
+              {BRAND.dropLabel}
             </div>
             <div className="footer-bottom-drop-desc">
-              Every treat is different — handmade, no preservatives, and made for howling joy.
+              Every treat is handmade. No preservatives. Maximum howling.
             </div>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -37,7 +38,7 @@ export function Footer() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="footer-bottom-snake"
-            src={asset("/images/haodada/hero-black.png")}
+            src={asset("/images/haodada/eat-bulldog.png")}
             alt=""
           />
         </div>
@@ -50,7 +51,7 @@ export function TikTokBar() {
   return (
     <section className="tiktok haodada-share">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="tiktok-al" src={asset("/images/haodada/eat-dachshund.png")} alt="" />
+      <img className="tiktok-al" src={asset("/images/haodada/hero-black.png")} alt="" />
       <div className="tiktok-cta">
         <div className="tiktok-cta-post">Post to TikTok</div>
         <div className="tiktok-cta-hashtag">#{BRAND.name}</div>
