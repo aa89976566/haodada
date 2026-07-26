@@ -7,7 +7,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{font-family:Din,sans-serif;font-size:16px;word-spacing:1px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 html,body{width:100%;height:100%;margin:0;overscroll-behavior-y:none}
-body{background:#e85d04;color:#000}
+body{background:#1742c4;color:#000}
 a{color:inherit;text-decoration:none}
 button{font:inherit}
 img{max-width:100%;display:block}
@@ -70,44 +70,60 @@ img{max-width:100%;display:block}
 .fade-enter{opacity:0}.fade-enter-active{transition:opacity .3s}
 
 
-/* ===== 嚎大大雞霸 brand overrides ===== */
-.logo-text{text-decoration:none;display:block;max-width:min(280px,42vw)}
-.logo-mark{display:block;font-family:Soft,Neue,sans-serif;font-size:clamp(22px,3.2vw,36px);line-height:1.05;color:#ffda22;text-transform:none;filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px 1px 0 #000);letter-spacing:.02em}
-.haodada-preloader{background:#c1121f!important}
-.haodada-preloader .enter{background:#000;color:#ffda22}
-.haodada-preloader .middle img{width:55vw;max-width:220px;border-radius:18px}
+/* ===== 嚎大大雞霸 — Illegal Chips font/CSS mimic ===== */
+.logo-text{display:flex;align-items:center;gap:8px;text-decoration:none;max-width:min(320px,46vw)}
+.logo-dog{width:48px;height:48px;object-fit:contain;filter:drop-shadow(2px 2px 0 #000)}
+.logo-mark{font-family:Soft,Neue,sans-serif;font-size:clamp(20px,2.6vw,32px);line-height:1;color:#ffda22;filter:drop-shadow(2px 2px 0 #000) drop-shadow(-1px 1px 0 #000)}
 
-.haodada-hero .bg{background:#e85d04!important}
-.hero-product{position:absolute;left:50%;top:46%;transform:translate(-54%,-50%) rotate(-6deg);width:min(52vw,520px);max-height:70vh;object-fit:contain;z-index:2;filter:drop-shadow(0 22px 34px rgba(0,0,0,.4));pointer-events:none}
-.haodada-headline{right:6%;top:48%;max-width:min(420px,38%);transform:translateY(-50%);text-align:left}
-.brand-lockup{font-family:Soft,Neue,sans-serif;font-size:clamp(40px,5vw,72px);line-height:.95;color:#ffda22;text-transform:none;filter:drop-shadow(3px 3px 0 #000) drop-shadow(-2px 2px 0 #000);margin-bottom:14px}
-.haodada-headline .tagline-2{max-width:100%;font-size:clamp(22px,2.4vw,36px);line-height:1.15;margin-top:0}
-.hero-sub{font-family:Neue,sans-serif;color:#fff;font-size:clamp(14px,1.4vw,20px);margin-top:14px;text-shadow:1px 1px 8px rgba(0,0,0,.7)}
-.shop-now-bttn{font-size:36px!important}
+#MSCHFPreloader{background:#ff0400}
+#MSCHFPreloader .middle img{width:70vw;max-width:240px;object-fit:contain}
+#MSCHFPreloader .middle h3{font-family:"Space Mono",monospace;font-size:18px}
+#MSCHFPreloader button.enter{font-family:"Space Mono",monospace;background:#000;color:#ff0400}
 
-.card-title-text{position:absolute;left:50%;top:0;transform:translate(-50%,-45%);font-family:Soft,Neue,sans-serif;font-size:clamp(26px,2.2vw,34px);text-transform:none;white-space:nowrap;filter:drop-shadow(2px 2px 0 #000)}
-.card-image-dog{max-width:240px!important;margin-top:56px!important;object-fit:contain}
+/* Dog replaces chip BAG slot */
+.bag.hero-dog-bag{bottom:90px;left:14%;max-width:46%;max-height:72%;transform:rotate(-4deg);object-fit:contain;filter:drop-shadow(0 18px 28px rgba(0,0,0,.45));z-index:2}
+.eating{bottom:70px;left:0;max-width:38%;max-height:55%;object-fit:contain;filter:drop-shadow(0 14px 22px rgba(0,0,0,.35));z-index:1}
+.ingredient{object-fit:contain;filter:drop-shadow(0 10px 16px rgba(0,0,0,.3))}
 
-.header-box-brand-badge{position:absolute;top:0;left:50%;transform:translate(-50%,-55%);font-family:Soft,Neue,sans-serif;font-size:22px;color:#ffda22;background:#141414;padding:4px 14px;border:2px solid #ffda22;border-radius:999px;z-index:3;white-space:nowrap}
-.header-box-img-dog{max-width:180px!important;bottom:8px!important;left:-10px!important;margin-right:-20px!important;object-fit:contain}
+.tagline-text.brand-title{font-family:Soft,Neue,sans-serif;font-size:clamp(42px,5.2vw,78px);line-height:.92;color:#ffda22;text-transform:none;filter:drop-shadow(3px 3px 0 #000) drop-shadow(-2px 2px 0 #000);margin-bottom:10px}
+.headline .tagline-2{font-family:Neue,sans-serif;text-transform:uppercase;font-size:clamp(22px,2.6vw,44px);line-height:1.05;max-width:280px;color:#fff;text-shadow:2px 2px 14px rgba(0,0,0,.95)}
+.hero-sub-line{font-family:Din,sans-serif;color:#ffda22;font-size:14px;letter-spacing:.04em;text-transform:uppercase;margin-top:12px;text-shadow:1px 1px 6px rgba(0,0,0,.8)}
 
-.main-dog{max-width:320px;margin:0 auto;display:block}
-.footer-dog{max-width:180px;object-fit:contain;margin:0 auto}
-.haodada-share{display:block!important;background:linear-gradient(180deg,hsla(0,0%,100%,.35),rgba(0,0,0,.35)),#c1121f}
+.shop-now-bttn{font-family:Oswald,sans-serif!important;text-transform:uppercase}
+
+.card-title-text{position:absolute;left:50%;top:0;transform:translate(-50%,-52%);font-family:Soft,Neue,sans-serif;font-size:clamp(22px,2vw,30px);text-transform:none;white-space:nowrap;filter:drop-shadow(2px 2px 0 #000);z-index:2}
+.card .card-image{max-height:280px;object-fit:contain}
+
+.header-box-header-text{position:absolute;top:0;left:190px;transform:translateY(calc(-50% - 2px));z-index:2;font-family:Soft,Neue,sans-serif;font-size:26px;color:#ffda22;background:#141414;padding:2px 12px;border:2px solid #ffda22;white-space:nowrap}
+.header-box-img-dog{max-width:170px!important;bottom:10px!important;left:-24px!important;margin-right:-40px!important;object-fit:contain}
+.header-box-tagline{font-family:Neue,sans-serif}
+.header-box-buy{font-family:Oswald,sans-serif}
+
+.main-bags{max-width:280px;margin:0 auto;display:block;object-fit:contain}
+.main-illegal-al{max-width:200px;object-fit:contain}
+.footer-bottom-label,.footer-bottom-snake{max-width:200px;object-fit:contain}
+.haodada-share{display:block!important}
 .tiktok-cta-hashtag{font-family:Neue,sans-serif;font-size:28px;color:#ffda22;margin-top:8px}
-.mascot-bubble{position:absolute;top:-54px;right:30px;background:#ffda22;color:#000;font-family:Soft,sans-serif;font-size:22px;padding:8px 14px;border-radius:18px;border:3px solid #000;opacity:0;transition:.3s linear}
-.mascot-bubble.show{opacity:1}
-.haodada-mascot .illegal-al-img{max-width:160px}
+.text-bubble{font-family:Soft,sans-serif;font-size:28px;color:#ffda22;filter:drop-shadow(2px 2px 0 #000);text-align:center;max-width:120px!important;top:-70px!important;right:40px!important;background:transparent!important;opacity:0;transition:.3s linear}
+.text-bubble.show{opacity:1}
+
+.meet{font-family:Neue,sans-serif}
+.footer-button,.menu-link{font-family:Din,sans-serif}
+.main-al-quote-text,.main-al-quote-attr,.tiktok-quote,.tiktok-attr,.al-quote-text,.al-attr{font-family:Soft,sans-serif}
 
 @media only screen and (max-width:950px){
-  .hero-product{left:50%;top:38%;transform:translate(-50%,-50%) rotate(-8deg);width:78vw;max-height:46vh}
-  .haodada-headline{position:absolute;left:50%;right:auto;top:68%;transform:translateX(-50%);text-align:center;max-width:90%;width:100%}
-  .brand-lockup{font-size:42px}
-  .haodada-headline .tagline-2{font-size:22px;max-width:100%;margin-left:auto;margin-right:auto}
-  .hero-sub{font-size:15px}
-  .logo-mark{font-size:20px}
-  .header-box-brand-badge{font-size:18px}
-  .header-box-img-dog{position:static!important;max-width:240px!important;margin:30px auto 0!important;display:block}
-  .haodada-share{display:block!important}
-  .main-illegal-al{max-width:220px}
+  .bag.hero-dog-bag{left:50%;bottom:42%;transform:translate(-50%,50%) rotate(-10deg);max-width:78%;max-height:48%}
+  .ingredient{left:52%;bottom:58%;max-width:48%;max-height:40%;transform:translateY(50%) rotate(-10deg);display:block}
+  .eating{display:none}
+  .headline{left:50%;top:62%;transform:translateX(-50%);text-align:center;max-width:92%;width:100%}
+  .tagline-text.brand-title{font-size:40px}
+  .headline .tagline-2{font-size:24px;max-width:100%;margin-left:auto;margin-right:auto}
+  .hero-sub-line{font-size:12px}
+  .logo-text{width:auto;max-width:60vw}
+  .logo-dog{width:36px;height:36px}
+  .logo-mark{font-size:18px}
+  .header-box-header-text{left:50%;width:auto;transform:translateX(-50%);top:-28px;font-size:22px}
+  .header-box-img-dog{position:static!important;max-width:240px!important;margin:36px auto 0!important;display:block}
+  .haodada-share{display:block!important;padding-top:140px}
+  .tiktok-al{max-width:220px;height:auto}
 }

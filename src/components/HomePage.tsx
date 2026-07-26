@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BRAND, HIGHLIGHTS } from "@/data/brand";
 import { BagCard } from "@/components/BagCard";
 import { FallingChips } from "@/components/FallingChips";
@@ -18,9 +18,17 @@ import { asset } from "@/lib/asset";
 
 export function HomePage() {
   const [ready, setReady] = useState(false);
+  const [flavorIndex, setFlavorIndex] = useState(0);
   const [infoIndex, setInfoIndex] = useState<number | null>(null);
 
   const dismiss = useCallback(() => setReady(true), []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setFlavorIndex((i) => (i + 1) % HIGHLIGHTS.length);
+    }, 3500);
+    return () => window.clearInterval(id);
+  }, []);
 
   const scrollToCards = () => {
     document.getElementById("meet")?.scrollIntoView({ behavior: "smooth" });
@@ -44,25 +52,60 @@ export function HomePage() {
       <IllegalAl />
 
       <div className={`container home-container${ready ? "" : " is-loading"}`}>
-        <header className="header haodada-hero">
+        <header className="header">
           <div className={`bg-wrapper${ready ? "" : " bg-wrapper-hide"}`}>
-            <div
-              className="bg"
-              style={{ opacity: 1, background: BRAND.heroColor }}
-            />
+            {HIGHLIGHTS.map((item, i) => (
+              <div
+                key={`bg-${item.id}`}
+                className="bg"
+                style={{
+                  opacity: i === flavorIndex ? 1 : 0,
+                  background: item.primaryColor,
+                }}
+              />
+            ))}
           </div>
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="hero-product"
-            src={asset("/images/dog-hero.png")}
-            alt={BRAND.name}
-          />
+          {/* "ingredient" layer — secondary dog cutout (Illegal Chips pattern) */}
+          {HIGHLIGHTS.map((item, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={`ingredient-${item.id}`}
+              className="ingredient"
+              src={asset(item.eatingImage)}
+              alt=""
+              style={{ opacity: i === flavorIndex ? 1 : 0 }}
+            />
+          ))}
 
-          <div className="headline haodada-headline">
-            <div className="brand-lockup">{BRAND.name}</div>
+          {/* Main product = dog photo, same slot as chip BAG */}
+          {HIGHLIGHTS.map((item, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={`bag-${item.id}`}
+              className="bag hero-dog-bag"
+              src={asset(item.bagImage)}
+              alt={item.name}
+              style={{ opacity: i === flavorIndex ? 1 : 0 }}
+            />
+          ))}
+
+          {/* Desktop "eating" layer */}
+          {HIGHLIGHTS.map((item, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={`eating-${item.id}`}
+              className="eating"
+              src={asset(item.eatingImage)}
+              alt=""
+              style={{ opacity: i === flavorIndex ? 1 : 0 }}
+            />
+          ))}
+
+          <div className="headline">
+            <div className="tagline-text brand-title">{BRAND.name}</div>
             <div className="tagline-2">{BRAND.tagline}</div>
-            <p className="hero-sub">{BRAND.heroLine}</p>
+            <p className="hero-sub-line">{BRAND.heroLine}</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="tagline-down"
@@ -74,7 +117,7 @@ export function HomePage() {
 
           {infoIndex === null ? (
             <button type="button" className="shop-now-bttn" onClick={scrollToBuy}>
-              立刻下單
+              SHOP NOW
             </button>
           ) : null}
 
@@ -87,14 +130,14 @@ export function HomePage() {
           <main className="main-content" id="meet">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="main-bags main-dog"
-              src={asset("/images/dog-hero.png")}
+              className="main-bags"
+              src={asset("/images/haodada/hero-pomeranian.png")}
               alt={BRAND.name}
             />
 
             <div className="main-al-quote">
               <div className="main-al-quote-text">
-                「給嚎大大吃的，才敢給你家毛孩吃！」
+                「這些是毛孩政府不希望你錯過的雞霸！」
               </div>
               <div className="main-al-quote-attr">{BRAND.mascot}</div>
             </div>
@@ -102,7 +145,7 @@ export function HomePage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="main-illegal-al"
-              src={asset("/images/dog-hero.png")}
+              src={asset("/images/haodada/eat-bulldog.png")}
               alt={BRAND.mascot}
             />
 
@@ -110,7 +153,7 @@ export function HomePage() {
               <IllegalBox mobile />
             </div>
 
-            <div className="meet">為什麼選{BRAND.name}：</div>
+            <div className="meet">Meet the {BRAND.shortName}:</div>
 
             <div className="cards">
               {HIGHLIGHTS.map((item, i) => (
@@ -125,15 +168,21 @@ export function HomePage() {
 
             <a className="wee-wrapper" href="#buy">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={asset("/images/dog-hero.png")} alt="" width={77} height={77} />
+              <img
+                src={asset("/images/haodada/pack-brown.png")}
+                alt=""
+                width={90}
+                height={90}
+                style={{ objectFit: "contain" }}
+              />
               <div className="wee-side">
                 <div className="wee-headline">
-                  現在就帶 <span className="wee-text">{BRAND.shortName}</span> 回家
+                  立刻入手 <span className="wee-text">{BRAND.name}</span>
                 </div>
                 <div className="wee-desc">
                   原肉低溫烘培
                   <br />
-                  無添加防腐劑，毛孩開心咬
+                  無添加防腐劑，毛孩安心咬
                 </div>
               </div>
             </a>

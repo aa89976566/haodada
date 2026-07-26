@@ -8,36 +8,36 @@ export function Footer() {
         <div className="footer-top">
           <div className="footer-buttons">
             <a className="footer-button" href={asset("/manifesto/")}>
-              品牌理念
+              Manifesto
             </a>
             <a className="footer-button" href={asset("/faq/")}>
-              常見問題
+              FAQ
             </a>
           </div>
           <div className="footer-links">
-            <span className="footer-link">寵物零食 · 原肉烘培</span>
+            <span className="footer-link">Terms & conditions</span>
           </div>
         </div>
         <div className="divider" />
         <div className="footer-bottom">
           <div>
-            <div className="footer-bottom-drop-title">{BRAND.name}</div>
+            <div className="footer-bottom-drop-title">
+              {BRAND.name} is <span className="yellow-highlight">匠寵</span> {BRAND.dropLabel}
+            </div>
             <div className="footer-bottom-drop-desc">
-              {BRAND.description}
-              <br />
-              每一口都想讓毛孩大聲嚎叫的開心。
+              Every treat is different — handmade, no preservatives, and made for howling joy.
             </div>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="footer-bottom-label footer-dog"
-            src={asset("/images/dog-hero.png")}
+            className="footer-bottom-label"
+            src={asset("/images/haodada/pack-brown.png")}
             alt={BRAND.name}
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="footer-bottom-snake footer-dog"
-            src={asset("/images/dog-hero.png")}
+            className="footer-bottom-snake"
+            src={asset("/images/haodada/hero-black.png")}
             alt=""
           />
         </div>
@@ -50,13 +50,13 @@ export function TikTokBar() {
   return (
     <section className="tiktok haodada-share">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="tiktok-al" src={asset("/images/dog-hero.png")} alt="" />
+      <img className="tiktok-al" src={asset("/images/haodada/eat-dachshund.png")} alt="" />
       <div className="tiktok-cta">
-        <div className="tiktok-cta-post">分享毛孩開吃瞬間</div>
+        <div className="tiktok-cta-post">Post to TikTok</div>
         <div className="tiktok-cta-hashtag">#{BRAND.name}</div>
       </div>
       <div className="tiktok-quote">
-        「拿嚎大大雞霸獎勵毛孩，看牠邊咬邊搖尾巴！」
+        “Feed your friends {BRAND.shortName} and make them guess what they’re eating!”
       </div>
     </section>
   );

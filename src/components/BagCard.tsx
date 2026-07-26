@@ -25,25 +25,15 @@ function BagInfo({
 
   return (
     <>
-      <button
-        type="button"
-        className="info-backdrop"
-        aria-label="關閉資訊"
-        onClick={onClose}
-      />
+      <button type="button" className="info-backdrop" aria-label="關閉" onClick={onClose} />
       <div className={`info info-${info.position}`} role="dialog">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="info-arrow" src={asset("/images/info-arrow.svg")} alt="" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="info-x"
-          src={asset("/images/x.svg")}
-          alt="關閉"
-          onClick={onClose}
-        />
+        <img className="info-x" src={asset("/images/x.svg")} alt="關閉" onClick={onClose} />
         <div className="info-headline">{info.headline}</div>
         <div className="info-content">
-          <div className="info-does-not">堅持不含</div>
+          <div className="info-does-not">Does not contain</div>
           <div className="info-content-title">{info.doesNotContain}</div>
           <div className="info-divider" />
           <div className="info-desc">{info.desc}</div>
@@ -53,22 +43,22 @@ function BagInfo({
               <div className="info-stat-title">
                 <span className="info-stat-grams">{info.servingSize}</span>
               </div>
-              <div className="info-stat-desc">份量建議</div>
+              <div className="info-stat-desc">serving size</div>
             </div>
             <div>
               <div className="info-stat-title">{info.totalFat}</div>
-              <div className="info-stat-desc">工法</div>
+              <div className="info-stat-desc">process</div>
             </div>
             <div>
               <div className="info-stat-title">{info.calories}</div>
-              <div className="info-stat-desc">亮點</div>
+              <div className="info-stat-desc">perk</div>
             </div>
           </div>
         </div>
         <div className="info-review">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="info-stars-img" src={starsSrc} alt={`${info.stars} 星`} />
-          <div className="info-review-text">{info.numReviews} 則毛孩家長評價</div>
+          <img className="info-stars-img" src={starsSrc} alt={`${info.stars} stars`} />
+          <div className="info-review-text">{info.numReviews} reviews</div>
         </div>
       </div>
     </>
@@ -96,28 +86,25 @@ export function BagCard({
         <button
           type="button"
           className={`card-info${open ? " card-info-selected" : ""}`}
-          aria-label={`關於${item.name}`}
+          aria-label={`Info ${item.name}`}
           onClick={onToggle}
         />
         {open ? <BagInfo item={item} onClose={onToggle} /> : null}
       </div>
       <div
-        className="card-title-text"
-        style={{ color: item.textColor === "black" ? "#111" : "#fff" }}
+        className="card-title card-title-text"
+        style={{ color: item.textColor === "black" ? "#111" : "#ffda22" }}
       >
         {item.name}
       </div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="card-image card-image-dog"
-        src={asset(item.image)}
-        alt={item.name}
-      />
+      <img className="card-image" src={asset(item.image)} alt={item.name} />
       <div
         className="card-desc"
         style={{ color: item.textColor === "black" ? "#000" : "#fff" }}
       >
         {item.desc}
+        <span className="card-until-now"> – until now!!</span>
       </div>
     </div>
   );

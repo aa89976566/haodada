@@ -17,26 +17,25 @@ export function IllegalBox({
     <div
       className={`header-box${BRAND.soldOut ? " header-box-sold-out" : ""}${className ? ` ${className}` : ""}`}
     >
-      <div className="header-box-brand-badge">{BRAND.name}</div>
+      <div className="header-box-header header-box-header-text">{BRAND.name}</div>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="header-box-img header-box-img-dog"
-        src={asset("/images/dog-hero.png")}
+        src={asset("/images/haodada/hero-pomeranian.png")}
         alt={BRAND.name}
       />
       <div className="header-box-tagline">
-        原肉雞排零食
+        每包都是
         <br />
-        低溫烘培
-        <br />
-        毛孩大口咬
+        原肉雞排
+        <br />+ 毛孩狂嚎
       </div>
       <div className="header-box-input">
-        <div className="header-box-input-title">數量</div>
+        <div className="header-box-input-title">Amount</div>
         <button
           type="button"
           className={`header-box-control${amount <= 1 ? " header-box-control-disabled" : ""}`}
-          aria-label="減少數量"
+          aria-label="減少"
           disabled={amount <= 1 || BRAND.soldOut}
           onClick={() => setAmount((n) => Math.max(1, n - 1))}
         >
@@ -47,7 +46,7 @@ export function IllegalBox({
         <button
           type="button"
           className={`header-box-control${amount >= 10 ? " header-box-control-disabled" : ""}`}
-          aria-label="增加數量"
+          aria-label="增加"
           disabled={amount >= 10 || BRAND.soldOut}
           onClick={() => setAmount((n) => Math.min(10, n + 1))}
         >
@@ -57,7 +56,7 @@ export function IllegalBox({
       </div>
       {BRAND.soldOut ? (
         <span className="header-box-buy" aria-disabled="true">
-          立即購買
+          buy now
           <span className="header-box-price">
             {BRAND.currency}
             {price}
@@ -65,7 +64,7 @@ export function IllegalBox({
         </span>
       ) : (
         <a className="header-box-buy" href="#buy">
-          立即購買
+          buy now
           <span className="header-box-price">
             {BRAND.currency}
             {price}
