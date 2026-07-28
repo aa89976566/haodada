@@ -1,16 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { BRAND, MASCOT_IMAGE } from "@/data/brand";
-import { asset } from "@/lib/asset";
+import { useEffect } from "react";
+import { BRAND } from "@/data/brand";
 
 export function Background() {
   return <div id="__bg" aria-hidden />;
 }
 
-/** Text logo only — no product photo (avoids hero duplication) */
 export function Logo() {
   return (
     <Link href="/" className="logo logo-text" aria-label={BRAND.name}>
@@ -19,47 +16,8 @@ export function Logo() {
   );
 }
 
-export function Menu() {
-  const pathname = usePathname();
-  return (
-    <nav className="menu">
-      <Link
-        href="/manifesto"
-        className={`menu-link${pathname === "/manifesto" ? " menu-link-highlight" : ""}`}
-      >
-        Manifesto
-      </Link>
-      <Link
-        href="/faq"
-        className={`menu-link${pathname === "/faq" ? " menu-link-highlight" : ""}`}
-      >
-        FAQ
-      </Link>
-    </nav>
-  );
-}
-
 export function CautionTape() {
-  return <div className="caution" aria-hidden />;
-}
-
-export function IllegalAl() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > 160);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div className="illegal-al" aria-hidden>
-      <div className={`illegal-al-quote text-bubble${show ? " show" : ""}`}>嚎！</div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="illegal-al-img" src={asset(MASCOT_IMAGE)} alt="" />
-    </div>
-  );
+  return <div className="caution caution-css" aria-hidden />;
 }
 
 export function Preloader({ onDone }: { onDone: () => void }) {
@@ -79,7 +37,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         // ignore
       }
       onDone();
-    }, 1600);
+    }, 1400);
     return () => window.clearTimeout(t);
   }, [onDone]);
 
@@ -94,10 +52,10 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       <div className="content">
         <div className="marquee top">{marquee}</div>
         <div className="middle">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={asset("/images/haodada/hero-pomeranian.png")} alt={BRAND.name} />
           <div className="line">----------------------------</div>
-          <h3>* {BRAND.name} {BRAND.dropLabel} *</h3>
+          <h3>
+            * {BRAND.name} {BRAND.dropLabel} *
+          </h3>
           <div className="line">----------------------------</div>
           <button
             type="button"

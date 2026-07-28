@@ -1,24 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import {
-  BELOW_FOLD_IMAGE,
-  BRAND,
-  HIGHLIGHTS,
-  MASCOT_IMAGE,
-} from "@/data/brand";
+import { BRAND, HIGHLIGHTS } from "@/data/brand";
 import { BagCard } from "@/components/BagCard";
-import { FallingChips } from "@/components/FallingChips";
 import { Footer, TikTokBar } from "@/components/Footer";
 import { IllegalBox } from "@/components/IllegalBox";
 import {
   Background,
   CautionTape,
   Logo,
-  Menu,
   Preloader,
 } from "@/components/SiteChrome";
-import { asset } from "@/lib/asset";
 
 export function HomePage() {
   const [ready, setReady] = useState(false);
@@ -49,13 +41,10 @@ export function HomePage() {
     <div className="page-root">
       {!ready ? <Preloader onDone={dismiss} /> : null}
       <Background />
-      <FallingChips />
       <Logo />
-      <Menu />
       <CautionTape />
 
       <div className={`container home-container${ready ? "" : " is-loading"}`}>
-        {/* ===== HERO — mirrors Illegal Chips header structure ===== */}
         <header className="header">
           <div className={`bg-wrapper${ready ? "" : " bg-wrapper-hide"}`}>
             {HIGHLIGHTS.map((item, i) => (
@@ -70,60 +59,23 @@ export function HomePage() {
             ))}
           </div>
 
-          {/* mobile secondary layer (Illegal Chips: .ingredient) */}
-          {HIGHLIGHTS.map((item, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`ingredient-${item.id}`}
-              className="ingredient"
-              src={asset(item.sideImage)}
-              alt=""
-              style={{ opacity: i === flavorIndex ? 1 : 0 }}
-            />
-          ))}
-
-          {/* main product replaces chip BAG */}
-          {HIGHLIGHTS.map((item, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`bag-${item.id}`}
-              className="bag"
-              src={asset(item.image)}
-              alt={item.name}
-              style={{ opacity: i === flavorIndex ? 1 : 0 }}
-            />
-          ))}
-
-          {/* desktop left layer (Illegal Chips: .eating) */}
-          {HIGHLIGHTS.map((item, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={`eating-${item.id}`}
-              className="eating"
-              src={asset(item.sideImage)}
-              alt=""
-              style={{ opacity: i === flavorIndex ? 1 : 0 }}
-            />
-          ))}
+          <div className="hero-product-slot bag" aria-hidden>
+            <div className="hero-product-name">{active.name}</div>
+            <div className="hero-product-desc">{active.desc}</div>
+          </div>
 
           <div className="headline">
-            {/* desktop tagline block */}
             <div className="tagline tagline-desktop-block">
               <div className="brand-title">{BRAND.name}</div>
               <div className="tagline-2">{BRAND.tagline}</div>
             </div>
-            {/* mobile tagline block */}
             <div className="tagline-mobile tagline-mobile-block">
               <div className="brand-title">{BRAND.name}</div>
               <div className="tagline-2">{BRAND.tagline}</div>
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="tagline-down"
-              src={asset("/images/down-arrow.png")}
-              alt=""
-              onClick={scrollToCards}
-            />
+            <button type="button" className="tagline-down-btn" onClick={scrollToCards}>
+              ↓
+            </button>
           </div>
 
           {infoIndex === null ? (
@@ -132,22 +84,13 @@ export function HomePage() {
             </button>
           ) : null}
 
-          {/* desktop-only shop dock (hidden on mobile like original) */}
           <div className="header-illegal-box">
-            <IllegalBox productImage={active.image} />
+            <IllegalBox />
           </div>
         </header>
 
-        {/* ===== BELOW FOLD — mirrors Illegal Chips .content ===== */}
         <div className="content">
           <main className="main-content" id="meet">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="main-bags"
-              src={asset(BELOW_FOLD_IMAGE)}
-              alt={BRAND.name}
-            />
-
             <div className="main-al-quote">
               <div className="main-al-quote-text">
                 「這些是毛孩政府不希望你錯過的雞霸！」
@@ -155,15 +98,8 @@ export function HomePage() {
               <div className="main-al-quote-attr">{BRAND.mascot}</div>
             </div>
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="main-illegal-al"
-              src={asset(MASCOT_IMAGE)}
-              alt={BRAND.mascot}
-            />
-
             <div className="header-illegal-box-mobile" id="buy">
-              <IllegalBox productImage={active.image} mobile />
+              <IllegalBox mobile />
             </div>
 
             <div className="meet">Meet the {BRAND.shortName}:</div>
@@ -180,14 +116,6 @@ export function HomePage() {
             </div>
 
             <a className="wee-wrapper" href="#buy">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={asset("/images/haodada/pack-brown.png")}
-                alt=""
-                width={88}
-                height={88}
-                style={{ objectFit: "contain" }}
-              />
               <div className="wee-side">
                 <div className="wee-headline">
                   order a bag of <span className="wee-text">{BRAND.shortName}</span>

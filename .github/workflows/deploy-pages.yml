@@ -27,7 +27,6 @@ jobs:
         run: |
           npm ci
           export NEXT_PUBLIC_BASE_PATH=/haodada
-          sed -i "s|url(/images/|url(${NEXT_PUBLIC_BASE_PATH}/images/|g" src/app/globals.css
           sed -i "s|url(/fonts/|url(${NEXT_PUBLIC_BASE_PATH}/fonts/|g" src/app/globals.css
           npm run build
       - name: Upload artifact

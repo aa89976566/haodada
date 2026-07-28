@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import type { ProductHighlight } from "@/data/brand";
-import { asset } from "@/lib/asset";
 
 function BagInfo({
   item,
@@ -12,8 +11,6 @@ function BagInfo({
   onClose: () => void;
 }) {
   const { info } = item;
-  const starsSrc =
-    info.stars >= 4.5 ? asset("/images/stars-4.5.svg") : asset("/images/stars-4.svg");
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -27,10 +24,9 @@ function BagInfo({
     <>
       <button type="button" className="info-backdrop" aria-label="關閉" onClick={onClose} />
       <div className={`info info-${info.position}`} role="dialog">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="info-arrow" src={asset("/images/info-arrow.svg")} alt="" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="info-x" src={asset("/images/x.svg")} alt="關閉" onClick={onClose} />
+        <button type="button" className="info-x text-x" onClick={onClose} aria-label="關閉">
+          ×
+        </button>
         <div className="info-headline">{info.headline}</div>
         <div className="info-content">
           <div className="info-does-not">Does not contain</div>
@@ -56,8 +52,7 @@ function BagInfo({
           </div>
         </div>
         <div className="info-review">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="info-stars-img" src={starsSrc} alt={`${info.stars} stars`} />
+          <div className="info-stars-text">{"★".repeat(Math.floor(info.stars))}☆</div>
           <div className="info-review-text">{info.numReviews} reviews</div>
         </div>
       </div>
@@ -76,7 +71,7 @@ export function BagCard({
 }) {
   return (
     <div
-      className="card"
+      className="card card-text-only"
       style={{
         background: `linear-gradient(180deg, hsla(0,0%,100%,.4), rgba(0,0,0,.4)), ${item.primaryColor}`,
         color: item.textColor,
@@ -85,10 +80,12 @@ export function BagCard({
       <div className={`card-tooltip${open ? " card-tooltip-selected" : ""}`}>
         <button
           type="button"
-          className={`card-info${open ? " card-info-selected" : ""}`}
+          className={`card-info text-info${open ? " card-info-selected" : ""}`}
           aria-label={`Info ${item.name}`}
           onClick={onToggle}
-        />
+        >
+          i
+        </button>
         {open ? <BagInfo item={item} onClose={onToggle} /> : null}
       </div>
       <div
@@ -97,8 +94,9 @@ export function BagCard({
       >
         {item.name}
       </div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="card-image" src={asset(item.image)} alt={item.name} />
+      <div className="card-body-text" style={{ color: item.textColor === "black" ? "#111" : "#fff" }}>
+        {item.name}
+      </div>
       <div
         className="card-desc"
         style={{ color: item.textColor === "black" ? "#000" : "#fff" }}

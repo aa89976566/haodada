@@ -1,25 +1,16 @@
 import { BRAND } from "@/data/brand";
-import { asset } from "@/lib/asset";
 
 export function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-top">
-          <div className="footer-buttons">
-            <a className="footer-button" href={asset("/manifesto/")}>
-              Manifesto
-            </a>
-            <a className="footer-button" href={asset("/faq/")}>
-              FAQ
-            </a>
-          </div>
           <div className="footer-links">
             <span className="footer-link">Terms & conditions</span>
           </div>
         </div>
         <div className="divider" />
-        <div className="footer-bottom">
+        <div className="footer-bottom footer-bottom-text">
           <div>
             <div className="footer-bottom-drop-title">
               {BRAND.name} is <span className="yellow-highlight">匠寵</span>{" "}
@@ -29,18 +20,6 @@ export function Footer() {
               Every treat is handmade. No preservatives. Maximum howling.
             </div>
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="footer-bottom-label"
-            src={asset("/images/haodada/pack-brown.png")}
-            alt={BRAND.name}
-          />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="footer-bottom-snake"
-            src={asset("/images/haodada/eat-bulldog.png")}
-            alt=""
-          />
         </div>
       </div>
     </footer>
@@ -50,8 +29,6 @@ export function Footer() {
 export function TikTokBar() {
   return (
     <section className="tiktok haodada-share">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="tiktok-al" src={asset("/images/haodada/hero-black.png")} alt="" />
       <div className="tiktok-cta">
         <div className="tiktok-cta-post">Post to TikTok</div>
         <div className="tiktok-cta-hashtag">#{BRAND.name}</div>

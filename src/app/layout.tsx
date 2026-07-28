@@ -22,13 +22,11 @@ export const metadata: Metadata = {
     url: "https://aa89976566.github.io/haodada/",
     siteName: BRAND.name,
     type: "website",
-    images: [{ url: "/images/dog-hero.png" }],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: BRAND.name,
     description: BRAND.description,
-    images: ["/images/dog-hero.png"],
   },
 };
 
