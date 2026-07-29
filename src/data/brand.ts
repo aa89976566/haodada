@@ -40,19 +40,21 @@ export const BRAND = {
 
 export type ChatBlock =
   | { kind: "mine"; texts: string[] }
-  | { kind: "yours"; texts: string[] };
+  | { kind: "yours"; texts: string[] }
+  | { kind: "yours-image" };
 
 export const CHAT: ChatBlock[] = [
   { kind: "mine", texts: ["寄雞霸來！！"] },
+  { kind: "yours-image" },
   {
     kind: "yours",
-    texts: ["像這樣！！ 大口雞胸肉乾 ←←←←??????"],
+    texts: ["Like this!!! ←←←←??????"],
   },
-  { kind: "mine", texts: ["這是什麼做的？"] },
+  { kind: "mine", texts: ["這是真的雞胸肉嗎？"] },
   {
     kind: "yours",
     texts: [
-      "整片雞胸肉低溫烘乾，保留蛋白質與肉香，大片造型增加咀嚼感與滿足感。",
+      "對，整片雞胸肉低溫烘乾。",
       "高蛋白補給 · 高適口性 · 單一蛋白 · 低溫烘乾",
     ],
   },
@@ -60,40 +62,29 @@ export const CHAT: ChatBlock[] = [
   {
     kind: "yours",
     texts: [
-      "夜市雞排靈感設計，為毛孩打造的大口滿足肉乾。",
-      "兩種口味：經典原味雞肉，與雞肉紅蘿蔔。",
+      "<strong>◈ 壕大大 ◈ 雞霸</strong> 是夜市雞排靈感設計，為毛孩打造的大口滿足肉乾。大片造型增加咀嚼感與滿足感。提供兩種口味：經典原味雞肉與雞肉紅蘿蔔。",
     ],
   },
   { kind: "mine", texts: ["2. 兩種口味差在哪？"] },
   {
     kind: "yours",
     texts: [
-      "原味雞肉：純雞肉製成，高蛋白低負擔，適合日常獎勵。粗蛋白 62%。",
-      "雞肉紅蘿蔔：添加紅蘿蔔，補充β胡蘿蔔素與膳食纖維。粗蛋白 58%。",
+      "<strong>原味雞肉</strong>：純雞肉製成，高蛋白低負擔。粗蛋白 62%。<br/><br/><strong>雞肉紅蘿蔔</strong>：添加紅蘿蔔，補充β胡蘿蔔素與膳食纖維。粗蛋白 58%。",
     ],
   },
-  { kind: "mine", texts: ["3. 誰可以吃？怎麼餵？"] },
+  { kind: "mine", texts: ["3. 誰可以吃？"] },
   {
     kind: "yours",
     texts: [
-      "適合 6 個月以上狗狗與貓咪、活動量大、挑嘴毛孩。",
-      "日常獎勵使用，可剪小段餵食，依體型調整份量。請搭配主食與充足飲水。",
-    ],
-  },
-  { kind: "mine", texts: ["4. 怎麼買？多少錢？"] },
-  {
-    kind: "yours",
-    texts: [
-      "雞肉胡蘿蔔 NT$79 · 雞肉原味 NT$89。點上方黃色按鈕直達 Furmosa。",
-      "by 匠寵 · furmosa.com",
+      "適合 6 個月以上狗狗與貓咪、活動量大、挑嘴毛孩。日常獎勵使用，可剪小段餵食。本產品屬零食用途，請搭配主食與充足飲水。",
     ],
   },
   { kind: "mine", texts: ["cool thx", "...你們是誰？"] },
   {
     kind: "yours",
     texts: [
-      "這是 匠寵 × ◈ 壕大大 ◈ 雞霸。",
-      "夜市雞排靈感，毛孩大口滿足。",
+      `這是 <a href="https://furmosa.com" target="_blank" rel="noreferrer">匠寵</a> × ◈ 壕大大 ◈ 雞霸。<br/>雞肉胡蘿蔔 NT$79 · 雞肉原味 NT$89。`,
+      `點上方按鈕或去 <a href="https://furmosa.com/products/chicken-fillet?variant=56882074419577" target="_blank" rel="noreferrer">Furmosa</a> 下單。`,
     ],
   },
 ];

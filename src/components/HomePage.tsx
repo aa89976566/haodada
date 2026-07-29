@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { BRAND, CHAT } from "@/data/brand";
-import { HERO_STATS, ScrollChaseStats } from "@/components/ScrollChaseStats";
 
-const HERO_IMG = {
+/** Only asset used for visuals — Drive hero, no generated art */
+const HERO = {
   webp: "/images/hero-jiba.webp",
   jpg: "/images/hero-jiba.jpg",
   alt: `${BRAND.displayName} 產品主視覺`,
@@ -13,6 +13,23 @@ const HERO_IMG = {
 function asset(path: string) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   return `${base}${path}`;
+}
+
+function HeroImg({ className = "" }: { className?: string }) {
+  return (
+    <picture>
+      <source srcSet={asset(HERO.webp)} type="image/webp" />
+      <img
+        className={className}
+        src={asset(HERO.jpg)}
+        alt={HERO.alt}
+        width={900}
+        height={1274}
+        decoding="async"
+        fetchPriority="high"
+      />
+    </picture>
+  );
 }
 
 function Preloader({ onDone }: { onDone: () => void }) {
@@ -27,7 +44,6 @@ function Preloader({ onDone }: { onDone: () => void }) {
     } catch {
       // ignore
     }
-
     const spin = window.setTimeout(() => setRotate(true), 80);
     const done = window.setTimeout(() => {
       try {
@@ -37,7 +53,6 @@ function Preloader({ onDone }: { onDone: () => void }) {
       }
       onDone();
     }, 1600);
-
     return () => {
       window.clearTimeout(spin);
       window.clearTimeout(done);
@@ -83,41 +98,24 @@ function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
-function HeroPicture({ className = "" }: { className?: string }) {
-  return (
-    <picture className={`hero-picture ${className}`.trim()}>
-      <source srcSet={asset(HERO_IMG.webp)} type="image/webp" />
-      <img
-        src={asset(HERO_IMG.jpg)}
-        alt={HERO_IMG.alt}
-        width={900}
-        height={1274}
-        decoding="async"
-        fetchPriority="high"
-        className="hero-photo"
-      />
-    </picture>
-  );
-}
-
 function DesktopColumn({ side }: { side: "left" | "right" }) {
   const variant = side === "left" ? BRAND.variants[0] : BRAND.variants[1];
-
   return (
-    <aside className={`column desktop-column ${side} is-hidden-mobile`}>
+    <div className={`column desktop-column ${side} is-hidden-mobile`}>
       <Wordmark className="logo-desktop" />
-      <div className="desktop-hero-art">
-        <HeroPicture />
-        <span className="art-caption">{variant.name}</span>
-      </div>
+      <HeroImg className="desktop-hero-img" />
       <div className="desktop-c2a">
         <a className="cta-chip" href={variant.url} target="_blank" rel="noreferrer">
           {BRAND.currency}
           {variant.price}
         </a>
-        <p>{variant.blurb}</p>
+        <p>
+          {variant.name.toUpperCase()}
+          <br />
+          {BRAND.ctaHint}
+        </p>
       </div>
-    </aside>
+    </div>
   );
 }
 
@@ -132,7 +130,7 @@ function ChatThread() {
                 {block.texts.map((text, j) => (
                   <div
                     className={`message${j === block.texts.length - 1 ? " last" : ""}`}
-                    key={`m-${i}-${j}`}
+                    key={`mt-${i}-${j}`}
                   >
                     {text}
                   </div>
@@ -141,16 +139,30 @@ function ChatThread() {
             );
           }
 
+          if (block.kind === "yours-image") {
+            return (
+              <div className="yours messages" key={`yi-${i}`}>
+                <div className="message has-image last">
+                  <HeroImg />
+                </div>
+              </div>
+            );
+          }
+
           return (
             <div className="yours messages" key={`y-${i}`}>
-              {block.texts.map((text, j) => (
-                <div
-                  className={`message${j === block.texts.length - 1 ? " last" : ""}`}
-                  key={`y-${i}-${j}`}
-                >
-                  {text}
-                </div>
-              ))}
+              {block.texts.map((text, j) => {
+                const isHtml = text.includes("<");
+                return (
+                  <div
+                    className={`message${j === block.texts.length - 1 ? " last" : ""}`}
+                    key={`yt-${i}-${j}`}
+                    {...(isHtml
+                      ? { dangerouslySetInnerHTML: { __html: text } }
+                      : { children: text })}
+                  />
+                );
+              })}
             </div>
           );
         })}
@@ -161,7 +173,6 @@ function ChatThread() {
 
 export function HomePage() {
   const [ready, setReady] = useState(false);
-  const scrubRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={ready ? "page-ready" : undefined}>
@@ -183,23 +194,14 @@ export function HomePage() {
                       href="https://furmosa.com"
                       target="_blank"
                       rel="noreferrer"
+                      title="匠寵 Furmosa"
                     >
                       by {BRAND.studio}
                     </a>
                   </div>
 
-                  {/* Tall runway + sticky pin = scroll-scrubbed counters */}
-                  <div className="scroll-scrub" ref={scrubRef}>
-                    <div className="scroll-scrub-sticky hero-image">
-                      <div className="hero-photo-frame">
-                        <HeroPicture />
-                        <div className="hero-scroll-hint" aria-hidden>
-                          SCROLL
-                        </div>
-                      </div>
-                      <ScrollChaseStats stats={HERO_STATS} trackRef={scrubRef} />
-                    </div>
-                  </div>
+                  {/* thisfoot .hero-image slot — Drive photo only */}
+                  <HeroImg className="hero-image" />
 
                   <div className="mobile-text" id="order">
                     <div className="c2a-wrapper">
@@ -208,6 +210,7 @@ export function HomePage() {
                         href={BRAND.shopUrl}
                         target="_blank"
                         rel="noreferrer"
+                        title="購買雞霸"
                       >
                         {BRAND.cta}
                         <span className="pointer" aria-hidden />
