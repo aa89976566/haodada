@@ -1,18 +1,41 @@
 export const BRAND = {
-  name: "嚎大大雞霸",
+  name: "壕大大雞霸",
+  displayName: "◈ 壕大大 ◈ 雞霸",
   shortName: "雞霸",
-  mascot: "嚎大大",
-  tagline: "我們用原肉做出真的雞霸零食",
-  heroLine: "原肉製作 · 低溫烘培 · 無添加防腐劑",
+  mascot: "壕大大",
+  tagline: "夜市雞排靈感 · 毛孩大口滿足肉乾",
+  heroLine: "整片雞胸肉低溫烘乾 · 高蛋白 · 單一蛋白",
   description:
-    "嚎大大雞霸——原肉低溫烘培的寵物雞排零食，無添加防腐劑，給毛孩大口開心咬。",
-  price: 320,
+    "◈ 壕大大 ◈ 雞霸——夜市雞排靈感設計，為毛孩打造的大口滿足肉乾。整片雞胸肉低溫烘乾，保留蛋白質與肉香。",
+  price: 79,
+  priceOriginal: 89,
   currency: "NT$",
   soldOut: false,
   dropLabel: "DROP #01",
   cta: "來點雞霸！！",
-  ctaHint: "點一下訂購。我們會寄雞霸給你。",
+  ctaHint: "點一下去 Furmosa 下單。我們會寄雞霸給你。",
   studio: "匠寵",
+  shopUrl:
+    "https://furmosa.com/products/chicken-fillet?variant=56882074419577",
+  features: ["高蛋白補給", "高適口性", "單一蛋白", "低溫烘乾"] as const,
+  variants: [
+    {
+      id: "carrot",
+      name: "雞肉胡蘿蔔",
+      price: 79,
+      blurb: "添加紅蘿蔔，補充β胡蘿蔔素與膳食纖維，幫助皮膚與腸道健康。",
+      nutrition: "粗蛋白 58% · 粗脂肪 13% · 粗纖維 2% · 含β胡蘿蔔素",
+      url: "https://furmosa.com/products/chicken-fillet?variant=56882074419577",
+    },
+    {
+      id: "plain",
+      name: "雞肉原味",
+      price: 89,
+      blurb: "純雞肉製成，高蛋白低負擔，適合日常獎勵與基礎營養補給。",
+      nutrition: "粗蛋白 62% · 粗脂肪 14.5% · 粗纖維 0.5%",
+      url: "https://furmosa.com/products/chicken-fillet?variant=56882074452345",
+    },
+  ] as const,
 } as const;
 
 export type ChatBlock =
@@ -23,46 +46,54 @@ export const CHAT: ChatBlock[] = [
   { kind: "mine", texts: ["寄雞霸來！！"] },
   {
     kind: "yours",
-    texts: ["像這樣！！ ←←←←??????"],
+    texts: ["像這樣！！ 大口雞胸肉乾 ←←←←??????"],
   },
-  { kind: "mine", texts: ["這是真的原肉嗎？"] },
+  { kind: "mine", texts: ["這是什麼做的？"] },
   {
     kind: "yours",
     texts: [
-      "對，真材實料原肉切片。",
-      "低溫烘培 · 無添加防腐劑 · 適合犬貓小點心。",
+      "整片雞胸肉低溫烘乾，保留蛋白質與肉香，大片造型增加咀嚼感與滿足感。",
+      "高蛋白補給 · 高適口性 · 單一蛋白 · 低溫烘乾",
     ],
   },
   { kind: "mine", texts: ["什麼是雞霸？"] },
   {
     kind: "yours",
     texts: [
-      "雞霸是嚎大大的招牌寵物雞排零食。選用原肉，不是碎肉重組，咬感紮實，訓練獎勵超有感。",
-      "配方簡單清楚：要給嚎大大吃的，才敢給你家毛孩吃。",
+      "夜市雞排靈感設計，為毛孩打造的大口滿足肉乾。",
+      "兩種口味：經典原味雞肉，與雞肉紅蘿蔔。",
     ],
   },
-  { kind: "mine", texts: ["2. 為什麼毛孩會嚎？"] },
+  { kind: "mine", texts: ["2. 兩種口味差在哪？"] },
   {
     kind: "yours",
     texts: [
-      "因為它真的好吃。大片無骨好撕好餵，成功坐下／握手那一刻，就是雞霸出場的時候。",
-      "爸媽比較放心的小點心：無添加防腐劑、無人工香精。",
+      "原味雞肉：純雞肉製成，高蛋白低負擔，適合日常獎勵。粗蛋白 62%。",
+      "雞肉紅蘿蔔：添加紅蘿蔔，補充β胡蘿蔔素與膳食纖維。粗蛋白 58%。",
     ],
   },
-  { kind: "mine", texts: ["3. 怎麼買？"] },
+  { kind: "mine", texts: ["3. 誰可以吃？怎麼餵？"] },
   {
     kind: "yours",
     texts: [
-      "點上方黃色按鈕，或直接滾到訂購區。每包 NT$320。",
-      "手工烘培，限量 DROP #01。",
+      "適合 6 個月以上狗狗與貓咪、活動量大、挑嘴毛孩。",
+      "日常獎勵使用，可剪小段餵食，依體型調整份量。請搭配主食與充足飲水。",
+    ],
+  },
+  { kind: "mine", texts: ["4. 怎麼買？多少錢？"] },
+  {
+    kind: "yours",
+    texts: [
+      "雞肉胡蘿蔔 NT$79 · 雞肉原味 NT$89。點上方黃色按鈕直達 Furmosa。",
+      "by 匠寵 · furmosa.com",
     ],
   },
   { kind: "mine", texts: ["cool thx", "...你們是誰？"] },
   {
     kind: "yours",
     texts: [
-      "這是 匠寵 × 嚎大大雞霸 DROP #01。",
-      "Every treat is handmade. No preservatives. Maximum howling.",
+      "這是 匠寵 × ◈ 壕大大 ◈ 雞霸。",
+      "夜市雞排靈感，毛孩大口滿足。",
     ],
   },
 ];

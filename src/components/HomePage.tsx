@@ -37,7 +37,7 @@ function Preloader({ onDone }: { onDone: () => void }) {
       <div className={`gradient-background${rotate ? " rotate" : ""}`} />
       <div className="loader-inner">
         <div className="content-wrapper">
-          <h1>{BRAND.name}</h1>
+          <h1>{BRAND.displayName}</h1>
           <h3>* {BRAND.dropLabel} *</h3>
           <h3>{BRAND.tagline}</h3>
           <button
@@ -63,32 +63,30 @@ function Preloader({ onDone }: { onDone: () => void }) {
 function Wordmark({ className = "" }: { className?: string }) {
   return (
     <div className={`wordmark ${className}`.trim()}>
-      <div className="wordmark-title">{BRAND.name}</div>
-      <div className="wordmark-sub">{BRAND.dropLabel}</div>
+      <div className="wordmark-title">{BRAND.displayName}</div>
+      <div className="wordmark-sub">
+        {BRAND.studio} · {BRAND.dropLabel}
+      </div>
     </div>
   );
 }
 
-function DesktopColumn({
-  side,
-}: {
-  side: "left" | "right";
-}) {
+function DesktopColumn({ side }: { side: "left" | "right" }) {
+  const variant = side === "left" ? BRAND.variants[0] : BRAND.variants[1];
+
   return (
     <aside className={`column desktop-column ${side} is-hidden-mobile`}>
       <Wordmark className="logo-desktop" />
       <div className={`desktop-hero-art art-panel${side === "right" ? " alt" : ""}`}>
         <span className="art-mascot" aria-hidden />
-        <span className="art-caption">
-          {side === "left" ? "原肉低溫烘培" : "無添加防腐劑"}
-        </span>
+        <span className="art-caption">{variant.name}</span>
       </div>
       <div className="desktop-c2a">
-        <a className="cta-chip" href="#order">
+        <a className="cta-chip" href={variant.url} target="_blank" rel="noreferrer">
           {BRAND.currency}
-          {BRAND.price}
+          {variant.price}
         </a>
-        <p>{BRAND.ctaHint}</p>
+        <p>{variant.blurb}</p>
       </div>
     </aside>
   );
@@ -150,17 +148,29 @@ export function HomePage() {
                   <Wordmark className="logo-main" />
 
                   <div className="about-link">
-                    <span className="credit-pill">by {BRAND.studio}</span>
+                    <a
+                      className="credit-pill"
+                      href="https://furmosa.com"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      by {BRAND.studio}
+                    </a>
                   </div>
 
                   <div className="hero-image art-panel">
                     <span className="art-mascot" aria-hidden />
-                    <span className="art-caption">電腦也會想咬一口</span>
+                    <span className="art-caption">整片雞胸 · 低溫烘乾</span>
                   </div>
 
                   <div className="mobile-text" id="order">
                     <div className="c2a-wrapper">
-                      <a className="button c2a-phone-hero" href="#order">
+                      <a
+                        className="button c2a-phone-hero"
+                        href={BRAND.shopUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         {BRAND.cta}
                         <span className="pointer" aria-hidden />
                       </a>
@@ -168,6 +178,11 @@ export function HomePage() {
                     </div>
                     <div className="legs">
                       <p className="legs-banner">{BRAND.tagline}</p>
+                      <p className="legs-price">
+                        胡蘿蔔 {BRAND.currency}
+                        {BRAND.price} · 原味 {BRAND.currency}
+                        {BRAND.priceOriginal}
+                      </p>
                     </div>
                   </div>
                 </div>
