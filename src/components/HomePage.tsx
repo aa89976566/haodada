@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { BRAND, CHAT } from "@/data/brand";
 
-/** Only asset used for visuals — Drive hero, no generated art */
-const HERO = {
+/** Single Drive hero asset — used once in the phone column */
+const HERO_SRC = {
   webp: "/images/hero-jiba.webp",
   jpg: "/images/hero-jiba.jpg",
   alt: `${BRAND.displayName} 產品主視覺`,
@@ -13,23 +13,6 @@ const HERO = {
 function asset(path: string) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   return `${base}${path}`;
-}
-
-function HeroImg({ className = "" }: { className?: string }) {
-  return (
-    <picture>
-      <source srcSet={asset(HERO.webp)} type="image/webp" />
-      <img
-        className={className}
-        src={asset(HERO.jpg)}
-        alt={HERO.alt}
-        width={900}
-        height={1274}
-        decoding="async"
-        fetchPriority="high"
-      />
-    </picture>
-  );
 }
 
 function Preloader({ onDone }: { onDone: () => void }) {
@@ -98,22 +81,22 @@ function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
+/** Desktop sides: logo + CTA only (no second/third hero photo) */
 function DesktopColumn({ side }: { side: "left" | "right" }) {
   const variant = side === "left" ? BRAND.variants[0] : BRAND.variants[1];
   return (
     <div className={`column desktop-column ${side} is-hidden-mobile`}>
       <Wordmark className="logo-desktop" />
-      <HeroImg className="desktop-hero-img" />
+      <div className="desktop-side-copy">
+        <div className="desktop-side-title">{variant.name}</div>
+        <p>{variant.blurb}</p>
+      </div>
       <div className="desktop-c2a">
         <a className="cta-chip" href={variant.url} target="_blank" rel="noreferrer">
           {BRAND.currency}
           {variant.price}
         </a>
-        <p>
-          {variant.name.toUpperCase()}
-          <br />
-          {BRAND.ctaHint}
-        </p>
+        <p>{BRAND.ctaHint}</p>
       </div>
     </div>
   );
@@ -135,16 +118,6 @@ function ChatThread() {
                     {text}
                   </div>
                 ))}
-              </div>
-            );
-          }
-
-          if (block.kind === "yours-image") {
-            return (
-              <div className="yours messages" key={`yi-${i}`}>
-                <div className="message has-image last">
-                  <HeroImg />
-                </div>
               </div>
             );
           }
@@ -200,8 +173,18 @@ export function HomePage() {
                     </a>
                   </div>
 
-                  {/* thisfoot .hero-image slot — Drive photo only */}
-                  <HeroImg className="hero-image" />
+                  {/* ONE hero only — matches thisfoot .hero-image slot */}
+                  <img
+                    className="hero-image"
+                    src={asset(HERO_SRC.jpg)}
+                    srcSet={`${asset(HERO_SRC.webp)} 900w`}
+                    sizes="(max-width: 768px) 100vw, 414px"
+                    alt={HERO_SRC.alt}
+                    width={900}
+                    height={1274}
+                    decoding="async"
+                    fetchPriority="high"
+                  />
 
                   <div className="mobile-text" id="order">
                     <div className="c2a-wrapper">

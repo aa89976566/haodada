@@ -62,6 +62,7 @@ button {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -204,17 +205,32 @@ img {
     right: 0;
   }
 
-  .desktop-column .logo-desktop,
-  .desktop-column .desktop-hero-img {
+  .desktop-column .logo-desktop {
     width: 86%;
   }
 
-  .desktop-column .desktop-hero-img {
-    object-fit: contain;
-    max-height: 48vh;
+  .desktop-side-copy {
+    width: 86%;
+    max-width: 360px;
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    text-align: center;
   }
 
-  .desktop-column .desktop-c2a img,
+  .desktop-side-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .desktop-side-copy p {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0.95;
+  }
+
   .desktop-column .desktop-c2a .cta-chip {
     width: 376px;
     max-width: 90%;
@@ -264,8 +280,8 @@ img {
 
 .about-link {
   align-self: flex-end;
-  max-width: 38%;
-  margin-top: -0.5rem;
+  max-width: 25%;
+  margin-top: -2rem;
   margin-bottom: 0.5rem;
   margin-right: 4%;
   z-index: 2;
@@ -289,10 +305,20 @@ img {
   color: #fff;
 }
 
-/* Drive hero — full width like thisfoot .hero-image */
+/*
+ * thisfoot: .mobile-hero .hero-image { width: 100% }
+ * Keep intrinsic aspect ratio — never force height.
+ */
+.hero.is-fullheight .mobile-hero .hero-image,
 .hero-image {
   width: 100%;
+  height: auto !important;
+  max-width: 100%;
   display: block;
+  object-fit: contain;
+  object-position: center top;
+  flex-shrink: 0;
+  align-self: stretch;
 }
 
 .mobile-text {
@@ -510,20 +536,6 @@ img {
   position: relative;
 }
 
-.yours .message.has-image {
-  background: unset;
-  padding: 0;
-  margin-right: 12%;
-  overflow: hidden;
-  border-radius: 16px;
-}
-
-.yours .message.has-image img {
-  width: 100%;
-  display: block;
-  border-radius: 16px;
-}
-
 .yours .message.last::before {
   content: "";
   position: absolute;
@@ -546,11 +558,6 @@ img {
   height: 20px;
   background: var(--yellow);
   border-bottom-right-radius: 10px;
-}
-
-.yours .message.has-image.last::before,
-.yours .message.has-image.last::after {
-  display: none;
 }
 
 .mine {

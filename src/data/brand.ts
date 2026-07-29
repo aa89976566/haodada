@@ -40,17 +40,15 @@ export const BRAND = {
 
 export type ChatBlock =
   | { kind: "mine"; texts: string[] }
-  | { kind: "yours"; texts: string[] }
-  | { kind: "yours-image" };
+  | { kind: "yours"; texts: string[] };
 
 export const CHAT: ChatBlock[] = [
   { kind: "mine", texts: ["寄雞霸來！！"] },
-  { kind: "yours-image" },
   {
     kind: "yours",
-    texts: ["Like this!!! ←←←←??????"],
+    texts: ["Like this!!! 大口雞胸肉乾 ←←←←??????"],
   },
-  { kind: "mine", texts: ["這是真的雞胸肉嗎？"] },
+  { kind: "mine", texts: ["這是真的雞胸肉嗎？"] }
   {
     kind: "yours",
     texts: [
