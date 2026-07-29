@@ -297,6 +297,26 @@ button {
   color: #fff;
 }
 
+/* Sticky scrub runway — Apple product-page pattern */
+.scroll-scrub {
+  --scrub: 0;
+  position: relative;
+  height: 220vh; /* scroll distance that drives +1 steps */
+  width: 100%;
+}
+
+.scroll-scrub-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  background: var(--yellow);
+}
+
+.scroll-scrub.is-scrubbing .hero-photo {
+  will-change: transform;
+}
+
 .hero-image {
   width: 100%;
   position: relative;
@@ -309,7 +329,8 @@ button {
   border-bottom: 3px solid #000;
   background: #111;
   aspect-ratio: 900 / 1100;
-  max-height: min(72vh, 640px);
+  max-height: min(68vh, 620px);
+  position: relative;
 }
 
 .hero-picture {
@@ -324,27 +345,24 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  transform: translateZ(0);
+  transform: translate3d(0, calc(var(--scrub) * -3%), 0) scale(calc(1.06 - var(--scrub) * 0.06));
+  will-change: auto;
 }
 
-/* Compositor-only parallax when scroll-driven animations exist */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-photo {
-      animation: hero-parallax linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 60%;
-    }
-  }
-}
-
-@keyframes hero-parallax {
-  from {
-    transform: scale(1.08) translateY(-4%);
-  }
-  to {
-    transform: scale(1) translateY(0);
-  }
+.hero-scroll-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #000;
+  background: var(--yellow);
+  border: 2px solid #000;
+  padding: 0.25rem 0.45rem;
+  opacity: calc(1 - var(--scrub) * 1.2);
+  pointer-events: none;
 }
 
 .desktop-hero-art {
@@ -388,23 +406,33 @@ button {
 
 /* Scroll chase stats */
 .scroll-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+  display: block;
   background: #000;
   border-bottom: 3px solid #000;
-  content-visibility: auto;
-  contain-intrinsic-size: 72px;
+  padding: 0.85rem 0.6rem 0.7rem;
+}
+
+.scroll-stat-hero {
+  text-align: center;
+  padding-bottom: 0.55rem;
+}
+
+.scroll-stat-hero-value {
+  font-size: clamp(2.6rem, 12vw, 3.6rem) !important;
+  min-width: 3ch;
+}
+
+.scroll-stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid rgba(255, 209, 80, 0.25);
+  padding-top: 0.55rem;
 }
 
 .scroll-stat {
   text-align: center;
-  padding: 0.7rem 0.35rem 0.75rem;
-  border-right: 1px solid rgba(255, 209, 80, 0.25);
-}
-
-.scroll-stat:last-child {
-  border-right: 0;
+  padding: 0.35rem;
 }
 
 .scroll-stat-value {
@@ -418,11 +446,16 @@ button {
   font-feature-settings: "tnum";
   min-width: 4ch;
   margin: 0 auto;
+  transition: transform 70ms ease-out;
+}
+
+.scroll-stat-value[data-pulse="1"] {
+  transform: translateY(-2px) scale(1.04);
 }
 
 .scroll-stat-label {
   display: block;
-  margin-top: 0.35rem;
+  margin-top: 0.3rem;
   font-family: var(--font-mono);
   font-size: 0.62rem;
   color: #fff;
@@ -431,10 +464,33 @@ button {
   opacity: 0.85;
 }
 
+.scroll-scrub-bar {
+  margin-top: 0.65rem;
+  height: 4px;
+  background: rgba(255, 209, 80, 0.2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.scroll-scrub-bar-fill {
+  height: 100%;
+  width: calc(var(--scrub) * 100%);
+  background: var(--yellow);
+  transform: translateZ(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .c2a-wrapper .pointer,
-  .hero-photo {
+  .c2a-wrapper .pointer {
     animation: none !important;
+  }
+  .hero-photo {
+    transform: none !important;
+  }
+  .hero-scroll-hint {
+    opacity: 0 !important;
+  }
+  .scroll-stat-value[data-pulse="1"] {
+    transform: none;
   }
 }
 

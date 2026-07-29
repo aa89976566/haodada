@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BRAND, CHAT } from "@/data/brand";
 import { HERO_STATS, ScrollChaseStats } from "@/components/ScrollChaseStats";
 
@@ -161,6 +161,7 @@ function ChatThread() {
 
 export function HomePage() {
   const [ready, setReady] = useState(false);
+  const scrubRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={ready ? "page-ready" : undefined}>
@@ -187,11 +188,17 @@ export function HomePage() {
                     </a>
                   </div>
 
-                  <div className="hero-image scroll-meter">
-                    <div className="hero-photo-frame">
-                      <HeroPicture />
+                  {/* Tall runway + sticky pin = scroll-scrubbed counters */}
+                  <div className="scroll-scrub" ref={scrubRef}>
+                    <div className="scroll-scrub-sticky hero-image">
+                      <div className="hero-photo-frame">
+                        <HeroPicture />
+                        <div className="hero-scroll-hint" aria-hidden>
+                          SCROLL
+                        </div>
+                      </div>
+                      <ScrollChaseStats stats={HERO_STATS} trackRef={scrubRef} />
                     </div>
-                    <ScrollChaseStats stats={HERO_STATS} trackSelector=".scroll-meter" />
                   </div>
 
                   <div className="mobile-text" id="order">

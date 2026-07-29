@@ -11,21 +11,23 @@ type Stat = {
 };
 
 /**
- * Scroll-scrubbed counters with "chase" lag:
- * - Scroll position maps to an integer target (0 → N)
- * - Display value climbs/falls by +1/−1 at a capped rate
- * - DOM text updated via refs (no React re-render per frame)
- * - Passive scroll + single rAF coalesce for main-thread thrift
+ * Apple-style sticky scrub + chase lag (After Effects “slider lag”):
  *
- * Pattern refs: Apple product scrubbers, CounterUp + scroll timelines,
- * CSS scroll-driven for transforms only (compositor), IO for gate.
+ * 1) Tall track creates scroll runway; sticky pin keeps hero in view
+ * 2) Scroll distance → integer target (floor), one step per scroll quantum
+ * 3) Display chases target by +1/−1 at capped cadence (slow add)
+ * 4) textContent via refs (no React re-render / layout thrash)
+ * 5) passive scroll + single rAF; IntersectionObserver gates listeners
+ * 6) --scrub CSS var for compositor progress (bar / opacity)
+ *
+ * Refs: Apple product pages, CSS scroll-driven timelines, CounterUp.js
  */
 export function ScrollChaseStats({
   stats,
-  trackSelector = ".scroll-meter",
+  trackRef,
 }: {
   stats: readonly Stat[];
-  trackSelector?: string;
+  trackRef: React.RefObject<HTMLElement | null>;
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const valueRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -33,10 +35,12 @@ export function ScrollChaseStats({
   const scrollTargetRef = useRef<number[]>(stats.map(() => 0));
   const rafRef = useRef(0);
   const lastStepRef = useRef(0);
+  const progressRef = useRef(0);
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    const track = trackRef.current;
+    if (!root || !track) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
@@ -45,27 +49,34 @@ export function ScrollChaseStats({
         const el = valueRefs.current[i];
         if (el) el.textContent = format(s, s.target);
       });
+      track.style.setProperty("--scrub", "1");
       return;
     }
 
-    const track =
-      (document.querySelector(trackSelector) as HTMLElement | null) ?? root;
-
     const readScrollTargets = () => {
       const rect = track.getBoundingClientRect();
-      const viewH = window.innerHeight || 1;
-      // Progress while the meter moves through the viewport (0 → 1)
-      const start = viewH * 0.85;
-      const end = viewH * 0.15;
-      const raw = (start - rect.top) / (start - end + rect.height * 0.35);
-      const progress = Math.min(1, Math.max(0, raw));
+      const run = Math.max(1, track.offsetHeight - window.innerHeight);
+      // How far we've scrolled through the sticky runway
+      const scrolled = Math.min(run, Math.max(0, -rect.top));
+      const progress = scrolled / run;
+      progressRef.current = progress;
+      track.style.setProperty("--scrub", progress.toFixed(4));
 
       stats.forEach((s, i) => {
-        scrollTargetRef.current[i] = Math.round(progress * s.target);
+        // Discrete steps: scroll → integer only (never fractional flash)
+        scrollTargetRef.current[i] = Math.min(
+          s.target,
+          Math.floor(progress * s.target + 1e-6),
+        );
       });
     };
 
-    const STEP_MS = 48; // slow +1 cadence (~20 steps/sec)
+    // Slower +1 for a deliberate “adding one while scrolling” feel
+    const STEP_MS = 70;
+
+    const schedule = () => {
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+    };
 
     const tick = (now: number) => {
       rafRef.current = 0;
@@ -83,14 +94,17 @@ export function ScrollChaseStats({
           const next = cur + (goal > cur ? 1 : -1);
           displayRef.current[i] = next;
           const el = valueRefs.current[i];
-          if (el) el.textContent = format(s, next);
+          if (el) {
+            el.textContent = format(s, next);
+            el.dataset.pulse = "1";
+            // clear pulse flag next frame (CSS after-effect hook)
+            requestAnimationFrame(() => {
+              if (el.dataset.pulse === "1") el.dataset.pulse = "0";
+            });
+          }
         });
       }
       schedule();
-    };
-
-    const schedule = () => {
-      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
 
     const onScroll = () => {
@@ -98,20 +112,24 @@ export function ScrollChaseStats({
       schedule();
     };
 
-    // Gate: only listen while meter is near viewport
+    let listening = false;
     const io = new IntersectionObserver(
       (entries) => {
         const visible = entries.some((e) => e.isIntersecting);
-        if (visible) {
+        if (visible && !listening) {
+          listening = true;
           window.addEventListener("scroll", onScroll, { passive: true });
+          track.classList.add("is-scrubbing");
           onScroll();
-        } else {
+        } else if (!visible && listening) {
+          listening = false;
           window.removeEventListener("scroll", onScroll);
+          track.classList.remove("is-scrubbing");
           if (rafRef.current) cancelAnimationFrame(rafRef.current);
           rafRef.current = 0;
         }
       },
-      { rootMargin: "20% 0px 20% 0px", threshold: 0 },
+      { rootMargin: "10% 0px 10% 0px", threshold: 0 },
     );
 
     io.observe(track);
@@ -121,25 +139,47 @@ export function ScrollChaseStats({
     return () => {
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
+      track.classList.remove("is-scrubbing");
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [stats, trackSelector]);
+  }, [stats, trackRef]);
+
+  const hero = stats[0];
 
   return (
     <div className="scroll-stats" ref={rootRef} aria-label="產品數據">
-      {stats.map((s, i) => (
-        <div className="scroll-stat" key={s.id}>
-          <span
-            className="scroll-stat-value tabular"
-            ref={(el) => {
-              valueRefs.current[i] = el;
-            }}
-          >
-            {format(s, 0)}
-          </span>
-          <span className="scroll-stat-label">{s.label}</span>
-        </div>
-      ))}
+      <div className="scroll-stat scroll-stat-hero">
+        <span
+          className="scroll-stat-value tabular scroll-stat-hero-value"
+          ref={(el) => {
+            valueRefs.current[0] = el;
+          }}
+        >
+          {format(hero, 0)}
+        </span>
+        <span className="scroll-stat-label">{hero.label}</span>
+      </div>
+      <div className="scroll-stat-row">
+        {stats.slice(1).map((s, idx) => {
+          const i = idx + 1;
+          return (
+            <div className="scroll-stat" key={s.id}>
+              <span
+                className="scroll-stat-value tabular"
+                ref={(el) => {
+                  valueRefs.current[i] = el;
+                }}
+              >
+                {format(s, 0)}
+              </span>
+              <span className="scroll-stat-label">{s.label}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="scroll-scrub-bar" aria-hidden>
+        <div className="scroll-scrub-bar-fill" />
+      </div>
     </div>
   );
 }
@@ -149,7 +189,7 @@ function format(s: Stat, n: number) {
 }
 
 export const HERO_STATS = [
-  { id: "protein", label: "粗蛋白 %", target: 62, suffix: "%" },
-  { id: "price", label: "胡蘿蔔價", target: 79, prefix: "$" },
-  { id: "fat", label: "粗脂肪 %", target: 14, suffix: "%" },
+  { id: "protein", label: "粗蛋白", target: 62, suffix: "%" },
+  { id: "price", label: "胡蘿蔔", target: 79, prefix: "$" },
+  { id: "fat", label: "粗脂肪", target: 14, suffix: "%" },
 ] as const;
