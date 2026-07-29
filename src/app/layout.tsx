@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { BRAND } from "@/data/brand";
 import "./globals.css";
 
@@ -28,6 +28,10 @@ export const metadata: Metadata = {
     title: BRAND.name,
     description: BRAND.description,
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#213c86",
 };
 
 export default function RootLayout({
