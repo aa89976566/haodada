@@ -48,7 +48,7 @@ export const CHAT: ChatBlock[] = [
     kind: "yours",
     texts: ["Like this!!! 大口雞胸肉乾 ←←←←??????"],
   },
-  { kind: "mine", texts: ["這是真的雞胸肉嗎？"] }
+  { kind: "mine", texts: ["這是真的雞胸肉嗎？"] },
   {
     kind: "yours",
     texts: [
