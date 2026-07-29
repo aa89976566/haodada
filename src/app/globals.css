@@ -299,7 +299,146 @@ button {
 
 .hero-image {
   width: 100%;
+  position: relative;
 }
+
+.hero-photo-frame {
+  width: 100%;
+  overflow: hidden;
+  border-top: 3px solid #000;
+  border-bottom: 3px solid #000;
+  background: #111;
+  aspect-ratio: 900 / 1100;
+  max-height: min(72vh, 640px);
+}
+
+.hero-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transform: translateZ(0);
+}
+
+/* Compositor-only parallax when scroll-driven animations exist */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-photo {
+      animation: hero-parallax linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+  }
+}
+
+@keyframes hero-parallax {
+  from {
+    transform: scale(1.08) translateY(-4%);
+  }
+  to {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.desktop-hero-art {
+  width: 86%;
+  max-width: 380px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.desktop-hero-art .hero-picture {
+  width: 100%;
+  border: 3px solid #000;
+  box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.desktop-hero-art .hero-photo {
+  object-position: center 15%;
+}
+
+.desktop-hero-art .art-caption {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--yellow);
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.35rem 0.55rem;
+  border: 2px solid #000;
+}
+
+/* Scroll chase stats */
+.scroll-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: #000;
+  border-bottom: 3px solid #000;
+  content-visibility: auto;
+  contain-intrinsic-size: 72px;
+}
+
+.scroll-stat {
+  text-align: center;
+  padding: 0.7rem 0.35rem 0.75rem;
+  border-right: 1px solid rgba(255, 209, 80, 0.25);
+}
+
+.scroll-stat:last-child {
+  border-right: 0;
+}
+
+.scroll-stat-value {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 5vw, 1.75rem);
+  color: var(--yellow);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  min-width: 4ch;
+  margin: 0 auto;
+}
+
+.scroll-stat-label {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c2a-wrapper .pointer,
+  .hero-photo {
+    animation: none !important;
+  }
+}
+
+/* Keep legacy art-panel utilities unused but harmless below */
 
 .mobile-text {
   padding: 1.5rem 0;

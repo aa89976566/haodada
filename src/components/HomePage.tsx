@@ -2,6 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { BRAND, CHAT } from "@/data/brand";
+import { HERO_STATS, ScrollChaseStats } from "@/components/ScrollChaseStats";
+
+const HERO_IMG = {
+  webp: "/images/hero-jiba.webp",
+  jpg: "/images/hero-jiba.jpg",
+  alt: `${BRAND.displayName} 產品主視覺`,
+} as const;
+
+function asset(path: string) {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  return `${base}${path}`;
+}
 
 function Preloader({ onDone }: { onDone: () => void }) {
   const [rotate, setRotate] = useState(false);
@@ -71,14 +83,31 @@ function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
+function HeroPicture({ className = "" }: { className?: string }) {
+  return (
+    <picture className={`hero-picture ${className}`.trim()}>
+      <source srcSet={asset(HERO_IMG.webp)} type="image/webp" />
+      <img
+        src={asset(HERO_IMG.jpg)}
+        alt={HERO_IMG.alt}
+        width={900}
+        height={1274}
+        decoding="async"
+        fetchPriority="high"
+        className="hero-photo"
+      />
+    </picture>
+  );
+}
+
 function DesktopColumn({ side }: { side: "left" | "right" }) {
   const variant = side === "left" ? BRAND.variants[0] : BRAND.variants[1];
 
   return (
     <aside className={`column desktop-column ${side} is-hidden-mobile`}>
       <Wordmark className="logo-desktop" />
-      <div className={`desktop-hero-art art-panel${side === "right" ? " alt" : ""}`}>
-        <span className="art-mascot" aria-hidden />
+      <div className="desktop-hero-art">
+        <HeroPicture />
         <span className="art-caption">{variant.name}</span>
       </div>
       <div className="desktop-c2a">
@@ -158,9 +187,11 @@ export function HomePage() {
                     </a>
                   </div>
 
-                  <div className="hero-image art-panel">
-                    <span className="art-mascot" aria-hidden />
-                    <span className="art-caption">整片雞胸 · 低溫烘乾</span>
+                  <div className="hero-image scroll-meter">
+                    <div className="hero-photo-frame">
+                      <HeroPicture />
+                    </div>
+                    <ScrollChaseStats stats={HERO_STATS} trackSelector=".scroll-meter" />
                   </div>
 
                   <div className="mobile-text" id="order">
