@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { BRAND, CHAT } from "@/data/brand";
 
-/** Single Drive hero asset — used once in the phone column */
+/** Single Drive hero — https://drive.google.com/file/d/1s302uFStOx6Pqki74FNVefS2qL3J3j9L */
 const HERO_SRC = {
-  webp: "/images/hero-jiba.webp",
-  jpg: "/images/hero-jiba.jpg",
+  webp: "/images/hero-drive.webp",
+  jpg: "/images/hero-drive.jpg",
   alt: `${BRAND.displayName} 產品主視覺`,
+  width: 1054,
+  height: 1492,
 } as const;
 
 function asset(path: string) {
@@ -173,15 +175,15 @@ export function HomePage() {
                     </a>
                   </div>
 
-                  {/* ONE hero only — matches thisfoot .hero-image slot */}
+                  {/* ONE hero only — Drive file 1s302uFStOx6Pqki74FNVefS2qL3J3j9L */}
                   <img
                     className="hero-image"
                     src={asset(HERO_SRC.jpg)}
-                    srcSet={`${asset(HERO_SRC.webp)} 900w`}
+                    srcSet={`${asset(HERO_SRC.webp)} ${HERO_SRC.width}w, ${asset(HERO_SRC.jpg)} ${HERO_SRC.width}w`}
                     sizes="(max-width: 768px) 100vw, 414px"
                     alt={HERO_SRC.alt}
-                    width={900}
-                    height={1274}
+                    width={HERO_SRC.width}
+                    height={HERO_SRC.height}
                     decoding="async"
                     fetchPriority="high"
                   />
