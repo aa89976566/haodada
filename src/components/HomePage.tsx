@@ -214,7 +214,7 @@ export function HomePage() {
                     className="hero-image"
                     src={asset(HERO_SRC.jpg)}
                     srcSet={`${asset(HERO_SRC.webp)} ${HERO_SRC.width}w, ${asset(HERO_SRC.jpg)} ${HERO_SRC.width}w`}
-                    sizes="(max-width: 768px) 100vw, 414px"
+                    sizes="(max-width: 1023px) 100vw, 414px"
                     alt={HERO_SRC.alt}
                     width={HERO_SRC.width}
                     height={HERO_SRC.height}

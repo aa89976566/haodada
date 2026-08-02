@@ -11,6 +11,11 @@
   --ink: #1d1d1d;
   --bubble-gray: #e5e5ea;
   --phone: 414px;
+  --desktop-break: 1024px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
   --font-mono: "Space Mono", "Andale Mono", ui-monospace, monospace;
   --font-chat: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -42,13 +47,16 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  min-width: 300px;
+  min-width: 0;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 html,
 body {
   margin: 0;
   min-height: 100%;
+  min-height: 100dvh;
   color: var(--ink);
 }
 
@@ -121,14 +129,15 @@ img {
 
 #MSCHFPreloader .content-wrapper {
   text-align: center;
-  width: 70vw;
+  width: min(86vw, 420px);
   max-width: 420px;
+  padding: 0 0.5rem;
 }
 
 #MSCHFPreloader .preloader-progress {
   margin: 1.5rem auto 0;
   width: 100%;
-  max-width: 280px;
+  max-width: min(280px, 100%);
   text-align: left;
 }
 
@@ -136,10 +145,11 @@ img {
 #MSCHFPreloader h2,
 #MSCHFPreloader h3 {
   font-family: var(--font-mono);
-  line-height: 1.75rem;
-  font-size: 1.35rem;
+  line-height: 1.35;
+  font-size: clamp(1.05rem, 4.2vw, 1.35rem);
   font-weight: 400;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 #MSCHFPreloader h1 {
@@ -155,9 +165,9 @@ img {
   padding: 0.85rem 1.5rem;
   text-transform: uppercase;
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 3.5vw, 1rem);
   width: 100%;
-  max-width: 280px;
+  max-width: min(280px, 100%);
 }
 
 #MSCHFPreloader button.enter:hover {
@@ -172,11 +182,14 @@ img {
 /* ---------- thisfoot shell ---------- */
 .hero.is-fullheight {
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
+  overflow-x: clip;
 }
 
 .main-container {
   width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -187,42 +200,49 @@ img {
   align-items: stretch;
   gap: 0;
   margin: 0;
+  width: 100%;
 }
 
-/* Desktop side columns */
+/* Desktop side columns — tablet keeps phone-only to avoid cramped side rails */
 .desktop-column {
   display: none;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .desktop-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    padding: 1.25rem 1.25rem 3rem !important;
+    padding: clamp(1rem, 2vw, 1.25rem) clamp(0.75rem, 1.5vw, 1.25rem) 3rem !important;
     height: 100vh;
+    height: 100dvh;
     position: fixed;
     top: 0;
-    width: calc((100% - var(--phone)) / 2);
+    width: calc((100% - min(var(--phone), 100vw)) / 2);
+    max-width: calc((100% - 320px) / 2);
     z-index: 2;
+    overflow: auto;
+    overscroll-behavior: contain;
   }
 
   .desktop-column.left {
     left: 0;
+    padding-left: max(0.75rem, var(--safe-left)) !important;
   }
 
   .desktop-column.right {
     right: 0;
+    padding-right: max(0.75rem, var(--safe-right)) !important;
   }
 
   .desktop-column .logo-desktop {
-    width: 86%;
+    width: min(86%, 360px);
   }
 
   .desktop-side-copy {
-    width: 86%;
+    width: min(86%, 360px);
     max-width: 360px;
     color: var(--yellow);
     font-family: var(--font-mono);
@@ -231,52 +251,67 @@ img {
 
   .desktop-side-title {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: clamp(1.05rem, 1.6vw, 1.5rem);
     margin-bottom: 0.75rem;
     text-transform: uppercase;
+    overflow-wrap: anywhere;
   }
 
   .desktop-side-copy p {
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 1.1vw, 1rem);
     line-height: 1.4;
     margin: 0;
     opacity: 0.95;
+    overflow-wrap: anywhere;
+  }
+
+  .desktop-column .desktop-c2a {
+    width: min(90%, 376px);
   }
 
   .desktop-column .desktop-c2a .cta-chip {
-    width: 376px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto 1rem;
   }
 
   .desktop-column .desktop-c2a p {
     color: var(--yellow);
     font-family: var(--font-mono);
-    font-size: 1.25rem;
+    font-size: clamp(0.95rem, 1.2vw, 1.25rem);
     margin: 0;
     line-height: 1.35;
+    overflow-wrap: anywhere;
   }
 }
 
 /* Center phone column */
 .mobile {
-  width: 100%;
+  width: min(100%, var(--phone));
   max-width: var(--phone);
   margin: 0 auto;
   background: var(--yellow);
   position: relative;
   z-index: 1;
+  min-width: 0;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .mobile {
     width: var(--phone);
+    flex: 0 0 var(--phone);
   }
 }
 
 .mobile-wrapper {
-  padding-top: 1.25rem !important;
-  padding-bottom: 3rem !important;
+  padding-top: calc(clamp(0.85rem, 3vw, 1.25rem) + var(--safe-top)) !important;
+  padding-bottom: calc(2rem + var(--safe-bottom)) !important;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  box-sizing: border-box;
 }
 
 .mobile-hero {
@@ -292,8 +327,8 @@ img {
 
 .about-link {
   align-self: flex-end;
-  max-width: 25%;
-  margin-top: -2rem;
+  max-width: min(42%, 7.5rem);
+  margin-top: clamp(-1.25rem, -4vw, -2rem);
   margin-bottom: 0.5rem;
   margin-right: 4%;
   z-index: 2;
@@ -304,12 +339,13 @@ img {
   background: #000;
   color: var(--yellow);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: clamp(0.58rem, 2.4vw, 0.7rem);
   padding: 0.35rem 0.55rem;
   text-decoration: none;
   text-transform: uppercase;
   border: 2px solid #000;
   box-shadow: 3px 3px 0 var(--red);
+  white-space: nowrap;
 }
 
 .credit-pill:hover {
@@ -334,7 +370,7 @@ img {
 }
 
 .mobile-text {
-  padding: 1.5rem 0;
+  padding: clamp(1rem, 4vw, 1.5rem) 0;
   text-align: center;
   background: var(--blue);
   width: 100%;
@@ -342,14 +378,14 @@ img {
 
 .mobile-text .c2a-wrapper {
   padding: 0 0.25rem 1.5rem;
-  margin-top: -61px;
+  margin-top: clamp(-36px, -12vw, -61px);
   position: relative;
 }
 
 .mobile-text .legs {
   margin-bottom: 2rem;
   width: 100%;
-  padding: 0 1rem;
+  padding: 0 clamp(0.75rem, 4vw, 1rem);
 }
 
 .c2a-phone-hero {
@@ -358,7 +394,7 @@ img {
   align-items: center;
   justify-content: center;
   color: var(--red) !important;
-  font-size: 1.35rem;
+  font-size: clamp(1.05rem, 4.5vw, 1.35rem);
   font-weight: 700;
   font-family: var(--font-mono);
   text-transform: uppercase;
@@ -366,11 +402,12 @@ img {
   background: var(--yellow);
   border: 3px solid #000;
   border-radius: 37px !important;
-  padding: 0.85rem 1.75rem;
+  padding: clamp(0.7rem, 2.5vw, 0.85rem) clamp(1rem, 4vw, 1.75rem);
   box-shadow: 2px 2px 0 0 var(--red);
   transition: box-shadow 0.2s ease-in-out, transform 0.15s ease;
-  max-width: 340px;
+  max-width: min(340px, calc(100% - 1.5rem));
   width: calc(100% - 2rem);
+  box-sizing: border-box;
 }
 
 .c2a-phone-hero:hover {
@@ -380,10 +417,10 @@ img {
 
 .c2a-wrapper .pointer {
   position: absolute;
-  left: 4%;
+  left: clamp(2%, 4vw, 4%);
   top: 72%;
-  width: 54px;
-  height: 54px;
+  width: clamp(40px, 12vw, 54px);
+  height: clamp(40px, 12vw, 54px);
   pointer-events: none;
   animation: poke 1.1s ease-in-out infinite;
 }
@@ -418,10 +455,11 @@ img {
 .c2a-wrapper > p {
   color: #fff;
   font-family: var(--font-mono);
-  font-size: 0.95rem;
-  margin: 1.1rem 1rem 0;
+  font-size: clamp(0.8rem, 3.2vw, 0.95rem);
+  margin: 1.1rem clamp(0.5rem, 3vw, 1rem) 0;
   line-height: 1.35;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .legs-banner {
@@ -438,10 +476,11 @@ img {
 
 .legs-price {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 3vw, 0.85rem);
   color: #fff;
   margin: 0.85rem auto 0;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 /* Wordmark (text logo — no generated art) */
@@ -456,24 +495,28 @@ img {
 .wordmark-title {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: clamp(1.25rem, 5.5vw, 1.85rem);
+  font-size: clamp(1.05rem, 5.2vw, 1.85rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
   background: #000;
   color: var(--yellow);
   display: inline-block;
+  max-width: 100%;
   padding: 0.35rem 0.55rem;
   border: 3px solid #000;
   box-shadow: 6px 6px 0 var(--red);
+  overflow-wrap: anywhere;
 }
 
 .wordmark-sub {
   margin-top: 0.65rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: clamp(0.62rem, 2.6vw, 0.72rem);
   color: #000;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  padding: 0 0.5rem;
+  overflow-wrap: anywhere;
 }
 
 .cta-chip {
@@ -502,10 +545,12 @@ img {
 }
 
 .chat {
-  padding: 1rem;
+  padding: clamp(0.75rem, 3vw, 1rem);
   font-family: var(--font-chat);
   display: flex;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .messages {
@@ -519,9 +564,12 @@ img {
   margin-top: 5px;
   margin-bottom: 5px;
   display: inline-block;
-  font-size: 1rem;
+  font-size: clamp(0.92rem, 3.6vw, 1rem);
   line-height: 1.35;
   background-color: transparent;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .chat .message:not(:last-child) {
@@ -543,7 +591,7 @@ img {
 
 .yours .message {
   color: var(--ink);
-  margin-right: 25%;
+  margin-right: clamp(8%, 12vw, 25%);
   background-color: var(--bubble-gray);
   position: relative;
 }
@@ -578,7 +626,7 @@ img {
 
 .mine .message {
   color: #fff;
-  margin-left: 25%;
+  margin-left: clamp(8%, 12vw, 25%);
   background: var(--blue);
   position: relative;
 }
@@ -607,9 +655,50 @@ img {
   border-bottom-left-radius: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .is-hidden-mobile {
     display: none !important;
+  }
+
+  .mobile {
+    width: 100%;
+    max-width: min(100%, var(--phone));
+  }
+
+  .hero.is-fullheight {
+    /* Full-bleed yellow phone on phones/tablets */
+    background: var(--yellow);
+  }
+
+  @media (min-width: 480px) {
+    .hero.is-fullheight {
+      background: var(--bg);
+    }
+
+    .mobile {
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+  }
+}
+
+@media (max-width: 359px) {
+  .about-link {
+    max-width: 48%;
+  }
+
+  .c2a-wrapper .pointer {
+    display: none;
+  }
+
+  .wordmark-title {
+    box-shadow: 4px 4px 0 var(--red);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .desktop-column .logo-desktop .wordmark-title {
+    font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+    box-shadow: 4px 4px 0 var(--red);
   }
 }
 
