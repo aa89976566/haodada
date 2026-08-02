@@ -697,8 +697,18 @@ img {
 
 @media (min-width: 1024px) and (max-width: 1279px) {
   .desktop-column .logo-desktop .wordmark-title {
-    font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+    font-size: clamp(0.8rem, 1.35vw, 1.2rem);
+    padding: 0.25rem 0.4rem;
     box-shadow: 4px 4px 0 var(--red);
+  }
+
+  .desktop-column .logo-desktop .wordmark-sub {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+  }
+
+  .desktop-column .desktop-c2a p {
+    font-size: 0.9rem;
   }
 }
 
