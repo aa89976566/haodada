@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ProgressBar } from "@/components/ui/progress-bar";
 import { BRAND, CHAT } from "@/data/brand";
 
 /** Single Drive hero — https://drive.google.com/file/d/1s302uFStOx6Pqki74FNVefS2qL3J3j9L */
@@ -17,8 +18,17 @@ function asset(path: string) {
   return `${base}${path}`;
 }
 
+function markEntered() {
+  try {
+    sessionStorage.setItem("haodada-entered", "1");
+  } catch {
+    // ignore
+  }
+}
+
 function Preloader({ onDone }: { onDone: () => void }) {
   const [rotate, setRotate] = useState(false);
+  const [progress, setProgress] = useState<number | null>(null);
 
   useEffect(() => {
     try {
@@ -30,19 +40,39 @@ function Preloader({ onDone }: { onDone: () => void }) {
       // ignore
     }
     const spin = window.setTimeout(() => setRotate(true), 80);
-    const done = window.setTimeout(() => {
-      try {
-        sessionStorage.setItem("haodada-entered", "1");
-      } catch {
-        // ignore
-      }
-      onDone();
-    }, 1600);
     return () => {
       window.clearTimeout(spin);
-      window.clearTimeout(done);
     };
   }, [onDone]);
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("haodada-entered") === "1") {
+        return;
+      }
+    } catch {
+      // ignore
+    }
+
+    if (progress === null) {
+      const id = window.setTimeout(() => setProgress(12), 400);
+      return () => window.clearTimeout(id);
+    }
+
+    if (progress < 100) {
+      const id = window.setTimeout(
+        () => setProgress(Math.min(100, progress + 18)),
+        280,
+      );
+      return () => window.clearTimeout(id);
+    }
+
+    const id = window.setTimeout(() => {
+      markEntered();
+      onDone();
+    }, 450);
+    return () => window.clearTimeout(id);
+  }, [progress, onDone]);
 
   return (
     <div id="MSCHFPreloader">
@@ -52,15 +82,19 @@ function Preloader({ onDone }: { onDone: () => void }) {
           <h1>{BRAND.displayName}</h1>
           <h3>* {BRAND.dropLabel} *</h3>
           <h3>{BRAND.tagline}</h3>
+          <div className="dark preloader-progress">
+            <ProgressBar
+              value={progress}
+              label="雞霸烘乾進度"
+              pendingLabel="低溫烘乾中"
+              completeLabel="可以開吃了"
+            />
+          </div>
           <button
             type="button"
             className="enter"
             onClick={() => {
-              try {
-                sessionStorage.setItem("haodada-entered", "1");
-              } catch {
-                // ignore
-              }
+              markEntered();
               onDone();
             }}
           >
