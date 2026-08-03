@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BrutalButton } from "@/components/ui/brutal-button";
+import { CompareSlider } from "@/components/ui/compare-slider";
+import { ProductCard } from "@/components/ui/product-card";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import { Sticker } from "@/components/ui/sticker";
+import { StickyPurchaseBar } from "@/components/ui/sticky-purchase-bar";
 import { BRAND, CHAT } from "@/data/brand";
 
 /** Single Drive hero — https://drive.google.com/file/d/1s302uFStOx6Pqki74FNVefS2qL3J3j9L */
@@ -90,16 +95,18 @@ function Preloader({ onDone }: { onDone: () => void }) {
               completeLabel="可以開吃了"
             />
           </div>
-          <button
+          <BrutalButton
             type="button"
             className="enter"
+            size="xl"
+            variant="reverse"
             onClick={() => {
               markEntered();
               onDone();
             }}
           >
             ENTER
-          </button>
+          </BrutalButton>
         </div>
       </div>
     </div>
@@ -180,11 +187,65 @@ function ChatThread() {
   );
 }
 
+function FlavorCompare() {
+  const [carrot, plain] = BRAND.variants;
+
+  return (
+    <section className="flavor-lab" aria-label="口味實驗對照">
+      <div className="flavor-lab-head">
+        <Sticker rotate={-4} tone="coral">
+          實驗對照組
+        </Sticker>
+        <h2>有雞霸 vs 沒雞霸？先選口味</h2>
+        <p>拖動中線，比較胡蘿蔔與原味的實驗結果。</p>
+      </div>
+
+      <CompareSlider
+        beforeLabel={carrot.name}
+        afterLabel={plain.name}
+        before={
+          <div className="flavor-pane flavor-pane-carrot">
+            <strong>{carrot.name}</strong>
+            <span>
+              {BRAND.currency}
+              {carrot.price}
+            </span>
+            <p>{carrot.blurb}</p>
+          </div>
+        }
+        after={
+          <div className="flavor-pane flavor-pane-plain">
+            <strong>{plain.name}</strong>
+            <span>
+              {BRAND.currency}
+              {plain.price}
+            </span>
+            <p>{plain.blurb}</p>
+          </div>
+        }
+      />
+
+      <div className="flavor-cards">
+        {BRAND.variants.map((variant) => (
+          <ProductCard
+            key={variant.id}
+            title={variant.name}
+            priceLabel={`${BRAND.currency}${variant.price}`}
+            blurb={variant.blurb}
+            href={variant.url}
+            badge={BRAND.dropLabel}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function HomePage() {
   const [ready, setReady] = useState(false);
 
   return (
-    <div className={ready ? "page-ready" : undefined}>
+    <div className={ready ? "page-ready has-sticky-purchase" : "has-sticky-purchase"}>
       {!ready ? <Preloader onDone={() => setReady(true)} /> : null}
 
       <section className="hero is-fullheight">
@@ -195,6 +256,18 @@ export function HomePage() {
             <div className="column is-3 mobile">
               <div className="mobile-wrapper">
                 <div className="mobile-hero">
+                  <div className="sticker-row" aria-hidden>
+                    <Sticker rotate={-8} tone="ink">
+                      {BRAND.dropLabel}
+                    </Sticker>
+                    <Sticker rotate={5} tone="coral">
+                      +327%
+                    </Sticker>
+                    <Sticker rotate={-2} tone="blue">
+                      低溫烘乾
+                    </Sticker>
+                  </div>
+
                   <Wordmark className="logo-main" />
 
                   <div className="about-link">
@@ -224,16 +297,17 @@ export function HomePage() {
 
                   <div className="mobile-text" id="order">
                     <div className="c2a-wrapper">
-                      <a
-                        className="button c2a-phone-hero"
-                        href={BRAND.shopUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        title="購買雞霸"
-                      >
-                        {BRAND.cta}
-                        <span className="pointer" aria-hidden />
-                      </a>
+                      <BrutalButton asChild size="xl" variant="default" className="c2a-phone-hero">
+                        <a
+                          href={BRAND.shopUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          title="購買雞霸"
+                        >
+                          {BRAND.cta}
+                          <span className="pointer" aria-hidden />
+                        </a>
+                      </BrutalButton>
                       <p>{BRAND.ctaHint}</p>
                     </div>
                     <div className="legs">
@@ -248,6 +322,7 @@ export function HomePage() {
                 </div>
 
                 <ChatThread />
+                <FlavorCompare />
               </div>
             </div>
 
@@ -255,6 +330,8 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {ready ? <StickyPurchaseBar /> : null}
     </div>
   );
 }
