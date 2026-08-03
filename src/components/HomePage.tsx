@@ -9,13 +9,13 @@ import { Sticker } from "@/components/ui/sticker";
 import { StickyPurchaseBar } from "@/components/ui/sticky-purchase-bar";
 import { BRAND, CHAT } from "@/data/brand";
 
-/** Single Drive hero — https://drive.google.com/file/d/1s302uFStOx6Pqki74FNVefS2qL3J3j9L */
+/** Single Drive hero — https://drive.google.com/file/d/12FmYOQDT-bTILmN01rJZZLSwUovQcw3Q */
 const HERO_SRC = {
   webp: "/images/hero-drive.webp",
   jpg: "/images/hero-drive.jpg",
   alt: `${BRAND.displayName} 產品主視覺`,
-  width: 1054,
-  height: 1492,
+  width: 2394,
+  height: 1360,
 } as const;
 
 function asset(path: string) {
@@ -282,7 +282,7 @@ export function HomePage() {
                     </a>
                   </div>
 
-                  {/* ONE hero only — Drive file 1s302uFStOx6Pqki74FNVefS2qL3J3j9L */}
+                  {/* ONE hero only — Drive file 12FmYOQDT-bTILmN01rJZZLSwUovQcw3Q */}
                   <img
                     className="hero-image"
                     src={asset(HERO_SRC.jpg)}

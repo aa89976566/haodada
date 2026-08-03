@@ -280,7 +280,7 @@ img {
   }
 }
 
-/* Center phone column */
+/* Center phone column — widen on desktop so landscape Drive hero stays readable */
 .mobile {
   width: min(100%, var(--phone));
   max-width: var(--phone);
@@ -293,8 +293,14 @@ img {
 
 @media (min-width: 1024px) {
   .mobile {
-    width: var(--phone);
-    flex: 0 0 var(--phone);
+    --phone-desktop: min(760px, 58vw);
+    width: var(--phone-desktop);
+    max-width: var(--phone-desktop);
+    flex: 0 0 var(--phone-desktop);
+  }
+
+  .desktop-column {
+    width: calc((100% - min(760px, 58vw)) / 2);
   }
 }
 
@@ -373,7 +379,8 @@ img {
 
 .mobile-text .c2a-wrapper {
   padding: 0 0.25rem 1.5rem;
-  margin-top: clamp(-36px, -12vw, -61px);
+  /* Landscape Drive hero is shorter than the old portrait bag — soften overlap */
+  margin-top: clamp(-20px, -5vw, -36px);
   position: relative;
 }
 
