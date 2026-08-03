@@ -1,92 +1,58 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ProgressBar } from "@/components/ui/progress-bar";
-import { BRAND, CHAT } from "@/data/brand";
+import { useEffect, useMemo, useState } from "react";
+import { THISFOOT_HTML } from "@/data/thisfootHtml";
 
-/**
- * Direct DOM/CSS clone of https://thisfootdoesnotexist.com/
- * — fixed 414px yellow phone + royal-blue side frames + iMessage chat.
- * Hero: Drive file 12FmYOQDT-bTILmN01rJZZLSwUovQcw3Q only.
- */
-const HERO_SRC = {
-  webp: "/images/hero-drive.webp",
-  jpg: "/images/hero-drive.jpg",
-  alt: `${BRAND.displayName} 產品主視覺`,
-  width: 2394,
-  height: 1360,
-} as const;
+function basePath() {
+  return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+}
 
-function asset(path: string) {
-  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-  return `${base}${path}`;
+/** Prefix absolute site-root asset paths for GitHub Pages basePath. */
+function withBase(html: string) {
+  const base = basePath();
+  if (!base) return html;
+  return html
+    .replace(/(src|href)="(\/_nuxt\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(src|href)="(\/img\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(href)="(\/privacypolicy\.pdf)"/g, `$1="${base}$2"`)
+    .replace(/(src|href)="(\/social\/[^"]+)"/g, `$1="${base}$2"`);
 }
 
 function markEntered() {
   try {
-    sessionStorage.setItem("haodada-entered", "1");
+    sessionStorage.setItem("thisfoot-entered", "1");
   } catch {
     // ignore
   }
 }
 
+function hasEntered() {
+  try {
+    return sessionStorage.getItem("thisfoot-entered") === "1";
+  } catch {
+    return false;
+  }
+}
+
 function Preloader({ onDone }: { onDone: () => void }) {
   const [rotate, setRotate] = useState(false);
-  const [progress, setProgress] = useState<number | null>(null);
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem("haodada-entered") === "1") {
-        onDone();
-        return;
-      }
-    } catch {
-      // ignore
+    if (hasEntered()) {
+      onDone();
+      return;
     }
     const spin = window.setTimeout(() => setRotate(true), 80);
     return () => window.clearTimeout(spin);
   }, [onDone]);
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem("haodada-entered") === "1") return;
-    } catch {
-      // ignore
-    }
-    if (progress === null) {
-      const id = window.setTimeout(() => setProgress(12), 400);
-      return () => window.clearTimeout(id);
-    }
-    if (progress < 100) {
-      const id = window.setTimeout(
-        () => setProgress(Math.min(100, progress + 18)),
-        280,
-      );
-      return () => window.clearTimeout(id);
-    }
-    const id = window.setTimeout(() => {
-      markEntered();
-      onDone();
-    }, 450);
-    return () => window.clearTimeout(id);
-  }, [progress, onDone]);
 
   return (
     <div id="MSCHFPreloader">
       <div className={`gradient-background${rotate ? " rotate" : ""}`} />
       <div className="loader-inner">
         <div className="content-wrapper">
-          <h1>{BRAND.displayName}</h1>
-          <h3>* {BRAND.dropLabel} *</h3>
-          <h3>{BRAND.tagline}</h3>
-          <div className="dark preloader-progress">
-            <ProgressBar
-              value={progress}
-              label="雞霸烘乾進度"
-              pendingLabel="低溫烘乾中"
-              completeLabel="可以開吃了"
-            />
-          </div>
+          <h1>This Foot Does Not Exist</h1>
+          <h3>* MSCHF *</h3>
           <button
             type="button"
             className="enter"
@@ -103,159 +69,27 @@ function Preloader({ onDone }: { onDone: () => void }) {
   );
 }
 
-function Wordmark({ className = "" }: { className?: string }) {
-  return (
-    <div className={`wordmark ${className}`.trim()}>
-      <div className="wordmark-title">{BRAND.displayName}</div>
-      <div className="wordmark-sub">
-        {BRAND.studio} · {BRAND.dropLabel}
-      </div>
-    </div>
-  );
-}
-
-function DesktopColumn({ side }: { side: "left" | "right" }) {
-  const variant = side === "left" ? BRAND.variants[0] : BRAND.variants[1];
-  return (
-    <div className={`column desktop-column ${side} is-hidden-mobile`}>
-      <Wordmark className="logo-desktop" />
-      <div className="desktop-side-copy desktop-hero-img">
-        <div className="desktop-side-title">{variant.name}</div>
-        <p>{variant.blurb}</p>
-      </div>
-      <div className="desktop-c2a">
-        <a className="cta-chip" href={variant.url} target="_blank" rel="noreferrer">
-          {BRAND.currency}
-          {variant.price}
-        </a>
-        <p>TEXT OUR SHOP IT&apos;LL SEND YOU 雞霸.</p>
-      </div>
-    </div>
-  );
-}
-
-function ChatThread() {
-  return (
-    <div className="mobile-messages">
-      <div className="chat">
-        {CHAT.map((block, i) => {
-          if (block.kind === "mine") {
-            return (
-              <div className="mine messages" key={`m-${i}`}>
-                {block.texts.map((text, j) => (
-                  <div
-                    className={`message${j === block.texts.length - 1 ? " last" : ""}`}
-                    key={`mt-${i}-${j}`}
-                  >
-                    {text}
-                  </div>
-                ))}
-              </div>
-            );
-          }
-          return (
-            <div className="yours messages" key={`y-${i}`}>
-              {block.texts.map((text, j) => {
-                const isHtml = text.includes("<");
-                return (
-                  <div
-                    className={`message${j === block.texts.length - 1 ? " last" : ""}`}
-                    key={`yt-${i}-${j}`}
-                    {...(isHtml
-                      ? { dangerouslySetInnerHTML: { __html: text } }
-                      : { children: text })}
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
+/**
+ * Direct static mirror of https://thisfootdoesnotexist.com/
+ * Markup + CSS + assets captured from the live site.
+ */
 export function HomePage() {
   const [ready, setReady] = useState(false);
+  const html = useMemo(() => withBase(THISFOOT_HTML), []);
+
+  useEffect(() => {
+    document.body.classList.toggle("page-ready", ready);
+    return () => document.body.classList.remove("page-ready");
+  }, [ready]);
 
   return (
-    <div className={ready ? "page-ready" : undefined}>
-      {!ready ? <Preloader onDone={() => setReady(true)} /> : null}
-
-      <section className="hero is-fullheight">
-        <div className="container main-container">
-          <div className="columns is-gapless">
-            <DesktopColumn side="left" />
-
-            <div className="column is-3 mobile">
-              <div className="mobile-wrapper">
-                <div className="mobile-hero">
-                  <Wordmark className="logo-main" />
-
-                  <div className="about-link">
-                    <a
-                      className="credit"
-                      href="https://furmosa.com"
-                      title="匠寵 Furmosa"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      by {BRAND.studio}
-                    </a>
-                  </div>
-
-                  <img
-                    className="hero-image"
-                    src={asset(HERO_SRC.jpg)}
-                    srcSet={`${asset(HERO_SRC.webp)} ${HERO_SRC.width}w, ${asset(HERO_SRC.jpg)} ${HERO_SRC.width}w`}
-                    sizes="(max-width: 768px) 100vw, 414px"
-                    alt={HERO_SRC.alt}
-                    width={HERO_SRC.width}
-                    height={HERO_SRC.height}
-                    decoding="async"
-                    fetchPriority="high"
-                  />
-
-                  <div className="mobile-text">
-                    <div className="c2a-wrapper">
-                      <a
-                        href={BRAND.shopUrl}
-                        title="購買雞霸"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="button c2a-phone-hero"
-                      >
-                        {BRAND.cta}
-                        <img
-                          className="pointer"
-                          src={asset("/images/thisfoot/pointer.png")}
-                          alt=""
-                          width={60}
-                          height={60}
-                          aria-hidden
-                        />
-                      </a>
-                      <p>TAP TO ORDER. WE&apos;LL SEND YOU 雞霸.</p>
-                    </div>
-                    <div className="legs">
-                      <p className="legs-banner">{BRAND.heroLine}</p>
-                      <p className="legs-price">
-                        胡蘿蔔 {BRAND.currency}
-                        {BRAND.price} · 原味 {BRAND.currency}
-                        {BRAND.priceOriginal}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <ChatThread />
-              </div>
-            </div>
-
-            <DesktopColumn side="right" />
-          </div>
-        </div>
-      </section>
-    </div>
+    <>
+      {!ready && <Preloader onDone={() => setReady(true)} />}
+      <div
+        className="thisfoot-mirror"
+        // Static snapshot of the hydrated thisfoot DOM.
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+    </>
   );
 }
