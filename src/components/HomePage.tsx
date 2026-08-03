@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { BRAND, CHAT } from "@/data/brand";
 
-/** Single Drive hero — https://drive.google.com/file/d/12FmYOQDT-bTILmN01rJZZLSwUovQcw3Q */
+/**
+ * Direct DOM/CSS clone of https://thisfootdoesnotexist.com/
+ * — fixed 414px yellow phone + royal-blue side frames + iMessage chat.
+ * Hero: Drive file 12FmYOQDT-bTILmN01rJZZLSwUovQcw3Q only.
+ */
 const HERO_SRC = {
   webp: "/images/hero-drive.webp",
   jpg: "/images/hero-drive.jpg",
@@ -49,7 +53,6 @@ function Preloader({ onDone }: { onDone: () => void }) {
     } catch {
       // ignore
     }
-
     if (progress === null) {
       const id = window.setTimeout(() => setProgress(12), 400);
       return () => window.clearTimeout(id);
@@ -111,13 +114,12 @@ function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
-/** Desktop sides: logo + copy + CTA only (no second hero photo) */
 function DesktopColumn({ side }: { side: "left" | "right" }) {
   const variant = side === "left" ? BRAND.variants[0] : BRAND.variants[1];
   return (
     <div className={`column desktop-column ${side} is-hidden-mobile`}>
       <Wordmark className="logo-desktop" />
-      <div className="desktop-side-copy">
+      <div className="desktop-side-copy desktop-hero-img">
         <div className="desktop-side-title">{variant.name}</div>
         <p>{variant.blurb}</p>
       </div>
@@ -126,7 +128,7 @@ function DesktopColumn({ side }: { side: "left" | "right" }) {
           {BRAND.currency}
           {variant.price}
         </a>
-        <p>{BRAND.ctaHint}</p>
+        <p>TEXT OUR SHOP IT&apos;LL SEND YOU 雞霸.</p>
       </div>
     </div>
   );
@@ -151,7 +153,6 @@ function ChatThread() {
               </div>
             );
           }
-
           return (
             <div className="yours messages" key={`y-${i}`}>
               {block.texts.map((text, j) => {
@@ -195,15 +196,14 @@ export function HomePage() {
                     <a
                       className="credit"
                       href="https://furmosa.com"
+                      title="匠寵 Furmosa"
                       target="_blank"
                       rel="noreferrer"
-                      title="匠寵 Furmosa"
                     >
                       by {BRAND.studio}
                     </a>
                   </div>
 
-                  {/* ONE hero only — Drive file 12FmYOQDT-bTILmN01rJZZLSwUovQcw3Q */}
                   <img
                     className="hero-image"
                     src={asset(HERO_SRC.jpg)}
@@ -216,17 +216,24 @@ export function HomePage() {
                     fetchPriority="high"
                   />
 
-                  <div className="mobile-text" id="order">
+                  <div className="mobile-text">
                     <div className="c2a-wrapper">
                       <a
-                        className="button c2a-phone-hero"
                         href={BRAND.shopUrl}
+                        title="購買雞霸"
                         target="_blank"
                         rel="noreferrer"
-                        title="購買雞霸"
+                        className="button c2a-phone-hero"
                       >
                         {BRAND.cta}
-                        <span className="pointer" aria-hidden />
+                        <img
+                          className="pointer"
+                          src={asset("/images/thisfoot/pointer.png")}
+                          alt=""
+                          width={60}
+                          height={60}
+                          aria-hidden
+                        />
                       </a>
                       <p>TAP TO ORDER. WE&apos;LL SEND YOU 雞霸.</p>
                     </div>
