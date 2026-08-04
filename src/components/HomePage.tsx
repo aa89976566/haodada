@@ -72,8 +72,8 @@ function Preloader({ onDone }: { onDone: () => void }) {
 }
 
 /**
- * Direct static mirror of https://thisfootdoesnotexist.com/
- * Markup + CSS + assets captured from the live site.
+ * Site mirror with thisfoot chat/UI retained below;
+ * reference-site hero chrome removed — Drive campaign banner only on top.
  */
 export function HomePage() {
   const [ready, setReady] = useState(false);
