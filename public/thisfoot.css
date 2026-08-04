@@ -116,3 +116,43 @@ img,video{max-width:100%;height:auto;display:block}
     animation:none!important;
   }
 }
+
+/* Fixed side frames (thisfoot behavior): middle scrolls, sides stay */
+@media screen and (min-width:769px){
+  html,body{overflow-x:hidden}
+  .columns.is-gapless{
+    display:block;
+    position:relative;
+    min-height:100vh;
+  }
+  .columns.is-gapless .desktop-column{
+    position:fixed !important;
+    top:0;
+    bottom:0;
+    height:100vh;
+    height:100dvh;
+    z-index:2;
+    overflow:hidden;
+    pointer-events:auto;
+  }
+  .columns.is-gapless .desktop-column.left{left:0}
+  .columns.is-gapless .desktop-column.right{right:0}
+  .columns.is-gapless .desktop-column .desktop-hero-img,
+  .columns.is-gapless .desktop-column .desktop-hero-img-el{
+    width:86%;
+    max-height:48vh;
+    height:auto;
+    object-fit:contain;
+    margin:0 auto;
+    display:block;
+  }
+  .hero.is-fullheight .mobile{
+    position:relative;
+    z-index:1;
+    width:414px;
+    margin:0 auto;
+  }
+}
+@media screen and (max-width:768px){
+  .columns.is-gapless .desktop-column{display:none!important}
+}
