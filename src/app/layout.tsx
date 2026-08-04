@@ -2,45 +2,49 @@ import type { Metadata, Viewport } from "next";
 import { asset } from "@/lib/asset";
 import "./globals.css";
 
-const TITLE = "DOG PARK LAB — 壕大大雞霸";
+const TITLE = "This Foot Does Not Exist";
 const DESCRIPTION =
-  "DOG PARK EXPERIMENT. Public fake laboratory studying chicken jerky and unexpected conversations.";
+  "We trained a computer to create fake foot pics. Text 607-409-3339. It'll send you feet.";
 const SITE_URL = "https://aa89976566.github.io/haodada/";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
-    "DOG PARK LAB",
-    "壕大大雞霸",
-    "匠寵",
-    "Furmosa",
-    "dog park experiment",
-    "寵物零食",
+    "foot",
+    "feet",
+    "does not exist",
+    "gan",
+    "ai",
+    "generate picture",
+    "chatbot",
+    "mschf",
   ],
-  authors: [{ name: "DOG UNIT" }],
+  authors: [{ name: "mschf" }],
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     url: SITE_URL,
-    siteName: "DOG PARK LAB",
+    siteName: "thisfootdoesnotexist",
     type: "website",
-    images: [{ url: `${SITE_URL}images/hero-drive.jpg` }],
+    images: [{ url: `${SITE_URL}social/sharecard-facebook.png` }],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@mschfxyz",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${SITE_URL}images/hero-drive.jpg`],
+    images: [`${SITE_URL}social/sharecard-twitter.png`],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#213c86",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  viewportFit: "cover",
+  minimumScale: 1,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -49,7 +53,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-Hant">
+    <html lang="en">
       <head>
         <link rel="stylesheet" href={asset("/thisfoot.css")} />
       </head>
