@@ -1,64 +1,48 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 
 const LINES = [
-  "Initializing…",
-  "Scanning Dog Park…",
-  "Loading Experiment…",
-  "Calibrating Dogs…",
-  "Experiment Ready",
+  "DOG PARK LAB BIOS 3.27",
+  "Memory check ........... OK",
+  "Mounting experiment disk ",
+  "Loading CRT driver ......",
+  "Calibrating subjects ....",
+  "Ready.",
 ] as const;
 
+/** Fast DOS-style boot into the fake OS — silence after. */
 export function BootSequence({ onDone }: { onDone: () => void }) {
   const reduce = useReducedMotion();
   const [lineIdx, setLineIdx] = useState(0);
 
   useEffect(() => {
     if (reduce) {
-      const t = window.setTimeout(onDone, 120);
+      const t = window.setTimeout(onDone, 100);
       return () => window.clearTimeout(t);
     }
-
     let i = 0;
     const id = window.setInterval(() => {
       i += 1;
       if (i >= LINES.length) {
         window.clearInterval(id);
-        window.setTimeout(onDone, 80);
+        window.setTimeout(onDone, 90);
         return;
       }
       setLineIdx(i);
-    }, 140);
-
+    }, 110);
     return () => window.clearInterval(id);
   }, [onDone, reduce]);
 
   return (
-    <div className="dpl-boot" role="status" aria-live="polite">
-      <div className="dpl-boot-panel">
-        <p className="dpl-boot-title">DOG PARK LAB</p>
-        <ul className="dpl-boot-lines">
-          {LINES.map((line, idx) => (
-            <li
-              key={line}
-              className={idx <= lineIdx ? "is-on" : ""}
-              aria-hidden={idx > lineIdx}
-            >
-              {idx <= lineIdx ? `> ${line}` : ""}
-            </li>
-          ))}
-        </ul>
-        {!reduce && (
-          <motion.div
-            className="dpl-boot-bar"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.7, ease: "linear" }}
-          />
-        )}
-      </div>
+    <div className="os-boot" role="status" aria-live="polite">
+      <pre className="os-boot-pre">
+        {LINES.map((line, idx) =>
+          idx <= lineIdx ? `${line}\n` : "",
+        ).join("")}
+        <span className="os-boot-blink">█</span>
+      </pre>
     </div>
   );
 }

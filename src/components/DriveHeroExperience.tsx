@@ -1,292 +1,233 @@
 "use client";
 
-import { useEffect, useMemo, useState, type MouseEvent } from "react";
-import { animate, motion, useMotionValue, useReducedMotion, useTransform } from "motion/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "motion/react";
 import type { Experiment } from "@/data/dogParkLab";
+import { createRng } from "@/lib/seeded";
 import { asset } from "@/lib/asset";
 
-function SplitFlapNumber({
-  value,
-  reduce,
-  seed,
-}: {
-  value: number;
-  reduce: boolean | null;
-  seed: number;
-}) {
-  const mv = useMotionValue(reduce ? value : 0);
-  const display = useTransform(mv, (v) => `${Math.round(v)}%`);
-  const [glitch, setGlitch] = useState(false);
+type OsEvent =
+  | "crt_flicker"
+  | "status_tick"
+  | "stamp"
+  | "warning"
+  | "blink";
 
-  useEffect(() => {
-    if (reduce) {
-      mv.set(value);
-      return;
-    }
-    const controls = animate(mv, value, {
-      duration: 1.1,
-      ease: [0.16, 1, 0.3, 1],
-    });
-    return () => controls.stop();
-  }, [mv, reduce, value]);
+const EVENT_TYPES: OsEvent[] = [
+  "crt_flicker",
+  "status_tick",
+  "stamp",
+  "warning",
+  "blink",
+];
+
+/**
+ * Poster stays untouched inside a CRT viewport.
+ * All fiction lives in the surrounding operating-system chrome.
+ */
+export function DriveHeroExperience({ experiment }: { experiment: Experiment }) {
+  const reduce = useReducedMotion();
+  const rngRef = useRef(createRng(experiment.seed ^ 0x0d06));
+  const [popularity, setPopularity] = useState(
+    experiment.percentValue ?? 327,
+  );
+  const [statusLine, setStatusLine] = useState(experiment.status);
+  const [flicker, setFlicker] = useState(false);
+  const [blinkSide, setBlinkSide] = useState<"left" | "right" | "both" | null>(
+    null,
+  );
+  const [stampVisible, setStampVisible] = useState(false);
+  const [stampKind, setStampKind] = useState(experiment.stamps[0]?.kind ?? "TESTED");
+  const [dialog, setDialog] = useState<string | null>(null);
+  const [linePressed, setLinePressed] = useState(false);
+
+  const lineHref = useMemo(() => "https://line.me/R/ti/p/@furmosa", []);
+
+  const runEvent = useCallback(
+    (type: OsEvent) => {
+      if (type === "crt_flicker") {
+        setFlicker(true);
+        window.setTimeout(() => setFlicker(false), 90);
+        return;
+      }
+      if (type === "blink") {
+        const side =
+          rngRef.current() < 0.33
+            ? "both"
+            : rngRef.current() < 0.5
+              ? "left"
+              : "right";
+        setBlinkSide(side);
+        window.setTimeout(() => setBlinkSide(null), 120);
+        return;
+      }
+      if (type === "status_tick") {
+        setPopularity((p) => p + (rngRef.current() < 0.5 ? -1 : 1));
+        setStatusLine((s) => (s === "RUNNING" ? "RUNNING" : experiment.status));
+        return;
+      }
+      if (type === "stamp") {
+        const kinds = experiment.stamps.map((s) => s.kind);
+        setStampKind(
+          kinds[Math.floor(rngRef.current() * Math.max(kinds.length, 1))] ??
+            "VERIFIED",
+        );
+        setStampVisible(true);
+        return;
+      }
+      if (type === "warning") {
+        const w =
+          experiment.warnings[0] ??
+          "WARNING — Dog attraction exceeds normal range";
+        setDialog(w);
+        window.setTimeout(() => setDialog(null), 2200);
+      }
+    },
+    [experiment.status, experiment.stamps, experiment.warnings],
+  );
 
   useEffect(() => {
     if (reduce) return;
     let cancelled = false;
-    let timer: number;
-    // Deterministic-ish schedule from seed (not Math.random).
-    let tick = seed >>> 0;
-
-    const nextWait = () => {
-      tick = (Math.imul(tick ^ (tick >>> 15), 1 | tick) + 0x6d2b79f5) >>> 0;
-      const unit = (tick >>> 0) / 4294967296;
-      return 12000 + unit * 8000;
-    };
+    let timer = 0;
 
     const schedule = () => {
+      const wait = 10000 + rngRef.current() * 30000;
       timer = window.setTimeout(() => {
         if (cancelled) return;
-        setGlitch(true);
-        window.setTimeout(() => {
-          if (!cancelled) setGlitch(false);
-          schedule();
-        }, 140);
-      }, nextWait());
+        const type =
+          EVENT_TYPES[Math.floor(rngRef.current() * EVENT_TYPES.length)]!;
+        runEvent(type);
+        schedule();
+      }, wait);
     };
-    schedule();
+
+    // First silence — no event for a while after boot
+    timer = window.setTimeout(schedule, 12000 + rngRef.current() * 8000);
     return () => {
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [reduce, seed]);
+  }, [reduce, runEvent]);
 
   return (
-    <span className={`dpl-pct${glitch ? " is-glitch" : ""}`} aria-label={`Result ${value}%`}>
-      <motion.span>{display}</motion.span>
-    </span>
-  );
-}
+    <section className="os-desktop" aria-label="DOG PARK LAB operating system">
+      <header className="os-menubar">
+        <span className="os-menubar-brand">DOG PARK LAB</span>
+        <span className="os-menubar-item">File</span>
+        <span className="os-menubar-item">View</span>
+        <span className="os-menubar-item">System</span>
+        <span className="os-menubar-clock">SYSTEM ONLINE</span>
+      </header>
 
-export function DriveHeroExperience({ experiment }: { experiment: Experiment }) {
-  const reduce = useReducedMotion();
-  const [cursorDog, setCursorDog] = useState(false);
-  const [micro, setMicro] = useState<string | null>(null);
-  const [warningIdx, setWarningIdx] = useState(0);
-  const [productTilt, setProductTilt] = useState({ x: 0, y: 0 });
-  const [linePressed, setLinePressed] = useState(false);
-  const [stampOnce, setStampOnce] = useState(false);
-  const [dogsLooking, setDogsLooking] = useState(false);
-
-  const lineHref = useMemo(
-    () => "https://line.me/R/ti/p/@furmosa",
-    [],
-  );
-
-  useEffect(() => {
-    // Stamp "實驗結果" feeling — once after load (overlay label).
-    const t = window.setTimeout(() => setStampOnce(true), 180);
-    return () => window.clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    if (reduce) return;
-    const t = window.setTimeout(() => setDogsLooking(true), 8000);
-    return () => window.clearTimeout(t);
-  }, [reduce]);
-
-  useEffect(() => {
-    if (!experiment.microEvent || reduce) return;
-    const show = window.setTimeout(() => {
-      setMicro(experiment.microEvent!.type);
-      window.setTimeout(() => setMicro(null), 1600);
-    }, experiment.microEvent.delayMs);
-    return () => window.clearTimeout(show);
-  }, [experiment.microEvent, reduce]);
-
-  useEffect(() => {
-    if (experiment.warnings.length <= 1) return;
-    const id = window.setInterval(() => {
-      setWarningIdx((i) => (i + 1) % experiment.warnings.length);
-    }, 7000);
-    return () => window.clearInterval(id);
-  }, [experiment.warnings]);
-
-  const onProductMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (reduce) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    const rotY = (px - 0.5) * 8; // max ~4deg each side
-    const rotX = (0.5 - py) * 8;
-    setProductTilt({
-      x: Math.max(-4, Math.min(4, rotX)),
-      y: Math.max(-4, Math.min(4, rotY)),
-    });
-  };
-
-  return (
-    <section className="drive-hero dpl-hero" aria-label="DOG PARK LAB Hero">
-      <div
-        className={`drive-hero-stage dpl-stage${dogsLooking ? " dogs-looking" : ""}`}
-        style={
-          reduce
-            ? undefined
-            : {
-                transform: `perspective(900px) rotateX(${productTilt.x}deg) rotateY(${productTilt.y}deg)`,
-              }
-        }
-        onMouseMove={onProductMove}
-        onMouseLeave={() => setProductTilt({ x: 0, y: 0 })}
-      >
-        <picture>
-          <source srcSet={asset("/images/hero-drive.webp")} type="image/webp" />
-          <img
-            src={asset("/images/hero-drive.jpg")}
-            alt="◈ 壕大大 ◈ 雞霸 — DOG PARK LAB poster"
-            width={2394}
-            height={1360}
-            decoding="async"
-            fetchPriority="high"
-            className="drive-hero-img dpl-poster"
-          />
-        </picture>
-
-        <div className="drive-hero-scanlines" aria-hidden="true" />
-        <div className="drive-hero-grain" aria-hidden="true" />
-        <div className="dpl-crt-flicker" aria-hidden="true" />
-
-        {/* Dog hover zones — cursor becomes dog emoji */}
-        <button
-          type="button"
-          className="dpl-hotspot dpl-hotspot-dog left"
-          aria-label={`${experiment.dogs[0].label} profile`}
-          onMouseEnter={() => setCursorDog(true)}
-          onMouseLeave={() => setCursorDog(false)}
-        />
-        <button
-          type="button"
-          className="dpl-hotspot dpl-hotspot-dog right"
-          aria-label={`${experiment.dogs[1].label} profile`}
-          onMouseEnter={() => setCursorDog(true)}
-          onMouseLeave={() => setCursorDog(false)}
-        />
-
-        {/* Physical LINE hit area over poster button */}
-        <a
-          className={`dpl-hotspot dpl-hotspot-line${linePressed ? " is-pressed" : ""}`}
-          href={lineHref}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="加入 @FURMOSA"
-          onMouseDown={() => setLinePressed(true)}
-          onMouseUp={() => setLinePressed(false)}
-          onMouseLeave={() => setLinePressed(false)}
+      <div className="os-workspace">
+        <article
+          className={`os-window os-window-viewport${flicker ? " is-flicker" : ""}`}
         >
-          <span className="dpl-line-stretch">@FURMOSA</span>
-        </a>
-
-        {/* Percentage overlay — covers baked 327% without redesigning poster */}
-        <div className="dpl-pct-slot" aria-live="polite">
-          {experiment.percentValue != null ? (
-            <SplitFlapNumber value={experiment.percentValue} reduce={reduce} seed={experiment.seed} />
-          ) : (
-            <span className="dpl-pct dpl-pct-text">{experiment.result}</span>
-          )}
-        </div>
-
-        {/* Title stamp once */}
-        <div
-          className={`dpl-title-stamp${stampOnce ? " is-stamped" : ""}`}
-          aria-hidden="true"
-        >
-          實驗結果
-        </div>
-
-        {/* Random brutal stamps */}
-        {experiment.stamps.map((s) => (
-          <span
-            key={`${s.kind}-${s.x}-${s.y}`}
-            className="dpl-stamp"
-            style={{
-              left: `${s.x}%`,
-              top: `${s.y}%`,
-              opacity: s.opacity,
-              transform: `rotate(${s.rot}deg)`,
-            }}
-          >
-            {s.kind}
-          </span>
-        ))}
-      </div>
-
-      {/* System HUD — outside poster layout chrome */}
-      <div className="dpl-hud" data-dog-cursor={cursorDog ? "1" : "0"}>
-        <div className="dpl-hud-tr">
-          <span>SYSTEM ONLINE</span>
-          <span>STATUS {experiment.status}</span>
-        </div>
-        <div className="dpl-hud-bl">
-          <span>DOG PARK EXPERIMENT #{experiment.experimentNo}</span>
-          <span>VER {experiment.version}</span>
-        </div>
-
-        <aside className="dpl-meta" aria-label="Experiment metadata">
-          <p>
-            <strong>Operator</strong> {experiment.operator}
-          </p>
-          <p>
-            <strong>Location</strong> {experiment.location}
-          </p>
-          <p>
-            <strong>Date</strong> {experiment.dateLabel}
-          </p>
-          <p>
-            <strong>Side effect</strong> {experiment.sideEffect}
-          </p>
-          <p>
-            <strong>Note</strong> {experiment.note}
-          </p>
-        </aside>
-
-        <aside className="dpl-dogs" aria-label="Subject profiles">
-          {experiment.dogs.map((d) => (
-            <div key={d.label} className="dpl-dog-card">
-              <p className="dpl-dog-label">{d.label}</p>
-              <p>
-                {d.trait} {d.traitValue}
-              </p>
-              <p>Likes {d.likes}</p>
-              <p>Mood {d.mood}</p>
-              <p>Treat detected {d.treatDetected ? "YES" : "NO"}</p>
+          <div className="os-titlebar">
+            <span className="os-titlebar-icon" aria-hidden="true" />
+            <h1 className="os-titlebar-text">
+              EXPERIMENT.VIEWPORT — #{experiment.experimentNo}
+            </h1>
+            <div className="os-titlebar-controls" aria-hidden="true">
+              <span />
+              <span />
+              <span />
             </div>
-          ))}
-        </aside>
+          </div>
 
-        <aside className="dpl-log" aria-label="Observation log">
-          <p className="dpl-log-title">OBSERVATION LOG</p>
-          <ul>
-            {experiment.observations.map((o) => (
-              <li key={o}>{o}</li>
-            ))}
-          </ul>
-        </aside>
+          <div className="os-toolbar">
+            <span>Operator {experiment.operator}</span>
+            <span>{experiment.location}</span>
+            <span>Date {experiment.dateLabel}</span>
+          </div>
 
-        {experiment.warnings[warningIdx] && (
-          <p className="dpl-warning" role="status">
-            {experiment.warnings[warningIdx]}
-          </p>
-        )}
+          {/* CRT bezel — poster is the screen contents only */}
+          <div className="os-crt">
+            <div className="os-crt-bezel">
+              <div className="os-crt-glass">
+                <picture>
+                  <source
+                    srcSet={asset("/images/hero-drive.webp")}
+                    type="image/webp"
+                  />
+                  <img
+                    src={asset("/images/hero-drive.jpg")}
+                    alt="◈ 壕大大 ◈ 雞霸 experiment viewport"
+                    width={2394}
+                    height={1360}
+                    decoding="async"
+                    fetchPriority="high"
+                    className="os-crt-image"
+                  />
+                </picture>
 
-        {micro && (
-          <motion.p
-            className="dpl-micro"
-            initial={reduce ? false : { y: -24, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ opacity: 0 }}
-            role="status"
-          >
-            {micro}
-          </motion.p>
+                {/* Blink as CRT phosphor dip over dog regions — not floating text */}
+                {blinkSide && (
+                  <div
+                    className={`os-blink os-blink-${blinkSide}`}
+                    aria-hidden="true"
+                  />
+                )}
+
+                {/* Invisible service hit zones inside the glass, no labels */}
+                <a
+                  className={`os-hit os-hit-line${linePressed ? " is-pressed" : ""}`}
+                  href={lineHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="加入 @FURMOSA"
+                  onMouseDown={() => setLinePressed(true)}
+                  onMouseUp={() => setLinePressed(false)}
+                  onMouseLeave={() => setLinePressed(false)}
+                />
+                <span
+                  className="os-hit os-hit-dog left"
+                  aria-hidden="true"
+                  title={experiment.dogs[0].label}
+                />
+                <span
+                  className="os-hit os-hit-dog right"
+                  aria-hidden="true"
+                  title={experiment.dogs[1].label}
+                />
+              </div>
+
+              {/* Machine plates live on the bezel, not on the artwork */}
+              <div className="os-plate os-plate-serial">
+                <span>IBM-SVC</span>
+                <span>UNIT {experiment.experimentNo}</span>
+              </div>
+              <div className="os-plate os-plate-inspect">
+                <span>INSPECTION</span>
+                <span>{statusLine}</span>
+              </div>
+              {stampVisible && (
+                <div className="os-sticker" aria-live="polite">
+                  {stampKind}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <footer className="os-statusbar">
+            <span>STATUS {statusLine}</span>
+            <span>POP {popularity}</span>
+            <span>VER {experiment.version}</span>
+            <span>{experiment.sideEffect}</span>
+          </footer>
+        </article>
+
+        {dialog && (
+          <div className="os-dialog" role="alertdialog" aria-live="assertive">
+            <div className="os-dialog-title">SYSTEM.ALERT</div>
+            <div className="os-dialog-body">
+              <p>{dialog}</p>
+              <button type="button" onClick={() => setDialog(null)}>
+                OK
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </section>

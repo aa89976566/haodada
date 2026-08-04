@@ -7,8 +7,8 @@ import { ExperimentArchive } from "@/components/ExperimentArchive";
 import { createSessionSeed, generateExperiment } from "@/data/dogParkLab";
 
 /**
- * DOG PARK LAB — interactive fake experiment over the existing poster.
- * Poster layout is preserved; experience layers are overlays + archive.
+ * DOG PARK LAB — fictional operating system.
+ * Poster is the CRT viewport contents; fiction lives in OS chrome.
  */
 export function HomePage() {
   const [ready, setReady] = useState(false);
@@ -25,9 +25,9 @@ export function HomePage() {
   return (
     <>
       {!ready && <BootSequence onDone={() => setReady(true)} />}
-      <main className={`dpl-main${ready ? " is-ready" : ""}`}>
+      <main className={`os-shell${ready ? " is-ready" : ""}`}>
         <DriveHeroExperience experiment={experiment} />
-        <ExperimentArchive cards={experiment.archive} />
+        <ExperimentArchive experiment={experiment} />
       </main>
     </>
   );
