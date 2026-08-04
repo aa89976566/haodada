@@ -14,6 +14,8 @@ function withBase(html: string) {
   return html
     .replace(/(src|href)="(\/_nuxt\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(src|href)="(\/img\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(src|href)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(srcset)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(href)="(\/privacypolicy\.pdf)"/g, `$1="${base}$2"`)
     .replace(/(src|href)="(\/social\/[^"]+)"/g, `$1="${base}$2"`);
 }
