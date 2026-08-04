@@ -1,6 +1,6 @@
 /* Minimal reset; site styles live in /thisfoot.css (public, basePath-safe). */
 html {
-  background: #213c86;
+  background: #1740c0;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background: #213c86;
+  background: #1740c0;
   color: #fff;
   min-height: 100%;
   font-family: "SpaceMono Regular", "Andale Mono", monospace;
