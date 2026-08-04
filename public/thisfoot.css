@@ -156,3 +156,14 @@ img,video{max-width:100%;height:auto;display:block}
 @media screen and (max-width:768px){
   .columns.is-gapless .desktop-column{display:none!important}
 }
+
+/* Logos removed — keep side dogs vertically balanced */
+@media screen and (min-width:769px){
+  .columns.is-gapless .desktop-column{
+    justify-content:center;
+    gap:1.25rem;
+    padding-top:2rem!important;
+  }
+  .columns.is-gapless .desktop-column .desktop-c2a{margin-top:auto}
+  .hero.is-fullheight .mobile-hero{padding-top:.5rem}
+}
