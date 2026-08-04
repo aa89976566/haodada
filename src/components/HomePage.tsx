@@ -38,6 +38,7 @@ function hasEntered() {
 
 function Preloader({ onDone }: { onDone: () => void }) {
   const [rotate, setRotate] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
     if (hasEntered()) {
@@ -49,7 +50,13 @@ function Preloader({ onDone }: { onDone: () => void }) {
   }, [onDone]);
 
   return (
-    <div id="MSCHFPreloader">
+    <div
+      id="MSCHFPreloader"
+      className={exiting ? "is-exiting" : undefined}
+      // Keep covering the page until exit finishes so ENTER can't click-through
+      // to the @FURMOSA hotspot sitting under the button.
+      style={exiting ? { pointerEvents: "auto" } : undefined}
+    >
       <div className={`gradient-background${rotate ? " rotate" : ""}`} />
       <div className="loader-inner">
         <div className="content-wrapper">
@@ -58,9 +65,15 @@ function Preloader({ onDone }: { onDone: () => void }) {
           <button
             type="button"
             className="enter"
-            onClick={() => {
+            disabled={exiting}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (exiting) return;
               markEntered();
-              onDone();
+              setExiting(true);
+              // Delay unmount past mouseup so the click doesn't hit links below.
+              window.setTimeout(() => onDone(), 320);
             }}
           >
             ENTER

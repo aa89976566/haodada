@@ -133,6 +133,14 @@ img,video{max-width:100%;height:auto;display:block}
   background:transparent;
   border:0;
   box-shadow:none;
+  /* Disabled until ENTER finishes — avoids preloader click-through */
+  pointer-events:none;
+}
+.page-ready .hero.is-fullheight .mobile-hero .furmosa-hotspot{
+  pointer-events:auto;
+}
+#MSCHFPreloader.is-exiting{
+  pointer-events:auto;
 }
 .hero.is-fullheight .mobile-hero .furmosa-hotspot .furmosa-pointer{
   position:absolute;
