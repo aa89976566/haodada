@@ -167,3 +167,20 @@ img,video{max-width:100%;height:auto;display:block}
   .columns.is-gapless .desktop-column .desktop-c2a{margin-top:auto}
   .hero.is-fullheight .mobile-hero{padding-top:.5rem}
 }
+
+/* Triptych cut: center panel only scrolls; sides are full-height static panels */
+.hero.is-fullheight .mobile-hero .hero-drive-img{
+  aspect-ratio:1197 / 1360;
+  object-fit:cover;
+  object-position:center center;
+  width:100%;
+  background:#ffd150;
+}
+@media screen and (min-width:769px){
+  .columns.is-gapless .desktop-column .desktop-hero-img,
+  .columns.is-gapless .desktop-column .desktop-hero-img-el{
+    width:90%;
+    max-height:62vh;
+    object-fit:contain;
+  }
+}
