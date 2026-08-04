@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { THISFOOT_HTML } from "@/data/thisfootHtml";
+import { asset } from "@/lib/asset";
 
 function basePath() {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -53,8 +54,8 @@ function Preloader({ onDone }: { onDone: () => void }) {
       <div className={`gradient-background${rotate ? " rotate" : ""}`} />
       <div className="loader-inner">
         <div className="content-wrapper">
-          <h1>This Foot Does Not Exist</h1>
-          <h3>* MSCHF *</h3>
+          <h1>◈ 壕大大 ◈ 雞霸</h1>
+          <h3>* 匠寵 DROP #01 *</h3>
           <button
             type="button"
             className="enter"
@@ -71,10 +72,30 @@ function Preloader({ onDone }: { onDone: () => void }) {
   );
 }
 
-/**
- * Site mirror with thisfoot chat/UI retained below;
- * reference-site hero chrome removed — Drive campaign banner only on top.
- */
+function DriveHero() {
+  return (
+    <section className="drive-hero" aria-label="Hero">
+      <div className="drive-hero-stage">
+        <picture>
+          <source srcSet={asset("/images/hero-drive.webp")} type="image/webp" />
+          <img
+            src={asset("/images/hero-drive.jpg")}
+            alt="◈ 壕大大 ◈ 雞霸"
+            width={2394}
+            height={1360}
+            decoding="async"
+            fetchPriority="high"
+            className="drive-hero-img"
+          />
+        </picture>
+        <div className="drive-hero-scanlines" aria-hidden="true" />
+        <div className="drive-hero-grain" aria-hidden="true" />
+      </div>
+    </section>
+  );
+}
+
+/** Drive campaign hero on top; thisfoot chat retained below. */
 export function HomePage() {
   const [ready, setReady] = useState(false);
   const html = useMemo(() => withBase(THISFOOT_HTML), []);
@@ -87,9 +108,9 @@ export function HomePage() {
   return (
     <>
       {!ready && <Preloader onDone={() => setReady(true)} />}
+      <DriveHero />
       <div
-        className="thisfoot-mirror"
-        // Static snapshot of the hydrated thisfoot DOM.
+        className="thisfoot-mirror thisfoot-chat"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </>
