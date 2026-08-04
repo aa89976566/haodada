@@ -1,9 +1,10 @@
-/* Minimal reset; site styles live in /thisfoot.css (public, basePath-safe). */
+/* Base reset; experiment chrome lives in /thisfoot.css */
 html {
   background: #213c86;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   overflow-x: hidden;
+  width: 100%;
 }
 
 *,
@@ -17,6 +18,10 @@ body {
   background: #213c86;
   color: #fff;
   min-height: 100%;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: "SpaceMono Regular", "Andale Mono", monospace;
   font-size: 16px;
 }
@@ -38,31 +43,4 @@ video {
   max-width: 100%;
   height: auto;
   display: block;
-}
-
-.page-ready #MSCHFPreloader {
-  display: none;
-}
-
-#MSCHFPreloader .loader-inner .content-wrapper button.enter {
-  margin-top: 2rem;
-  border: 0;
-  background: #fff;
-  color: #000;
-  padding: 0.85rem 1.5rem;
-  text-transform: uppercase;
-  font-family: "Andale Mono", monospace;
-  font-size: 1rem;
-  width: 100%;
-  max-width: 280px;
-}
-
-#MSCHFPreloader .loader-inner .content-wrapper button.enter:hover {
-  background: #ffd150;
-  color: #ff4d4d;
-}
-
-.yours .message.has-image video {
-  width: 100%;
-  border-radius: 12px;
 }
