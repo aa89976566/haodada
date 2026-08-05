@@ -5,7 +5,6 @@ export const BRAND = {
   mascot: "嚎大大",
   studio: "匠寵",
   furmosa: "FURMOSA",
-  tagline: "帶球，只會開始遊戲。帶雞霸，才會開始聊天。",
   description:
     "嚎大大雞霸——匠寵 FURMOSA 寵物雞肉零食。整片雞胸肉低溫烘乾，無添加，給毛孩大口咬才夠味。",
   lineUrl: "https://line.me/R/ti/p/@furmosa",
@@ -19,61 +18,31 @@ export type ChatBlock =
   | { kind: "mine"; texts: string[] }
   | { kind: "yours"; texts: string[] };
 
-/** Chat rhythm: short, punchy, absurd — brand world only. Text bubbles only. */
+/** Short alternating bubbles — Taiwanese spoken tone, no punctuation. */
 export const CHAT: ChatBlock[] = [
-  { kind: "mine", texts: ["寄雞霸來！！"] },
-  {
-    kind: "yours",
-    texts: ["像這樣！！大口雞胸肉乾 ←←←←??????"],
-  },
-  { kind: "mine", texts: ["這是什麼做的？"] },
-  {
-    kind: "yours",
-    texts: [
-      "整片雞胸肉低溫烘乾。",
-      "無添加。拒絕亂七八糟。只給毛孩乾乾淨淨。",
-    ],
-  },
-  { kind: "mine", texts: ["《狗公園公約》第 6 條？"] },
-  {
-    kind: "yours",
-    texts: ["帶球，只會開始遊戲。", "帶雞霸，才會開始聊天。"],
-  },
-  { kind: "mine", texts: ["什麼是雞霸？"] },
+  { kind: "mine", texts: ["旁邊那個怎麼自己站在那"] },
+  { kind: "yours", texts: ["他沒帶雞霸啊"] },
+  { kind: "mine", texts: ["難怪狗看到他直接轉彎"] },
+  { kind: "yours", texts: ["連路過的都假裝沒看到"] },
+  { kind: "mine", texts: ["太慘了吧 我才不要變那樣"] },
+  { kind: "yours", texts: ["所以下次去公園自己知道"] },
+  { kind: "mine", texts: ["這誰做的"] },
+  { kind: "yours", texts: ["匠寵"] },
+  { kind: "mine", texts: ["匠寵是什麼"] },
   {
     kind: "yours",
     texts: [
-      "<strong>嚎大大雞霸</strong>——純雞情。單純雞肉原味，大口咬才夠味。",
-      "夜市雞排靈感 · 毛孩大口滿足肉乾。",
+      "做毛孩食物的台灣品牌",
+      "原料跟做法都講清楚 不搞看不懂的東西",
     ],
   },
-  { kind: "mine", texts: ["帶去狗公園會怎樣？"] },
-  {
-    kind: "yours",
-    texts: ["被搭訕機率增加 327%。", "實驗結果如圖。請自行負責社交後果。"],
-  },
-  { kind: "mine", texts: ["真的無添加？"] },
+  { kind: "mine", texts: ["哪裡買"] },
   {
     kind: "yours",
     texts: [
-      "對。低溫烘乾雞肉零食，配方簡單清楚。",
-      "適合當日常獎勵；請搭配主食與充足飲水。",
+      `加 LINE 找 <a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">${BRAND.lineHandle}</a>`,
+      `或直接上 <a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">furmosa.com</a>`,
     ],
   },
-  { kind: "mine", texts: ["怎麼買？"] },
-  {
-    kind: "yours",
-    texts: [
-      `加入 LINE <a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">${BRAND.lineHandle}</a>，我們寄雞霸給你。`,
-      `或上 <a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">furmosa.com</a>`,
-    ],
-  },
-  { kind: "mine", texts: ["cool thx", "...你們是誰？"] },
-  {
-    kind: "yours",
-    texts: [
-      `這是 <a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="credit">匠寵 FURMOSA</a> × 嚎大大雞霸。`,
-      "狗公園見。記得帶雞霸。",
-    ],
-  },
+  { kind: "mine", texts: ["好 先買再說"] },
 ];
