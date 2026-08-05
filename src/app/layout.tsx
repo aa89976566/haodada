@@ -1,37 +1,37 @@
 import type { Metadata, Viewport } from "next";
+import { BRAND } from "@/data/brand";
 import { asset } from "@/lib/asset";
 import "./globals.css";
 
-const TITLE = "This Foot Does Not Exist";
-const DESCRIPTION =
-  "We trained a computer to create fake foot pics. Text 607-409-3339. It'll send you feet.";
+const TITLE = `${BRAND.name}｜${BRAND.studio} ${BRAND.furmosa}`;
+const DESCRIPTION = BRAND.description;
 const SITE_URL = "https://aa89976566.github.io/haodada/";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
-    "foot",
-    "feet",
-    "does not exist",
-    "gan",
-    "ai",
-    "generate picture",
-    "chatbot",
-    "mschf",
+    "嚎大大雞霸",
+    "匠寵",
+    "FURMOSA",
+    "雞肉零食",
+    "低溫烘乾",
+    "寵物零食",
+    "狗公園",
+    "無添加",
   ],
-  authors: [{ name: "mschf" }],
+  authors: [{ name: `${BRAND.studio} ${BRAND.furmosa}` }],
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     url: SITE_URL,
-    siteName: "thisfootdoesnotexist",
+    siteName: BRAND.name,
     type: "website",
+    locale: "zh_TW",
     images: [{ url: `${SITE_URL}social/sharecard-facebook.png` }],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@mschfxyz",
     title: TITLE,
     description: DESCRIPTION,
     images: [`${SITE_URL}social/sharecard-twitter.png`],
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#1740c0",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -53,9 +53,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={asset("/thisfoot.css")} />
+        <link rel="stylesheet" href={asset("/site.css")} />
       </head>
       <body>{children}</body>
     </html>

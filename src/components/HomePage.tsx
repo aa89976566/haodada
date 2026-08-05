@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { THISFOOT_HTML } from "@/data/thisfootHtml";
+import { BRAND } from "@/data/brand";
+import { buildSiteHtml } from "@/data/siteHtml";
 
 function basePath() {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -16,13 +17,14 @@ function withBase(html: string) {
     .replace(/(src|href)="(\/img\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(src|href)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(srcset)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
-    .replace(/(href)="(\/privacypolicy\.pdf)"/g, `$1="${base}$2"`)
     .replace(/(src|href)="(\/social\/[^"]+)"/g, `$1="${base}$2"`);
 }
 
+const ENTERED_KEY = "haodada-entered";
+
 function markEntered() {
   try {
-    sessionStorage.setItem("thisfoot-entered", "1");
+    sessionStorage.setItem(ENTERED_KEY, "1");
   } catch {
     // ignore
   }
@@ -30,7 +32,7 @@ function markEntered() {
 
 function hasEntered() {
   try {
-    return sessionStorage.getItem("thisfoot-entered") === "1";
+    return sessionStorage.getItem(ENTERED_KEY) === "1";
   } catch {
     return false;
   }
@@ -38,6 +40,7 @@ function hasEntered() {
 
 function Preloader({ onDone }: { onDone: () => void }) {
   const [rotate, setRotate] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
     if (hasEntered()) {
@@ -49,18 +52,29 @@ function Preloader({ onDone }: { onDone: () => void }) {
   }, [onDone]);
 
   return (
-    <div id="MSCHFPreloader">
+    <div
+      id="SitePreloader"
+      className={exiting ? "is-exiting" : undefined}
+      style={exiting ? { pointerEvents: "auto" } : undefined}
+    >
       <div className={`gradient-background${rotate ? " rotate" : ""}`} />
       <div className="loader-inner">
         <div className="content-wrapper">
-          <h1>This Foot Does Not Exist</h1>
-          <h3>* MSCHF *</h3>
+          <h1>{BRAND.name}</h1>
+          <h3>* {BRAND.studio} × {BRAND.furmosa} *</h3>
           <button
             type="button"
             className="enter"
-            onClick={() => {
+            disabled={exiting}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (exiting) return;
               markEntered();
-              onDone();
+              setExiting(true);
+              // Delay unmount past mouseup so ENTER cannot click-through
+              // to the @FURMOSA hotspot underneath.
+              window.setTimeout(() => onDone(), 320);
             }}
           >
             ENTER
@@ -71,13 +85,10 @@ function Preloader({ onDone }: { onDone: () => void }) {
   );
 }
 
-/**
- * Direct static mirror of https://thisfootdoesnotexist.com/
- * Markup + CSS + assets captured from the live site.
- */
+/** Left/right fixed columns, scrolling center chat — 嚎大大雞霸 / FURMOSA. */
 export function HomePage() {
   const [ready, setReady] = useState(false);
-  const html = useMemo(() => withBase(THISFOOT_HTML), []);
+  const html = useMemo(() => withBase(buildSiteHtml()), []);
 
   useEffect(() => {
     document.body.classList.toggle("page-ready", ready);
@@ -87,11 +98,7 @@ export function HomePage() {
   return (
     <>
       {!ready && <Preloader onDone={() => setReady(true)} />}
-      <div
-        className="thisfoot-mirror"
-        // Static snapshot of the hydrated thisfoot DOM.
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div className="site-mirror" dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
 }
