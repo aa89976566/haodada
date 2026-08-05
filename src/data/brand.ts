@@ -14,18 +14,46 @@ export const BRAND = {
   features: ["無添加", "純雞情", "低溫烘乾", "狗公園社交"] as const,
 } as const;
 
-export type ChatBlock =
-  | { kind: "mine"; texts: string[] }
-  | { kind: "yours"; texts: string[] };
+export type ChatTextBlock = {
+  kind: "mine" | "yours";
+  texts: string[];
+};
+
+/** Exactly one image bubble in the thread (left / yours). */
+export type ChatImageBlock = {
+  kind: "yours";
+  image: string;
+  alt: string;
+};
+
+export type ChatBlock = ChatTextBlock | ChatImageBlock;
 
 /** Short alternating bubbles — Taiwanese spoken tone, no punctuation. */
 export const CHAT: ChatBlock[] = [
-  { kind: "mine", texts: ["旁邊那個怎麼自己站在那"] },
-  { kind: "yours", texts: ["他沒帶雞霸啊"] },
-  { kind: "mine", texts: ["難怪狗看到他直接轉彎"] },
-  { kind: "yours", texts: ["連路過的都假裝沒看到"] },
-  { kind: "mine", texts: ["太慘了吧 我才不要變那樣"] },
-  { kind: "yours", texts: ["所以下次去公園自己知道"] },
+  { kind: "mine", texts: ["欸你們剛剛那包是什麼"] },
+  { kind: "yours", texts: ["雞胸肉做的雞排啊"] },
+  { kind: "mine", texts: ["看起來也太大一片"] },
+  { kind: "yours", texts: ["我買過 我家那隻看到袋子就坐好了"] },
+  {
+    kind: "yours",
+    image: "/images/haodada/eat-bulldog.png",
+    alt: "狗狗咬著大片雞排合照",
+  },
+  { kind: "mine", texts: ["這張也太可愛 可以直接拿來當大頭貼"] },
+  { kind: "yours", texts: ["而且它完全無添加"] },
+  {
+    kind: "yours",
+    texts: ["成分就雞肉 沒有香料沒有色素也沒有防腐劑"],
+  },
+  { kind: "mine", texts: ["那會不會很貴"] },
+  { kind: "yours", texts: ["沒有欸 這個份量價格很合理"] },
+  {
+    kind: "yours",
+    texts: ["平常剪小塊當獎勵也可以 一包可以吃一陣子"],
+  },
+  { kind: "mine", texts: ["難怪去公園整群都跑過來"] },
+  { kind: "yours", texts: ["旁邊沒帶的那個直接變空氣"] },
+  { kind: "mine", texts: ["太慘 我不要跟他一樣"] },
   { kind: "mine", texts: ["這誰做的"] },
   { kind: "yours", texts: ["匠寵"] },
   { kind: "mine", texts: ["匠寵是什麼"] },
@@ -33,7 +61,7 @@ export const CHAT: ChatBlock[] = [
     kind: "yours",
     texts: [
       "做毛孩食物的台灣品牌",
-      "原料跟做法都講清楚 不搞看不懂的東西",
+      "專門把毛孩吃的東西做簡單 原料跟做法都講清楚",
     ],
   },
   { kind: "mine", texts: ["哪裡買"] },
@@ -44,5 +72,5 @@ export const CHAT: ChatBlock[] = [
       `或直接上 <a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">furmosa.com</a>`,
     ],
   },
-  { kind: "mine", texts: ["好 先買再說"] },
+  { kind: "mine", texts: ["好 先買一包幫牠拍照"] },
 ];
