@@ -6,7 +6,6 @@ export const BRAND = {
   studio: "匠寵",
   furmosa: "FURMOSA",
   tagline: "帶球，只會開始遊戲。帶雞霸，才會開始聊天。",
-  heroLine: "低溫烘乾 · 無添加 · 狗公園社交武器",
   description:
     "嚎大大雞霸——匠寵 FURMOSA 寵物雞肉零食。整片雞胸肉低溫烘乾，無添加，給毛孩大口咬才夠味。",
   lineUrl: "https://line.me/R/ti/p/@furmosa",
