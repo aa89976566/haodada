@@ -1,4 +1,4 @@
-/* Minimal reset; site styles live in /thisfoot.css (public, basePath-safe). */
+/* Minimal reset; site styles live in /site.css (public, basePath-safe). */
 html {
   background: #1740c0;
   -webkit-font-smoothing: antialiased;
@@ -40,11 +40,11 @@ video {
   display: block;
 }
 
-.page-ready #MSCHFPreloader {
+.page-ready #SitePreloader {
   display: none;
 }
 
-#MSCHFPreloader .loader-inner .content-wrapper button.enter {
+#SitePreloader .loader-inner .content-wrapper button.enter {
   margin-top: 2rem;
   border: 0;
   background: #fff;
@@ -57,12 +57,16 @@ video {
   max-width: 280px;
 }
 
-#MSCHFPreloader .loader-inner .content-wrapper button.enter:hover {
+#SitePreloader .loader-inner .content-wrapper button.enter:hover {
   background: #ffd150;
-  color: #ff4d4d;
+  color: #c41230;
 }
 
-.yours .message.has-image video {
+#SitePreloader .loader-inner .content-wrapper button.enter:disabled {
+  opacity: 0.85;
+}
+
+.yours .message.has-image img {
   width: 100%;
   border-radius: 12px;
 }

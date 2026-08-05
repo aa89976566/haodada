@@ -1,6 +1,8 @@
 # 嚎大大雞霸
 
-寵物原肉雞排零食品牌形象站（Next.js + GitHub Pages）。
+匠寵 FURMOSA 寵物原肉雞排零食形象站（Next.js + GitHub Pages）。
+
+桌面三欄：左右固定側欄、中央可捲聊天；進場 ENTER；CTA 導向 LINE @FURMOSA。
 
 ## 開發
 
