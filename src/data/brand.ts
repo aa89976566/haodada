@@ -11,6 +11,8 @@ export const BRAND = {
   lineHandle: "@FURMOSA",
   shopUrl:
     "https://furmosa.com/products/chicken-fillet?variant=56882074419577",
+  igUrl: "https://www.instagram.com/furmosa_food/",
+  igHandle: "@furmosa_food",
   features: ["無添加", "純雞情", "低溫烘乾", "狗公園社交"] as const,
 } as const;
 
@@ -36,7 +38,7 @@ export const CHAT: ChatBlock[] = [
   { kind: "yours", texts: ["我買過 我家那隻看到袋子就坐好了"] },
   {
     kind: "yours",
-    image: "/images/haodada/eat-bulldog.png",
+    image: "/images/haodada/dog-jerky-customer-repaired-v2.jpg",
     alt: "狗狗咬著大片雞排合照",
   },
   { kind: "mine", texts: ["這張也太可愛 可以直接拿來當大頭貼"] },
@@ -54,22 +56,22 @@ export const CHAT: ChatBlock[] = [
   { kind: "mine", texts: ["難怪去公園整群都跑過來"] },
   { kind: "yours", texts: ["旁邊沒帶的那個直接變空氣"] },
   { kind: "mine", texts: ["太慘 我不要跟他一樣"] },
-  { kind: "mine", texts: ["這誰做的"] },
-  { kind: "yours", texts: ["匠寵"] },
-  { kind: "mine", texts: ["匠寵是什麼"] },
-  {
-    kind: "yours",
-    texts: [
-      "做毛孩食物的台灣品牌",
-      "專門把毛孩吃的東西做簡單 原料跟做法都講清楚",
-    ],
-  },
-  { kind: "mine", texts: ["哪裡買"] },
+  { kind: "mine", texts: ["哪裡可以買"] },
   {
     kind: "yours",
     texts: [
       `加 LINE 找 <a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">${BRAND.lineHandle}</a>`,
       `或直接上 <a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">furmosa.com</a>`,
+      "對了裡面還可以抽狗狗卡牌",
+      "抽到跟自己同品種的可以免費再來一包欸",
+    ],
+  },
+  { kind: "mine", texts: ["是什麼意思"] },
+  {
+    kind: "yours",
+    texts: [
+      "哎呀你直接追蹤他們 IG 就知道了",
+      `<a href="${BRAND.igUrl}" target="_blank" rel="noopener noreferrer" class="phone-link" aria-label="Instagram ${BRAND.igHandle}">${BRAND.igHandle}</a>`,
     ],
   },
   { kind: "mine", texts: ["好 先買一包幫牠拍照"] },
