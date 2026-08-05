@@ -28,7 +28,14 @@ export type ChatImageBlock = {
   alt: string;
 };
 
-export type ChatBlock = ChatTextBlock | ChatImageBlock;
+/** Exactly one video bubble in the thread (left / yours) — chat media card. */
+export type ChatVideoBlock = {
+  kind: "yours";
+  video: string;
+  alt: string;
+};
+
+export type ChatBlock = ChatTextBlock | ChatImageBlock | ChatVideoBlock;
 
 /** Short alternating bubbles — Taiwanese spoken tone, no punctuation. */
 export const CHAT: ChatBlock[] = [
@@ -65,6 +72,12 @@ export const CHAT: ChatBlock[] = [
     ],
   },
   { kind: "mine", texts: ["難怪剛剛去公園整群狗都跑過來"] },
+  { kind: "yours", texts: ["你看剛剛就是這樣"] },
+  {
+    kind: "yours",
+    video: "/images/haodada/dogpark-product-v2.mp4",
+    alt: "狗公園拿著嚎大大雞霸的影片",
+  },
   { kind: "yours", texts: ["沒帶的那個直接在旁邊變空氣"] },
   {
     kind: "mine",
