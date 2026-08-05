@@ -40,7 +40,9 @@ img,video{max-width:100%;height:auto;display:block}
   /* ≥16px CRT/keyboard safety inset on side posters */
   --side-pad-y:max(16px,clamp(16px,3.5vh,48px));
   --side-pad-x:max(16px,clamp(16px,2.8vw,48px));
-  --chat-media-width:82%;
+  /* Reference .has-image uses margin-right:12% (~88% max); keep 78–86% card */
+  --chat-media-width:86%;
+  --chat-media-gutter:14%;
 }
 
 html,body{
@@ -282,9 +284,10 @@ html,body{
 /* Chat media cards (photo + video): single-side bubble, ~78–86% rail width */
 .yours .message.has-image{
   display:inline-block!important;
-  width:var(--chat-media-width);
-  max-width:var(--chat-media-width);
-  margin-right:calc(100% - var(--chat-media-width));
+  width:var(--chat-media-width)!important;
+  max-width:var(--chat-media-width)!important;
+  margin-right:var(--chat-media-gutter)!important;
+  margin-left:0!important;
   margin-top:5px;
   margin-bottom:5px;
   padding:10px;
@@ -299,7 +302,7 @@ html,body{
 .yours .message.has-image .chat-bubble-photo{
   display:block;
   width:100%;
-  max-width:100%;
+  max-width:100%!important;
   height:auto;
   object-fit:contain;
   object-position:center;
@@ -307,8 +310,10 @@ html,body{
   background:#e5e5ea;
   padding:0;
 }
+/* Video card — reference rhythm: yours/has-image media, not full-bleed */
 .yours .message.has-video{
-  padding:8px;
+  padding:0!important;
+  background:#e5e5ea!important;
 }
 .yours .message.has-video .chat-product-video,
 .hero.is-fullheight .mobile-messages .chat .chat-product-video{
@@ -322,7 +327,7 @@ html,body{
   border:0!important;
   box-shadow:none!important;
   margin:0!important;
-  border-radius:14px;
+  border-radius:20px;
   pointer-events:none;
 }
 .yours .message.has-video .chat-product-video::-webkit-media-controls,
