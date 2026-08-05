@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1740c0",
+  themeColor: "#1a42c2",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={asset("/haodada-site-v2.css")} />
+        <link rel="stylesheet" href={asset("/haodada-site-v3.css")} />
       </head>
       <body>{children}</body>
     </html>

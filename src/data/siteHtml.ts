@@ -17,22 +17,10 @@ function renderTexts(texts: string[], markLast: boolean) {
 }
 
 function renderChatBlock(block: ChatBlock): string {
-  if (block.kind === "yours-ad") {
-    return `<div class="yours messages"><div class="message has-image is-ad"><img src="${escapeAttr(block.image.src)}" alt="${escapeAttr(block.image.alt)}"></div></div>`;
-  }
-
   if (block.kind === "mine") {
     return `<div class="mine messages">${renderTexts(block.texts, true)}</div>`;
   }
-
-  const parts: string[] = [];
-  if (block.image) {
-    parts.push(
-      `<div class="message has-image"><img src="${escapeAttr(block.image.src)}" alt="${escapeAttr(block.image.alt)}"></div>`,
-    );
-  }
-  parts.push(renderTexts(block.texts, true));
-  return `<div class="yours messages">${parts.join("")}</div>`;
+  return `<div class="yours messages">${renderTexts(block.texts, true)}</div>`;
 }
 
 function renderChat() {
@@ -44,5 +32,5 @@ export function buildSiteHtml(): string {
   const line = BRAND.lineUrl;
   const handle = BRAND.lineHandle;
 
-  return `<section class="hero is-fullheight"><div class="container main-container"><div class="columns is-gapless"><div class="column desktop-column left is-hidden-mobile"><picture class="desktop-hero-img"><source srcset="/images/side-dog-left.webp" type="image/webp"><img src="/images/side-dog-left.jpg" alt="嚎大大雞霸 無添加" width="883" height="1360" class="desktop-hero-img-el"></picture></div><div class="column is-3 mobile"><div class="mobile-wrapper"><div class="mobile-hero"><div class="hero-drive-wrap"><picture class="hero-image hero-drive"><source srcset="/images/hero-center.webp" type="image/webp"><img src="/images/hero-center.jpg" alt="實驗結果：帶上雞霸被搭訕機率增加 327%" width="1144" height="1360" decoding="async" fetchpriority="high" class="hero-drive-img"></picture><a class="furmosa-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" aria-label="加入 LINE ${escapeAttr(handle)}"><img src="/_nuxt/img/fc777b6.png" alt="" class="pointer furmosa-pointer" width="60" height="60"></a></div><div class="mobile-text"><div class="c2a-wrapper"><a href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" class="button c2a-phone-hero c2a-line-hero" aria-label="加入 LINE ${escapeAttr(handle)}"><span class="c2a-line-label">加入 ${escapeAttr(handle)}</span></a><p>點一下加入 LINE。我們寄雞霸給你。</p></div><p class="brand-strip">${escapeAttr(BRAND.heroLine)}</p></div></div><div class="mobile-messages"><div class="chat">${renderChat()}</div></div></div></div><div class="column desktop-column right is-hidden-mobile"><picture class="desktop-hero-img"><source srcset="/images/side-dog-right.webp" type="image/webp"><img src="/images/side-dog-right.jpg" alt="嚎大大雞霸 純雞情" width="883" height="1360" class="desktop-hero-img-el"></picture></div></div></div></section>`;
+  return `<section class="hero is-fullheight"><div class="container main-container"><div class="columns is-gapless"><div class="column desktop-column left is-hidden-mobile"><picture class="desktop-hero-img"><source srcset="/images/side-dog-left-v2.webp" type="image/webp"><img src="/images/side-dog-left-v2.jpg" alt="嚎大大雞霸 無添加" width="634" height="1360" class="desktop-hero-img-el"></picture></div><div class="column is-3 mobile"><div class="mobile-wrapper"><div class="mobile-hero"><div class="hero-drive-wrap"><picture class="hero-image hero-drive"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img src="/images/hero-center-v2.jpg" alt="實驗結果：帶上雞霸被搭訕機率增加 327%" width="1133" height="1360" decoding="async" fetchpriority="high" class="hero-drive-img"></picture><a class="furmosa-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" aria-label="加入 LINE ${escapeAttr(handle)}"><img src="/_nuxt/img/fc777b6.png" alt="" class="pointer furmosa-pointer" width="60" height="60"></a></div><div class="mobile-text"><div class="c2a-wrapper"><a href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" class="button c2a-phone-hero c2a-line-hero" aria-label="加入 LINE ${escapeAttr(handle)}"><span class="c2a-line-label">加入 ${escapeAttr(handle)}</span></a><p>點一下加入 LINE。我們寄雞霸給你。</p></div><p class="brand-strip">${escapeAttr(BRAND.heroLine)}</p></div></div><div class="mobile-messages"><div class="chat">${renderChat()}</div></div></div></div><div class="column desktop-column right is-hidden-mobile"><picture class="desktop-hero-img"><source srcset="/images/side-dog-right-v2.webp" type="image/webp"><img src="/images/side-dog-right-v2.jpg" alt="嚎大大雞霸 純雞情" width="627" height="1360" class="desktop-hero-img-el"></picture></div></div></div></section>`;
 }

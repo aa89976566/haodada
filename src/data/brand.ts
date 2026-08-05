@@ -18,18 +18,13 @@ export const BRAND = {
 
 export type ChatBlock =
   | { kind: "mine"; texts: string[] }
-  | { kind: "yours"; texts: string[]; image?: { src: string; alt: string } }
-  | { kind: "yours-ad"; image: { src: string; alt: string } };
+  | { kind: "yours"; texts: string[] };
 
-/** Chat rhythm: short, punchy, absurd — brand world only. */
+/** Chat rhythm: short, punchy, absurd — brand world only. Text bubbles only. */
 export const CHAT: ChatBlock[] = [
   { kind: "mine", texts: ["寄雞霸來！！"] },
   {
     kind: "yours",
-    image: {
-      src: "/images/haodada/chat-product.jpg",
-      alt: "嚎大大雞霸 雞肉零食包裝",
-    },
     texts: ["像這樣！！大口雞胸肉乾 ←←←←??????"],
   },
   { kind: "mine", texts: ["這是什麼做的？"] },
@@ -56,10 +51,6 @@ export const CHAT: ChatBlock[] = [
   { kind: "mine", texts: ["帶去狗公園會怎樣？"] },
   {
     kind: "yours",
-    image: {
-      src: "/images/haodada/eat-dachshund.png",
-      alt: "狗狗開心咬雞霸",
-    },
     texts: ["被搭訕機率增加 327%。", "實驗結果如圖。請自行負責社交後果。"],
   },
   { kind: "mine", texts: ["真的無添加？"] },
@@ -69,13 +60,6 @@ export const CHAT: ChatBlock[] = [
       "對。低溫烘乾雞肉零食，配方簡單清楚。",
       "適合當日常獎勵；請搭配主食與充足飲水。",
     ],
-  },
-  {
-    kind: "yours-ad",
-    image: {
-      src: "/images/haodada/pack-brown.png",
-      alt: "嚎大大雞霸產品",
-    },
   },
   { kind: "mine", texts: ["怎麼買？"] },
   {

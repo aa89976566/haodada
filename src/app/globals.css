@@ -1,6 +1,6 @@
-/* Minimal reset; site styles live in /haodada-site-v2.css (public, basePath-safe). */
+/* Minimal reset; site styles live in /haodada-site-v3.css (public, basePath-safe). */
 html {
-  background: #1740c0;
+  background: #1a42c2;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background: #1740c0;
+  background: #1a42c2;
   color: #fff;
   min-height: 100%;
   font-family: "SpaceMono Regular", "Andale Mono", monospace;
@@ -58,15 +58,10 @@ video {
 }
 
 #SitePreloader .loader-inner .content-wrapper button.enter:hover {
-  background: #ffd150;
+  background: #f7dc50;
   color: #c41230;
 }
 
 #SitePreloader .loader-inner .content-wrapper button.enter:disabled {
   opacity: 0.85;
-}
-
-.yours .message.has-image img {
-  width: 100%;
-  border-radius: 12px;
 }
