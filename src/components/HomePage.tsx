@@ -85,6 +85,21 @@ function Preloader({ onDone }: { onDone: () => void }) {
   );
 }
 
+function startMutedAutoplay(video: HTMLVideoElement) {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
+  const playAttempt = video.play();
+  if (playAttempt && typeof playAttempt.catch === "function") {
+    playAttempt.catch(() => {
+      // Autoplay may be blocked; leave muted for a later user gesture.
+    });
+  }
+}
+
 /** Left/right fixed columns, scrolling center chat — 嚎大大雞霸 / FURMOSA. */
 export function HomePage() {
   const [ready, setReady] = useState(false);
@@ -93,6 +108,23 @@ export function HomePage() {
   useEffect(() => {
     document.body.classList.toggle("page-ready", ready);
     return () => document.body.classList.remove("page-ready");
+  }, [ready]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const video = document.querySelector<HTMLVideoElement>(
+      "video.chat-product-video",
+    );
+    if (!video) return;
+    if (reduceMotion) {
+      video.removeAttribute("autoplay");
+      video.pause();
+      return;
+    }
+    startMutedAutoplay(video);
   }, [ready]);
 
   return (

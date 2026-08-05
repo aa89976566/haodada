@@ -38,8 +38,8 @@ export const CHAT: ChatBlock[] = [
   { kind: "yours", texts: ["我買過 我家那隻看到袋子就坐好了"] },
   {
     kind: "yours",
-    image: "/images/haodada/dog-jerky-customer-repaired-v2.jpg",
-    alt: "狗狗咬著大片雞排合照",
+    image: "/images/haodada/customer-dog-product-v3.jpg",
+    alt: "使用者的狗狗咬著嚎大大雞霸",
   },
   { kind: "mine", texts: ["這張也太可愛 可以直接拿來當大頭貼"] },
   { kind: "yours", texts: ["而且它完全無添加"] },
