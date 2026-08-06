@@ -14,7 +14,7 @@
   --center-w:414px;
   --chat-media-width:86%;
   --chat-media-gutter:14%;
-  }
+}
 
 html{
   background:var(--hero-letterbox);
@@ -51,9 +51,11 @@ img,video{max-width:100%;height:auto;display:block}
 #SitePreloader.is-exiting{pointer-events:auto}
 
 /* =========================================================
-   v14 — thisfootdoesnotexist reference shell
-   Only the 414px center rail is in document flow.
-   Left/right are fixed viewport crops of the same master JPEG.
+   v14 — single fixed .desktop-master
+   + 414px .center-flow
+   + transparent 100vh spacer
+   + opaque .chat-stream
+   Document flow is ONLY the center rail. Master never scrolls.
    ========================================================= */
 .hero.is-fullheight{
   min-height:100vh;
@@ -61,96 +63,120 @@ img,video{max-width:100%;height:auto;display:block}
   width:100%;
   margin:0;
   padding:0;
-  background:var(--hero-letterbox);
+  background:transparent;
   overflow-x:clip;
-}
-
-.reference-shell{
-  width:var(--center-w);
-  max-width:100%;
-  margin:0 auto;
   position:relative;
-  min-height:100vh;
-  min-height:100dvh;
-  background:var(--ink-yellow);
 }
 
-.center-rail{
-  width:var(--center-w);
-  max-width:100%;
-  position:relative;
-  z-index:2;
-  background:var(--ink-yellow);
-  margin:0;
-  padding:0;
-}
-
-/* Fixed side viewports — never contribute document height */
-.master-side{
+/* Fixed full-viewport master — one image, never in document flow */
+.desktop-master{
   position:fixed;
   top:0;
+  left:0;
+  width:100vw;
   height:100dvh;
+  z-index:0;
   overflow:hidden;
-  z-index:1;
   background:var(--hero-letterbox);
   pointer-events:none;
   margin:0;
   padding:0;
-  border:0;
+  display:none;
 }
-.master-side--left{
-  left:0;
-  width:calc((100vw - var(--center-w)) / 2);
-}
-.master-side--right{
-  right:0;
-  width:calc((100vw - var(--center-w)) / 2);
-}
-
-/* Three synced crops of the same master image */
-.master-side img.master-crop-img,
-.center-hero-window img.master-crop-img--desktop{
+.desktop-master-img{
+  display:block;
   position:absolute;
   top:0;
+  left:0;
   width:100vw!important;
   max-width:none!important;
-  height:auto!important;
-  display:block;
+  height:100dvh!important;
+  object-fit:contain;
+  object-position:center center;
   border:0;
   border-radius:0;
   box-shadow:none;
-  object-fit:fill;
 }
-.master-side--left img.master-crop-img{left:0}
-.master-side--right img.master-crop-img{left:calc(-1 * ((100vw + var(--center-w)) / 2))}
 
-.center-hero-window{
+/* Only this column contributes document height */
+.center-flow{
   position:relative;
+  z-index:2;
   width:var(--center-w);
   max-width:100%;
-  height:calc(100vw * 941 / 1672);
-  max-height:100dvh;
-  overflow:hidden;
-  background:var(--hero-letterbox);
-  margin:0;
+  margin:0 auto;
   padding:0;
-  line-height:0;
-}
-.center-hero-window img.master-crop-img--desktop{
-  left:calc(-1 * ((100vw - var(--center-w)) / 2));
+  background:transparent;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  row-gap:0;
 }
 
-/* Mobile poster lives in flow; hidden on desktop */
-.center-hero-mobile{display:none}
-.center-hero-mobile-img{display:none}
-
-/* Chat immediately under center hero — no full-width rail, spacer, or divider */
-.mobile-messages{
-  margin:0;
-  padding:0;
-  background:var(--ink-yellow);
+/* Transparent window onto the fixed master for the first viewport */
+.center-spacer{
+  display:none;
   width:100%;
+  height:100vh;
+  height:100dvh;
+  margin:0;
+  padding:0;
+  border:0;
+  background:transparent;
+  pointer-events:none;
+  flex:0 0 auto;
 }
+
+/* Mobile-only poster in flow — default hidden on desktop */
+.mobile-hero-flow{
+  display:none;
+  width:100%;
+  margin:0!important;
+  padding:0!important;
+  border:0;
+  line-height:0;
+  font-size:0;
+  background:var(--ink-yellow);
+  flex:0 0 auto;
+}
+.mobile-hero-picture{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  line-height:0;
+  font-size:0;
+}
+.mobile-hero-img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  border:0;
+  vertical-align:top;
+  object-fit:contain;
+  object-position:center;
+  background:var(--ink-yellow);
+}
+
+/* Opaque yellow chat — covers master as it scrolls up; no top gap */
+.chat-stream,
+.mobile-messages.chat-stream{
+  position:relative;
+  z-index:2;
+  width:100%;
+  margin:0!important;
+  margin-top:0!important;
+  padding:0!important;
+  border:0;
+  background:var(--ink-yellow);
+  background-color:var(--ink-yellow);
+  flex:0 0 auto;
+}
+.chat-stream .chat,
 .mobile-messages .chat{
   margin:0;
   padding:16px 1rem 3rem;
@@ -161,6 +187,7 @@ img,video{max-width:100%;height:auto;display:block}
   display:flex;
   flex-direction:column;
 }
+
 .messages{display:flex;flex-direction:column}
 .message{
   border-radius:20px;
@@ -263,8 +290,8 @@ img,video{max-width:100%;height:auto;display:block}
   padding:0!important;
   background:#e5e5ea!important;
 }
-.yours .message.has-video .chat-product-video,
-.mobile-messages .chat .chat-product-video{
+.chat-stream .chat .chat-product-video,
+.yours .message.has-video .chat-product-video{
   display:block;
   width:100%!important;
   max-width:100%!important;
@@ -278,10 +305,10 @@ img,video{max-width:100%;height:auto;display:block}
   border-radius:20px;
   pointer-events:none;
 }
+.chat-stream .chat .chat-product-video::-webkit-media-controls,
+.chat-stream .chat .chat-product-video::-webkit-media-controls-enclosure,
 .yours .message.has-video .chat-product-video::-webkit-media-controls,
-.yours .message.has-video .chat-product-video::-webkit-media-controls-enclosure,
-.mobile-messages .chat .chat-product-video::-webkit-media-controls,
-.mobile-messages .chat .chat-product-video::-webkit-media-controls-enclosure{
+.yours .message.has-video .chat-product-video::-webkit-media-controls-enclosure{
   display:none!important;
 }
 .yours .message a.phone-link,
@@ -290,7 +317,12 @@ img,video{max-width:100%;height:auto;display:block}
   text-decoration:underline;
 }
 
-/* Kill legacy v12/v13 structures if residual markup ever appears */
+/* Kill abandoned three-crop / full-stage structures */
+.reference-shell,
+.master-side,
+.master-crop-img,
+.center-rail,
+.center-hero-window,
 .master-hero-stage,
 .chat-rail,
 .master-hero-img,
@@ -307,73 +339,90 @@ img,video{max-width:100%;height:auto;display:block}
   overflow:hidden!important;
   border:0!important;
   pointer-events:none!important;
+  position:static!important;
 }
 
-/* Desktop ≥1024: three synced master crops */
+/* Desktop ≥1024 */
 @media screen and (min-width:1024px){
-  .center-hero-mobile,
-  .center-hero-mobile-img{display:none!important}
-  .master-crop-img--desktop{display:block!important}
-  .master-side{display:block}
+  .desktop-master{display:block}
+  .center-spacer{display:block}
+  .mobile-hero-flow,
+  .mobile-hero-picture,
+  .mobile-hero-img{display:none!important}
+  .center-flow{width:var(--center-w)}
 }
 
-/* Mobile / tablet <1024: hide sides, readable center poster → chat */
+/* Mobile / tablet <1024 */
 @media screen and (max-width:1023px){
   html,body{background:var(--ink-yellow)}
   .hero.is-fullheight{background:var(--ink-yellow)}
-  .master-side{
+  .desktop-master{
     display:none!important;
     visibility:hidden!important;
     width:0!important;
     height:0!important;
-    pointer-events:none!important;
   }
-  .reference-shell,
-  .center-rail{
+  .center-spacer{
+    display:none!important;
+    height:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  .center-flow{
     width:100%;
     max-width:var(--center-w);
     margin:0 auto;
-    min-height:0;
+    background:var(--ink-yellow);
+    gap:0;
+    row-gap:0;
   }
-  .master-crop-img--desktop{display:none!important}
-  .center-hero-window{
+  .mobile-hero-flow{
+    display:block!important;
     width:100%;
-    height:auto;
-    max-height:none;
-    overflow:visible;
+    margin:0!important;
+    padding:0!important;
+    line-height:0;
+    font-size:0;
     background:var(--ink-yellow);
   }
-  .center-hero-mobile{
+  .mobile-hero-picture{
     display:block!important;
     width:100%;
+    margin:0;
+    padding:0;
     line-height:0;
+    font-size:0;
   }
-  .center-hero-mobile-img{
+  .mobile-hero-img{
     display:block!important;
-    position:relative!important;
-    left:auto!important;
-    top:auto!important;
     width:100%!important;
     max-width:100%!important;
     height:auto!important;
-    aspect-ratio:1133 / 1360;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
     object-fit:contain;
     object-position:center;
     background:var(--ink-yellow);
   }
+  .chat-stream,
+  .mobile-messages.chat-stream{
+    margin:0!important;
+    margin-top:0!important;
+    padding:0!important;
+    background:var(--ink-yellow);
+  }
 }
 
-@keyframes hero-fade-up{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:none}
+/* Opacity-only — no translateY (avoids layout gap under mobile hero) */
+@keyframes hero-fade-in{
+  from{opacity:0}
+  to{opacity:1}
 }
-.page-ready .center-hero-window{
-  animation:hero-fade-up .65s ease-out .1s both;
-}
-.page-ready .mobile-messages{
-  animation:hero-fade-up .5s ease-out .22s both;
+.page-ready .chat-stream{
+  animation:hero-fade-in .45s ease-out .12s both;
 }
 @media (prefers-reduced-motion:reduce){
-  .page-ready .center-hero-window,
-  .page-ready .mobile-messages{animation:none!important}
+  .page-ready .chat-stream{animation:none!important}
 }
