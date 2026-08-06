@@ -34,10 +34,13 @@ function renderChat() {
 }
 
 /**
- * v13 layout: one unified master hero (first viewport) → yellow chat rail.
- * Desktop uses hero-master-v13.jpg (16:9 contain + corner-blue letterbox).
- * Mobile uses existing center poster so the first screen stays readable.
+ * v14 — thisfootdoesnotexist reference shell:
+ * fixed left/right master crops + scrolling 414px center rail (hero → chat).
+ * Desktop uses one master JPEG for three synced viewport crops.
  */
 export function buildSiteHtml(): string {
-  return `<section class="hero is-fullheight"><div class="container main-container"><div class="master-hero-stage"><img class="master-hero-img master-hero-img--desktop" src="/images/hero-master-v13.jpg" alt="${escapeAttr(BRAND.name)} 統一主視覺" width="960" height="540" decoding="async" fetchpriority="high"><picture class="master-hero-mobile"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img class="master-hero-img master-hero-img--mobile" src="/images/hero-center-v2.jpg" alt="${escapeAttr(BRAND.name)} 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high"></picture></div><div class="chat-rail"><div class="mobile-messages"><div class="chat">${renderChat()}</div></div></div></div></section>`;
+  const master = "/images/hero-master-v13.jpg";
+  const masterAlt = `${BRAND.name} 統一主視覺`;
+
+  return `<section class="hero is-fullheight"><div class="reference-shell"><aside class="master-side master-side--left" aria-hidden="true"><img class="master-crop-img" src="${escapeAttr(master)}" alt="" width="960" height="540" decoding="async" fetchpriority="high"></aside><main class="center-rail"><div class="center-hero-window"><img class="master-crop-img master-crop-img--desktop" src="${escapeAttr(master)}" alt="${escapeAttr(masterAlt)}" width="960" height="540" decoding="async" fetchpriority="high"><picture class="center-hero-mobile"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img class="center-hero-mobile-img" src="/images/hero-center-v2.jpg" alt="${escapeAttr(BRAND.name)} 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high"></picture></div><section class="mobile-messages"><div class="chat">${renderChat()}</div></section></main><aside class="master-side master-side--right" aria-hidden="true"><img class="master-crop-img" src="${escapeAttr(master)}" alt="" width="960" height="540" decoding="async" fetchpriority="high"></aside></div></section>`;
 }
