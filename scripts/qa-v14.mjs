@@ -6,12 +6,13 @@ const OUT = "/opt/cursor/artifacts/v14-qa";
 const URL = "http://127.0.0.1:4173/";
 const VIEWPORTS = [
   { w: 390, h: 844 },
+  { w: 768, h: 900 },
   { w: 820, h: 900 },
-  { w: 1024, h: 900 },
   { w: 1440, h: 900 },
   { w: 1920, h: 900 },
 ];
 const HARD_TIMEOUT_MS = 90_000;
+const DESKTOP_MIN = 769;
 
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -43,11 +44,12 @@ async function measure(page, vw, vh) {
   await page.waitForTimeout(500);
 
   const data = await page.evaluate(() => {
-    const master = document.querySelector(".desktop-master");
-    const masterImg = document.querySelector(".desktop-master-img");
+    const masters = document.querySelectorAll(".desktop-master");
+    const master = masters[0] || null;
+    const masterImg = master?.querySelector("img") || null;
     const flow = document.querySelector(".center-flow");
-    const spacer = document.querySelector(".center-spacer");
-    const mobileHero = document.querySelector(".mobile-hero-flow");
+    const spacer = document.querySelector(".desktop-hero-spacer");
+    const mobileHero = document.querySelector(".mobile-hero");
     const chat = document.querySelector(".chat-stream");
     const video = document.querySelector("video.chat-product-video");
     const cssHref =
@@ -79,7 +81,11 @@ async function measure(page, vw, vh) {
         marginTop: s.marginTop,
         marginBottom: s.marginBottom,
         paddingTop: s.paddingTop,
+        overflow: s.overflow,
+        overflowY: s.overflowY,
         transform: s.transform,
+        objectFit: s.objectFit,
+        objectPosition: s.objectPosition,
       };
     }
 
@@ -89,18 +95,30 @@ async function measure(page, vw, vh) {
       if (html.includes(w)) banned.push(w);
     }
 
+    const nestedScroll = [...document.querySelectorAll("*")].filter((el) => {
+      if (el === document.documentElement || el === document.body) return false;
+      const s = getComputedStyle(el);
+      return (
+        (s.overflowY === "auto" || s.overflowY === "scroll") &&
+        el.scrollHeight > el.clientHeight + 2
+      );
+    }).length;
+
     const mh = rect(mobileHero);
     const ch = rect(chat);
     const sp = rect(spacer);
 
     return {
       cssHref,
+      masterCount: masters.length,
       hasThreeCrop: !!(
         document.querySelector(".reference-shell") ||
-        document.querySelector(".master-side")
+        document.querySelector(".master-side") ||
+        document.querySelector(".experience-shell")
       ),
       overflowX: document.documentElement.scrollWidth > window.innerWidth + 1,
       docWidth: document.documentElement.scrollWidth,
+      nestedScroll,
       banned,
       master: { style: style(master), rect: rect(master) },
       masterImg: masterImg
@@ -109,6 +127,7 @@ async function measure(page, vw, vh) {
             naturalWidth: masterImg.naturalWidth,
             naturalHeight: masterImg.naturalHeight,
             objectFit: getComputedStyle(masterImg).objectFit,
+            objectPosition: getComputedStyle(masterImg).objectPosition,
             src: (masterImg.getAttribute("src") || "").split("/").pop(),
           }
         : null,
@@ -132,12 +151,12 @@ async function measure(page, vw, vh) {
   });
 
   let afterScroll = null;
-  if (vw >= 1024) {
+  if (vw >= DESKTOP_MIN) {
     await page.evaluate(() => window.scrollTo(0, 500));
     await page.waitForTimeout(150);
     afterScroll = await page.evaluate(() => {
       const master = document.querySelector(".desktop-master");
-      const spacer = document.querySelector(".center-spacer");
+      const spacer = document.querySelector(".desktop-hero-spacer");
       const chat = document.querySelector(".chat-stream");
       const r = (el) => {
         if (!el) return null;
@@ -146,10 +165,12 @@ async function measure(page, vw, vh) {
       };
       return {
         scrollY: window.scrollY,
+        vh: window.innerHeight,
         master: r(master),
         spacer: r(spacer),
         chat: r(chat),
         masterPos: getComputedStyle(master).position,
+        chatBg: getComputedStyle(chat).backgroundColor,
       };
     });
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -162,8 +183,10 @@ async function measure(page, vw, vh) {
   const push = (name, ok, detail) => checks.push({ name, ok, detail });
 
   push("css-v14", data.cssHref.includes("haodada-site-v14"), data.cssHref);
+  push("master-once", data.masterCount === 1, String(data.masterCount));
   push("no-three-crop", !data.hasThreeCrop, String(data.hasThreeCrop));
   push("no-overflow", !data.overflowX, `docW=${data.docWidth}`);
+  push("body-only-scroll", data.nestedScroll === 0, `nested=${data.nestedScroll}`);
   push("banned", data.banned.length === 0, JSON.stringify(data.banned));
   push(
     "video",
@@ -176,10 +199,10 @@ async function measure(page, vw, vh) {
     JSON.stringify(data.video),
   );
 
-  if (vw >= 1024) {
+  if (vw >= DESKTOP_MIN) {
     const expectX = (vw - 414) / 2;
     push(
-      "center-flow",
+      "center-flow-414",
       near(data.flow.x, expectX, 2) && near(data.flow.width, 414, 1),
       `x=${data.flow.x} w=${data.flow.width}`,
     );
@@ -192,10 +215,11 @@ async function measure(page, vw, vh) {
       JSON.stringify({ style: data.master.style, rect: data.master.rect }),
     );
     push(
-      "master-img",
+      "master-img-contain",
       data.masterImg?.naturalWidth === 960 &&
         data.masterImg?.naturalHeight === 540 &&
-        data.masterImg?.src === "hero-master-v13.jpg",
+        data.masterImg?.src === "hero-master-v13.jpg" &&
+        data.masterImg?.objectFit === "contain",
       JSON.stringify(data.masterImg),
     );
     push(
@@ -216,19 +240,27 @@ async function measure(page, vw, vh) {
       data.mobileHero.style.display,
     );
     if (afterScroll) {
+      const expectChatTop = afterScroll.vh - 500;
       push(
-        "scroll-master-fixed",
+        "scrollY500-master-top0",
         afterScroll.masterPos === "fixed" &&
-          near(afterScroll.master.top, 0, 1.5),
-        JSON.stringify(afterScroll.master),
+          near(afterScroll.master.top, 0, 1.5) &&
+          near(afterScroll.scrollY, 500, 2),
+        JSON.stringify({
+          scrollY: afterScroll.scrollY,
+          masterTop: afterScroll.master.top,
+          pos: afterScroll.masterPos,
+        }),
       );
       push(
-        "scroll-chat-moves",
-        afterScroll.chat.top < vh - 100 && afterScroll.spacer.top < -400,
-        JSON.stringify({
-          spacerTop: afterScroll.spacer.top,
-          chatTop: afterScroll.chat.top,
-        }),
+        "scrollY500-chat-top",
+        near(afterScroll.chat.top, expectChatTop, 2),
+        `chatTop=${afterScroll.chat.top} expect=${expectChatTop}`,
+      );
+      push(
+        "chat-opaque-no-bleed",
+        afterScroll.chatBg.includes("247"),
+        afterScroll.chatBg,
       );
     }
   } else {
@@ -243,14 +275,17 @@ async function measure(page, vw, vh) {
       `display=${data.spacer.style.display} h=${data.spacer.rect?.height}`,
     );
     push(
+      "center-flow-full",
+      near(data.flow.width, vw, 2),
+      `w=${data.flow.width}`,
+    );
+    push(
       "mobile-hero-chat",
       data.mobileHero.style.display !== "none" &&
         near(data.gapMobileHeroChat ?? 99, 0, 1.5) &&
         data.chat.style.marginTop === "0px" &&
-        data.chat.style.paddingTop === "0px" &&
-        (data.chat.style.transform === "none" ||
-          data.chat.style.transform === "matrix(1, 0, 0, 1, 0, 0)"),
-      `gap=${data.gapMobileHeroChat} mt=${data.chat.style.marginTop} pt=${data.chat.style.paddingTop} tf=${data.chat.style.transform}`,
+        data.chat.style.paddingTop === "0px",
+      `gap=${data.gapMobileHeroChat} mt=${data.chat.style.marginTop} pt=${data.chat.style.paddingTop}`,
     );
   }
 

@@ -102,8 +102,8 @@ function startMutedAutoplay(video: HTMLVideoElement) {
 }
 
 /**
- * v15 — fixed side panels + scrolling center column.
- * Scroll drives CSS custom properties via rAF (max parallax ~14px).
+ * v14 — fixed master + center-flow. Body is the only scroll container.
+ * JS only handles preloader + muted video autoplay (no parallax / sticky).
  */
 export function HomePage() {
   const [ready, setReady] = useState(false);
@@ -123,42 +123,15 @@ export function HomePage() {
     const video = document.querySelector<HTMLVideoElement>(
       "video.chat-product-video",
     );
-    if (video) {
-      if (reduceMotion) {
-        video.removeAttribute("autoplay");
-        video.pause();
-      } else {
-        startMutedAutoplay(video);
-      }
-    }
+    if (!video) return;
 
     if (reduceMotion) {
-      document.documentElement.style.setProperty("--scroll-y", "0");
-      document.documentElement.style.setProperty("--parallax", "0");
+      video.removeAttribute("autoplay");
+      video.pause();
       return;
     }
 
-    let raf = 0;
-    const applyScrollVars = () => {
-      const y = window.scrollY || document.documentElement.scrollTop || 0;
-      const parallax = Math.max(-14, Math.min(14, y * 0.035));
-      const root = document.documentElement;
-      root.style.setProperty("--scroll-y", String(y));
-      root.style.setProperty("--parallax", String(parallax));
-    };
-    const onScroll = () => {
-      if (raf) return;
-      raf = window.requestAnimationFrame(() => {
-        raf = 0;
-        applyScrollVars();
-      });
-    };
-    applyScrollVars();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) window.cancelAnimationFrame(raf);
-    };
+    startMutedAutoplay(video);
   }, [ready]);
 
   return (

@@ -51,93 +51,66 @@ img,video{max-width:100%;height:auto;display:block}
 #SitePreloader.is-exiting{pointer-events:auto}
 
 /* =========================================================
-   v14 — single fixed .desktop-master
-   + 414px .center-flow
-   + transparent 100vh spacer
-   + opaque .chat-stream
-   Document flow is ONLY the center rail. Master never scrolls.
+   v14 — fixed master (once) + 414 center-flow
+   left/right master stay fixed; opaque chat covers center on scroll
+   NO three-crop, sticky, scroll-snap, or nested scroll containers
    ========================================================= */
-.hero.is-fullheight{
-  min-height:100vh;
-  min-height:100dvh;
-  width:100%;
+.page-shell{
+  position:relative;
   margin:0;
   padding:0;
-  background:transparent;
-  overflow-x:clip;
-  position:relative;
+  min-height:100%;
 }
 
-/* Fixed full-viewport master — one image, never in document flow */
 .desktop-master{
   position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100dvh;
+  inset:0;
   z-index:0;
-  overflow:hidden;
-  background:var(--hero-letterbox);
+  background:#011c91;
+  display:grid;
+  place-items:start center;
   pointer-events:none;
-  margin:0;
-  padding:0;
-  display:none;
+  overflow:hidden;
 }
-.desktop-master-img{
+.desktop-master img{
   display:block;
-  position:absolute;
-  top:0;
-  left:0;
   width:100vw!important;
   max-width:none!important;
-  height:100dvh!important;
+  height:100vh!important;
   object-fit:contain;
-  object-position:center center;
+  object-position:center top;
   border:0;
   border-radius:0;
   box-shadow:none;
 }
 
-/* Only this column contributes document height */
 .center-flow{
   position:relative;
-  z-index:2;
-  width:var(--center-w);
-  max-width:100%;
-  margin:0 auto;
+  z-index:1;
+  width:414px;
+  margin-inline:auto;
   padding:0;
   background:transparent;
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  row-gap:0;
 }
 
-/* Transparent window onto the fixed master for the first viewport */
-.center-spacer{
-  display:none;
-  width:100%;
+.desktop-hero-spacer{
   height:100vh;
-  height:100dvh;
+  background:transparent;
   margin:0;
   padding:0;
   border:0;
-  background:transparent;
   pointer-events:none;
-  flex:0 0 auto;
 }
 
-/* Mobile-only poster in flow — default hidden on desktop */
-.mobile-hero-flow{
+.mobile-hero{
   display:none;
   width:100%;
-  margin:0!important;
-  padding:0!important;
+  margin:0;
+  padding:0;
   border:0;
   line-height:0;
   font-size:0;
   background:var(--ink-yellow);
-  flex:0 0 auto;
 }
 .mobile-hero-picture{
   display:block;
@@ -162,25 +135,23 @@ img,video{max-width:100%;height:auto;display:block}
   background:var(--ink-yellow);
 }
 
-/* Opaque yellow chat — covers master as it scrolls up; no top gap */
 .chat-stream,
 .mobile-messages.chat-stream{
   position:relative;
-  z-index:2;
+  background:#f7dc50;
+  background-color:#f7dc50;
+  min-height:100vh;
+  box-sizing:border-box;
   width:100%;
   margin:0!important;
-  margin-top:0!important;
   padding:0!important;
   border:0;
-  background:var(--ink-yellow);
-  background-color:var(--ink-yellow);
-  flex:0 0 auto;
 }
 .chat-stream .chat,
 .mobile-messages .chat{
   margin:0;
   padding:16px 1rem 3rem;
-  background:var(--ink-yellow);
+  background:#f7dc50;
   width:100%;
   box-sizing:border-box;
   font-family:Helvetica Neue,Arial,sans-serif;
@@ -317,7 +288,7 @@ img,video{max-width:100%;height:auto;display:block}
   text-decoration:underline;
 }
 
-/* Kill abandoned three-crop / full-stage structures */
+/* Kill abandoned three-crop / v15 structures if any residual markup appears */
 .reference-shell,
 .master-side,
 .master-crop-img,
@@ -326,11 +297,12 @@ img,video{max-width:100%;height:auto;display:block}
 .master-hero-stage,
 .chat-rail,
 .master-hero-img,
-.columns.is-gapless .desktop-column,
+.experience-shell,
+.side-panel,
+.interactive-hero,
 .furmosa-hotspot,
 .mobile-text,
-.c2a-line-hero,
-.mobile-messages > .chat-video-wrap{
+.c2a-line-hero{
   display:none!important;
   height:0!important;
   width:0!important;
@@ -342,27 +314,14 @@ img,video{max-width:100%;height:auto;display:block}
   position:static!important;
 }
 
-/* Desktop ≥1024 */
-@media screen and (min-width:1024px){
-  .desktop-master{display:block}
-  .center-spacer{display:block}
-  .mobile-hero-flow,
-  .mobile-hero-picture,
-  .mobile-hero-img{display:none!important}
-  .center-flow{width:var(--center-w)}
-}
-
-/* Mobile / tablet <1024 */
-@media screen and (max-width:1023px){
+/* Mobile ≤768 */
+@media screen and (max-width:768px){
   html,body{background:var(--ink-yellow)}
-  .hero.is-fullheight{background:var(--ink-yellow)}
   .desktop-master{
     display:none!important;
     visibility:hidden!important;
-    width:0!important;
-    height:0!important;
   }
-  .center-spacer{
+  .desktop-hero-spacer{
     display:none!important;
     height:0!important;
     min-height:0!important;
@@ -371,51 +330,27 @@ img,video{max-width:100%;height:auto;display:block}
   }
   .center-flow{
     width:100%;
-    max-width:var(--center-w);
-    margin:0 auto;
-    background:var(--ink-yellow);
-    gap:0;
-    row-gap:0;
-  }
-  .mobile-hero-flow{
-    display:block!important;
-    width:100%;
-    margin:0!important;
-    padding:0!important;
-    line-height:0;
-    font-size:0;
+    margin-inline:auto;
     background:var(--ink-yellow);
   }
-  .mobile-hero-picture{
-    display:block!important;
+  .mobile-hero{
+    display:block;
     width:100%;
     margin:0;
     padding:0;
     line-height:0;
     font-size:0;
-  }
-  .mobile-hero-img{
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    height:auto!important;
-    margin:0!important;
-    padding:0!important;
-    border:0!important;
-    object-fit:contain;
-    object-position:center;
     background:var(--ink-yellow);
   }
   .chat-stream,
   .mobile-messages.chat-stream{
     margin:0!important;
-    margin-top:0!important;
     padding:0!important;
-    background:var(--ink-yellow);
+    background:#f7dc50;
+    min-height:100vh;
   }
 }
 
-/* Opacity-only — no translateY (avoids layout gap under mobile hero) */
 @keyframes hero-fade-in{
   from{opacity:0}
   to{opacity:1}
