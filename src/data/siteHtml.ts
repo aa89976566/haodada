@@ -33,10 +33,11 @@ function renderChat() {
   return CHAT.map(renderChatBlock).join("");
 }
 
-/** Full site markup: fixed sides + scrolling center, Furmosa content only. */
+/**
+ * v13 layout: one unified master hero (first viewport) → yellow chat rail.
+ * Desktop uses hero-master-v13.jpg (16:9 contain + corner-blue letterbox).
+ * Mobile uses existing center poster so the first screen stays readable.
+ */
 export function buildSiteHtml(): string {
-  const line = BRAND.lineUrl;
-  const handle = BRAND.lineHandle;
-
-  return `<section class="hero is-fullheight"><div class="container main-container"><div class="columns is-gapless"><div class="column desktop-column left is-hidden-mobile"><picture class="desktop-hero-img"><source srcset="/images/side-dog-left-v3.webp" type="image/webp"><img src="/images/side-dog-left-v3.jpg" alt="嚎大大雞霸 無添加" width="634" height="1360" class="desktop-hero-img-el"></picture></div><div class="column is-3 mobile"><div class="mobile-wrapper"><div class="mobile-hero"><div class="hero-drive-wrap"><picture class="hero-image hero-drive"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img src="/images/hero-center-v2.jpg" alt="嚎大大雞霸 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high" class="hero-drive-img"></picture><a class="furmosa-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" aria-label="加入 LINE ${escapeAttr(handle)}"></a></div></div><div class="mobile-messages"><div class="chat">${renderChat()}</div></div></div></div><div class="column desktop-column right is-hidden-mobile"><picture class="desktop-hero-img"><source srcset="/images/side-dog-right-v3.webp" type="image/webp"><img src="/images/side-dog-right-v3.jpg" alt="嚎大大雞霸 純雞情" width="627" height="1360" class="desktop-hero-img-el"></picture></div></div></div></section>`;
+  return `<section class="hero is-fullheight"><div class="container main-container"><div class="master-hero-stage"><img class="master-hero-img master-hero-img--desktop" src="/images/hero-master-v13.jpg" alt="${escapeAttr(BRAND.name)} 統一主視覺" width="960" height="540" decoding="async" fetchpriority="high"><picture class="master-hero-mobile"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img class="master-hero-img master-hero-img--mobile" src="/images/hero-center-v2.jpg" alt="${escapeAttr(BRAND.name)} 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high"></picture></div><div class="chat-rail"><div class="mobile-messages"><div class="chat">${renderChat()}</div></div></div></div></section>`;
 }
