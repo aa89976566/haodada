@@ -61,7 +61,9 @@ function Preloader({ onDone }: { onDone: () => void }) {
       <div className="loader-inner">
         <div className="content-wrapper">
           <h1>{BRAND.name}</h1>
-          <h3>* {BRAND.studio} × {BRAND.furmosa} *</h3>
+          <h3>
+            * {BRAND.studio} × {BRAND.furmosa} *
+          </h3>
           <button
             type="button"
             className="enter"
@@ -72,8 +74,6 @@ function Preloader({ onDone }: { onDone: () => void }) {
               if (exiting) return;
               markEntered();
               setExiting(true);
-              // Delay unmount past mouseup so ENTER cannot click-through
-              // to the @FURMOSA hotspot underneath.
               window.setTimeout(() => onDone(), 320);
             }}
           >
@@ -92,15 +92,19 @@ function startMutedAutoplay(video: HTMLVideoElement) {
   video.setAttribute("muted", "");
   video.setAttribute("playsinline", "");
   video.setAttribute("webkit-playsinline", "");
+  video.removeAttribute("controls");
   const playAttempt = video.play();
   if (playAttempt && typeof playAttempt.catch === "function") {
     playAttempt.catch(() => {
-      // Autoplay may be blocked; leave muted for a later user gesture.
+      /* Autoplay may be blocked until gesture */
     });
   }
 }
 
-/** Left/right fixed columns, scrolling center chat — 嚎大大雞霸 / FURMOSA. */
+/**
+ * v15 — fixed side panels + scrolling center column.
+ * Scroll drives CSS custom properties via rAF (max parallax ~14px).
+ */
 export function HomePage() {
   const [ready, setReady] = useState(false);
   const html = useMemo(() => withBase(buildSiteHtml()), []);
@@ -115,16 +119,46 @@ export function HomePage() {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+
     const video = document.querySelector<HTMLVideoElement>(
       "video.chat-product-video",
     );
-    if (!video) return;
+    if (video) {
+      if (reduceMotion) {
+        video.removeAttribute("autoplay");
+        video.pause();
+      } else {
+        startMutedAutoplay(video);
+      }
+    }
+
     if (reduceMotion) {
-      video.removeAttribute("autoplay");
-      video.pause();
+      document.documentElement.style.setProperty("--scroll-y", "0");
+      document.documentElement.style.setProperty("--parallax", "0");
       return;
     }
-    startMutedAutoplay(video);
+
+    let raf = 0;
+    const applyScrollVars = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const parallax = Math.max(-14, Math.min(14, y * 0.035));
+      const root = document.documentElement;
+      root.style.setProperty("--scroll-y", String(y));
+      root.style.setProperty("--parallax", String(parallax));
+    };
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        applyScrollVars();
+      });
+    };
+    applyScrollVars();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+    };
   }, [ready]);
 
   return (

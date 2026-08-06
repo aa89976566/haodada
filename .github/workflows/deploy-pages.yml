@@ -1,9 +1,7 @@
 name: Deploy to GitHub Pages
 
-# Dual publish:
-# 1) marketplace-free push to gh-pages (works even when action downloads fail)
-# 2) classic actions/deploy-pages for current Pages build_type=workflow
-# Official URL stays https://aa89976566.github.io/haodada/
+# Pages source = gh-pages / (root). Marketplace-free shell publish only.
+# Avoids actions/checkout + upload-pages-artifact + deploy-pages download failures.
 
 on:
   push:
@@ -12,15 +10,12 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  # Safe path — no marketplace action downloads
   publish-gh-pages:
     runs-on: ubuntu-latest
     steps:
@@ -43,34 +38,3 @@ jobs:
           git add -A
           git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
-
-  # Current Pages source is build_type=workflow — needs deploy-pages
-  build-pages-artifact:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-      - name: Install and build
-        run: |
-          npm ci
-          export NEXT_PUBLIC_BASE_PATH=/haodada
-          npm run build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-  deploy-pages:
-    needs: build-pages-artifact
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          timeout: 1800000
