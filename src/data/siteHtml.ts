@@ -34,13 +34,12 @@ function renderChat() {
 }
 
 /**
- * v14 — thisfootdoesnotexist reference shell:
- * fixed left/right master crops + scrolling 414px center rail (hero → chat).
- * Desktop uses one master JPEG for three synced viewport crops.
+ * v14 — single fixed .desktop-master + 414px .center-flow
+ * + transparent 100vh spacer + opaque .chat-stream.
+ * Document flow is only the center rail; master never scrolls.
  */
 export function buildSiteHtml(): string {
   const master = "/images/hero-master-v13.jpg";
-  const masterAlt = `${BRAND.name} 統一主視覺`;
 
-  return `<section class="hero is-fullheight"><div class="reference-shell"><aside class="master-side master-side--left" aria-hidden="true"><img class="master-crop-img" src="${escapeAttr(master)}" alt="" width="960" height="540" decoding="async" fetchpriority="high"></aside><main class="center-rail"><div class="center-hero-window"><img class="master-crop-img master-crop-img--desktop" src="${escapeAttr(master)}" alt="${escapeAttr(masterAlt)}" width="960" height="540" decoding="async" fetchpriority="high"><picture class="center-hero-mobile"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img class="center-hero-mobile-img" src="/images/hero-center-v2.jpg" alt="${escapeAttr(BRAND.name)} 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high"></picture></div><section class="mobile-messages"><div class="chat">${renderChat()}</div></section></main><aside class="master-side master-side--right" aria-hidden="true"><img class="master-crop-img" src="${escapeAttr(master)}" alt="" width="960" height="540" decoding="async" fetchpriority="high"></aside></div></section>`;
+  return `<section class="hero is-fullheight"><div class="desktop-master" aria-hidden="true"><img class="desktop-master-img" src="${escapeAttr(master)}" alt="" width="960" height="540" decoding="async" fetchpriority="high"></div><div class="center-flow"><div class="center-spacer" aria-hidden="true"></div><div class="mobile-hero-flow"><picture class="mobile-hero-picture"><source srcset="/images/hero-center-v2.webp" type="image/webp"><img class="mobile-hero-img" src="/images/hero-center-v2.jpg" alt="${escapeAttr(BRAND.name)} 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high"></picture></div><section class="chat-stream mobile-messages"><div class="chat">${renderChat()}</div></section></div></section>`;
 }

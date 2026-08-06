@@ -11,15 +11,20 @@ const VIEWPORTS = [
   { w: 1440, h: 900 },
   { w: 1920, h: 900 },
 ];
+const HARD_TIMEOUT_MS = 90_000;
 
 fs.mkdirSync(OUT, { recursive: true });
+
+function near(a, b, tol = 1.5) {
+  return Math.abs(a - b) <= tol;
+}
 
 async function dismissPreloader(page) {
   const btn = page.locator("#SitePreloader button.enter");
   if (await btn.count()) {
     try {
-      await btn.click({ timeout: 2500 });
-      await page.waitForTimeout(350);
+      await btn.click({ timeout: 2000 });
+      await page.waitForTimeout(200);
     } catch {
       /* ignore */
     }
@@ -31,26 +36,20 @@ async function dismissPreloader(page) {
   });
 }
 
-function near(a, b, tol = 1.5) {
-  return Math.abs(a - b) <= tol;
-}
-
 async function measure(page, vw, vh) {
   await page.setViewportSize({ width: vw, height: vh });
-  await page.goto(URL, { waitUntil: "networkidle" });
+  await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 15000 });
   await dismissPreloader(page);
   await page.waitForTimeout(500);
 
   const data = await page.evaluate(() => {
-    const shell = document.querySelector(".reference-shell");
-    const rail = document.querySelector(".center-rail");
-    const heroWin = document.querySelector(".center-hero-window");
-    const chat = document.querySelector(".mobile-messages");
-    const left = document.querySelector(".master-side--left");
-    const right = document.querySelector(".master-side--right");
-    const imgs = [...document.querySelectorAll("img.master-crop-img")];
+    const master = document.querySelector(".desktop-master");
+    const masterImg = document.querySelector(".desktop-master-img");
+    const flow = document.querySelector(".center-flow");
+    const spacer = document.querySelector(".center-spacer");
+    const mobileHero = document.querySelector(".mobile-hero-flow");
+    const chat = document.querySelector(".chat-stream");
     const video = document.querySelector("video.chat-product-video");
-    const chatEl = document.querySelector(".mobile-messages .chat");
     const cssHref =
       [...document.querySelectorAll('link[rel="stylesheet"]')]
         .map((l) => l.href)
@@ -64,8 +63,6 @@ async function measure(page, vw, vh) {
         y: r.y,
         top: r.top,
         bottom: r.bottom,
-        left: r.left,
-        right: r.right,
         width: r.width,
         height: r.height,
       };
@@ -76,112 +73,98 @@ async function measure(page, vw, vh) {
       return {
         position: s.position,
         display: s.display,
-        width: s.width,
-        height: s.height,
-        overflow: s.overflow,
         backgroundColor: s.backgroundColor,
+        height: s.height,
+        zIndex: s.zIndex,
+        marginTop: s.marginTop,
+        marginBottom: s.marginBottom,
+        paddingTop: s.paddingTop,
+        transform: s.transform,
       };
     }
 
-    const imgInfo = imgs.map((img) => {
-      const r = rect(img);
-      const s = getComputedStyle(img);
-      return {
-        className: img.className,
-        naturalWidth: img.naturalWidth,
-        naturalHeight: img.naturalHeight,
-        renderedWidth: r?.width ?? 0,
-        renderedTop: r?.top ?? null,
-        renderedLeft: r?.left ?? null,
-        cssWidth: s.width,
-        cssTop: s.top,
-        cssLeft: s.left,
-        maxWidth: s.maxWidth,
-        display: s.display,
-        src: (img.currentSrc || img.src).split("/").pop(),
-      };
-    });
+    const banned = [];
+    const html = document.body.innerText || "";
+    for (const w of ["哪裡買", "LINE 加入", "line.me", "furmosa.com/products"]) {
+      if (html.includes(w)) banned.push(w);
+    }
+
+    const mh = rect(mobileHero);
+    const ch = rect(chat);
+    const sp = rect(spacer);
 
     return {
       cssHref,
-      vw: window.innerWidth,
-      vh: window.innerHeight,
-      docWidth: document.documentElement.scrollWidth,
+      hasThreeCrop: !!(
+        document.querySelector(".reference-shell") ||
+        document.querySelector(".master-side")
+      ),
       overflowX: document.documentElement.scrollWidth > window.innerWidth + 1,
-      shell: rect(shell),
-      rail: rect(rail),
-      heroWin: rect(heroWin),
-      chat: rect(chat),
-      left: { rect: rect(left), style: style(left) },
-      right: { rect: rect(right), style: style(right) },
-      imgs: imgInfo,
-      gapHeroChat:
-        heroWin && chat
-          ? chat.getBoundingClientRect().top -
-            heroWin.getBoundingClientRect().bottom
-          : null,
+      docWidth: document.documentElement.scrollWidth,
+      banned,
+      master: { style: style(master), rect: rect(master) },
+      masterImg: masterImg
+        ? {
+            rect: rect(masterImg),
+            naturalWidth: masterImg.naturalWidth,
+            naturalHeight: masterImg.naturalHeight,
+            objectFit: getComputedStyle(masterImg).objectFit,
+            src: (masterImg.getAttribute("src") || "").split("/").pop(),
+          }
+        : null,
+      flow: rect(flow),
+      spacer: { style: style(spacer), rect: sp },
+      mobileHero: { style: style(mobileHero), rect: mh },
+      chat: { style: style(chat), rect: ch },
+      gapSpacerChat: sp && ch ? ch.top - sp.bottom : null,
+      gapMobileHeroChat: mh && ch ? ch.top - mh.bottom : null,
       video: video
         ? {
-            inChat: !!(chatEl && chatEl.contains(video)),
-            autoplay: video.autoplay,
-            muted: video.muted,
-            loop: video.loop,
-            controls: video.controls,
+            inChat: !!video.closest(".chat-stream"),
+            autoplay: video.hasAttribute("autoplay"),
+            muted: video.muted || video.hasAttribute("muted"),
+            loop: video.hasAttribute("loop"),
+            controls: video.hasAttribute("controls"),
             paused: video.paused,
           }
         : null,
-      banned: [...document.querySelectorAll(".chat .message")]
-        .map((el) => (el.innerText || "").trim())
-        .filter((t) => /哪裡買|line\.me|furmosa\.com|加 LINE/i.test(t)),
-      hasLegacy: !!(
-        document.querySelector(".master-hero-stage") ||
-        document.querySelector(".chat-rail")
-      ),
     };
   });
 
-  // Scroll test on desktop
   let afterScroll = null;
   if (vw >= 1024) {
     await page.evaluate(() => window.scrollTo(0, 500));
-    await page.waitForTimeout(200);
+    await page.waitForTimeout(150);
     afterScroll = await page.evaluate(() => {
-      const left = document.querySelector(".master-side--left");
-      const right = document.querySelector(".master-side--right");
-      const heroWin = document.querySelector(".center-hero-window");
-      const chat = document.querySelector(".mobile-messages");
+      const master = document.querySelector(".desktop-master");
+      const spacer = document.querySelector(".center-spacer");
+      const chat = document.querySelector(".chat-stream");
       const r = (el) => {
         if (!el) return null;
         const b = el.getBoundingClientRect();
-        return { top: b.top, y: b.y, x: b.x, width: b.width };
+        return { top: b.top, y: b.y, height: b.height, width: b.width };
       };
       return {
         scrollY: window.scrollY,
-        left: r(left),
-        right: r(right),
-        heroWin: r(heroWin),
+        master: r(master),
+        spacer: r(spacer),
         chat: r(chat),
+        masterPos: getComputedStyle(master).position,
       };
     });
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(100);
   }
 
   const shot = path.join(OUT, `v14-${vw}.png`);
   await page.screenshot({ path: shot, fullPage: false });
 
-  // Assertions summary
   const checks = [];
   const push = (name, ok, detail) => checks.push({ name, ok, detail });
 
   push("css-v14", data.cssHref.includes("haodada-site-v14"), data.cssHref);
-  push("no-legacy", !data.hasLegacy, String(data.hasLegacy));
-  push("no-overflow", !data.overflowX, `docW=${data.docWidth} vw=${data.vw}`);
-  push(
-    "banned-hard-sell",
-    data.banned.length === 0,
-    JSON.stringify(data.banned),
-  );
+  push("no-three-crop", !data.hasThreeCrop, String(data.hasThreeCrop));
+  push("no-overflow", !data.overflowX, `docW=${data.docWidth}`);
+  push("banned", data.banned.length === 0, JSON.stringify(data.banned));
   push(
     "video",
     !!data.video &&
@@ -194,100 +177,80 @@ async function measure(page, vw, vh) {
   );
 
   if (vw >= 1024) {
-    const expectedSide = (vw - 414) / 2;
-    const expectedCenterX = expectedSide;
+    const expectX = (vw - 414) / 2;
     push(
-      "center-x",
-      near(data.rail.x, expectedCenterX, 2),
-      `got ${data.rail.x} expect ${expectedCenterX}`,
-    );
-    push("center-w", near(data.rail.width, 414, 1), `got ${data.rail.width}`);
-    push(
-      "left-w",
-      near(data.left.rect.width, expectedSide, 2) &&
-        data.left.style.position === "fixed",
-      `w=${data.left.rect?.width} pos=${data.left.style?.position}`,
+      "center-flow",
+      near(data.flow.x, expectX, 2) && near(data.flow.width, 414, 1),
+      `x=${data.flow.x} w=${data.flow.width}`,
     );
     push(
-      "right-x",
-      near(data.right.rect.x, expectedCenterX + 414, 2) &&
-        near(data.right.rect.width, expectedSide, 2) &&
-        data.right.style.position === "fixed",
-      `x=${data.right.rect?.x} w=${data.right.rect?.width}`,
+      "master-fixed",
+      data.master.style.position === "fixed" &&
+        near(data.master.rect.top, 0, 1) &&
+        near(data.master.rect.width, vw, 2) &&
+        near(data.master.rect.height, vh, 2),
+      JSON.stringify({ style: data.master.style, rect: data.master.rect }),
     );
     push(
-      "hero-top0",
-      near(data.heroWin.top, 0, 1.5),
-      `top=${data.heroWin.top}`,
+      "master-img",
+      data.masterImg?.naturalWidth === 960 &&
+        data.masterImg?.naturalHeight === 540 &&
+        data.masterImg?.src === "hero-master-v13.jpg",
+      JSON.stringify(data.masterImg),
     );
     push(
-      "chat-follows-hero",
-      near(data.gapHeroChat, 0, 1.5),
-      `gap=${data.gapHeroChat}`,
-    );
-
-    const visibleMaster = data.imgs.filter(
-      (i) => i.display !== "none" && i.renderedWidth > 10,
+      "spacer-100vh",
+      near(data.spacer.rect.height, vh, 2) &&
+        data.spacer.style.backgroundColor === "rgba(0, 0, 0, 0)",
+      `h=${data.spacer.rect.height} bg=${data.spacer.style.backgroundColor}`,
     );
     push(
-      "three-master-imgs",
-      visibleMaster.length === 3 &&
-        visibleMaster.every(
-          (i) =>
-            i.naturalWidth === 960 &&
-            i.naturalHeight === 540 &&
-            near(i.renderedWidth, vw, 2) &&
-            near(i.renderedTop, 0, 1.5),
-        ),
-      JSON.stringify(
-        visibleMaster.map((i) => ({
-          n: [i.naturalWidth, i.naturalHeight],
-          w: i.renderedWidth,
-          top: i.renderedTop,
-          left: i.renderedLeft,
-          src: i.src,
-        })),
-      ),
+      "chat-opaque-follows-spacer",
+      near(data.gapSpacerChat, 0, 1.5) &&
+        data.chat.style.backgroundColor.includes("247"),
+      `gap=${data.gapSpacerChat} bg=${data.chat.style.backgroundColor}`,
     );
-
-    // Seam check: left panel right edge == center left; center right == right panel left
-    const seamL = Math.abs(
-      data.left.rect.right - data.heroWin.left,
-    );
-    const seamR = Math.abs(data.heroWin.right - data.right.rect.left);
     push(
-      "crop-seams",
-      seamL <= 1.5 && seamR <= 1.5,
-      `seamL=${seamL} seamR=${seamR}`,
+      "mobile-hero-hidden",
+      data.mobileHero.style.display === "none",
+      data.mobileHero.style.display,
     );
-
     if (afterScroll) {
       push(
-        "scroll-sides-fixed",
-        near(afterScroll.left.top, 0, 1.5) &&
-          near(afterScroll.right.top, 0, 1.5),
-        JSON.stringify({
-          leftTop: afterScroll.left.top,
-          rightTop: afterScroll.right.top,
-        }),
+        "scroll-master-fixed",
+        afterScroll.masterPos === "fixed" &&
+          near(afterScroll.master.top, 0, 1.5),
+        JSON.stringify(afterScroll.master),
       );
       push(
-        "scroll-center-moves",
-        afterScroll.heroWin.top < -400 && afterScroll.heroWin.top > -600,
-        `heroTop=${afterScroll.heroWin.top} chatTop=${afterScroll.chat.top}`,
+        "scroll-chat-moves",
+        afterScroll.chat.top < vh - 100 && afterScroll.spacer.top < -400,
+        JSON.stringify({
+          spacerTop: afterScroll.spacer.top,
+          chatTop: afterScroll.chat.top,
+        }),
       );
     }
   } else {
     push(
-      "sides-hidden",
-      data.left.style.display === "none" &&
-        data.right.style.display === "none",
-      `L=${data.left.style?.display} R=${data.right.style?.display}`,
+      "master-hidden",
+      data.master.style.display === "none",
+      data.master.style.display,
     );
     push(
-      "chat-follows-hero",
-      near(data.gapHeroChat, 0, 1.5),
-      `gap=${data.gapHeroChat}`,
+      "spacer-hidden",
+      data.spacer.style.display === "none" || data.spacer.rect.height < 1,
+      `display=${data.spacer.style.display} h=${data.spacer.rect?.height}`,
+    );
+    push(
+      "mobile-hero-chat",
+      data.mobileHero.style.display !== "none" &&
+        near(data.gapMobileHeroChat ?? 99, 0, 1.5) &&
+        data.chat.style.marginTop === "0px" &&
+        data.chat.style.paddingTop === "0px" &&
+        (data.chat.style.transform === "none" ||
+          data.chat.style.transform === "matrix(1, 0, 0, 1, 0, 0)"),
+      `gap=${data.gapMobileHeroChat} mt=${data.chat.style.marginTop} pt=${data.chat.style.paddingTop} tf=${data.chat.style.transform}`,
     );
   }
 
@@ -301,35 +264,29 @@ async function measure(page, vw, vh) {
   };
 }
 
-const browser = await chromium.launch({
-  headless: true,
-  channel: undefined,
-});
+const timer = setTimeout(() => {
+  console.error("HARD TIMEOUT exceeded");
+  process.exit(2);
+}, HARD_TIMEOUT_MS);
+
+const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage();
 const results = [];
 let allPass = true;
-for (const { w, h } of VIEWPORTS) {
-  const r = await measure(page, w, h);
-  results.push(r);
-  allPass = allPass && r.pass;
-  console.log(`\n=== ${w}x${h} ${r.pass ? "PASS" : "FAIL"} ===`);
-  for (const c of r.checks) {
-    console.log(`  ${c.ok ? "✓" : "✗"} ${c.name}: ${c.detail}`);
+try {
+  for (const { w, h } of VIEWPORTS) {
+    const r = await measure(page, w, h);
+    results.push(r);
+    allPass = allPass && r.pass;
+    console.log(`\n=== ${w}x${h} ${r.pass ? "PASS" : "FAIL"} ===`);
+    for (const c of r.checks) {
+      console.log(`  ${c.ok ? "✓" : "✗"} ${c.name}: ${c.detail}`);
+    }
   }
-  console.log(
-    "  rects",
-    JSON.stringify({
-      left: r.data.left.rect,
-      rail: r.data.rail,
-      hero: r.data.heroWin,
-      chat: r.data.chat,
-      right: r.data.right.rect,
-      gap: r.data.gapHeroChat,
-    }),
-  );
+} finally {
+  await browser.close().catch(() => {});
+  clearTimeout(timer);
 }
-await browser.close();
 fs.writeFileSync(path.join(OUT, "v14-qa.json"), JSON.stringify(results, null, 2));
 console.log("\nALL", allPass ? "PASS" : "FAIL");
-console.log("Wrote", path.join(OUT, "v14-qa.json"));
 process.exit(allPass ? 0 : 1);
