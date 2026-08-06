@@ -37,7 +37,11 @@ export type ChatVideoBlock = {
 
 export type ChatBlock = ChatTextBlock | ChatImageBlock | ChatVideoBlock;
 
-/** Short alternating bubbles — Taiwanese spoken tone, no punctuation. */
+/**
+ * Bark / BARKBOX group-chat tone — Taiwan spoken voice.
+ * Keep customer dog photo + dogpark video; IG as a normal bubble link.
+ * No hard-sell CTAs (LINE / shop URL / 「哪裡買」).
+ */
 export const CHAT: ChatBlock[] = [
   {
     kind: "mine",
@@ -63,14 +67,6 @@ export const CHAT: ChatBlock[] = [
     kind: "yours",
     texts: ["而且它完全無添加", "就只有雞肉 沒有香料沒有色素也沒有防腐劑"],
   },
-  { kind: "mine", texts: ["那這麼大一片不會很貴喔"] },
-  {
-    kind: "yours",
-    texts: [
-      "還好欸 這個份量價格算很合理",
-      "平常剪小塊當獎勵 一包可以吃一陣子",
-    ],
-  },
   { kind: "mine", texts: ["難怪剛剛去公園整群狗都跑過來"] },
   { kind: "yours", texts: ["你看剛剛就是這樣"] },
   {
@@ -79,24 +75,11 @@ export const CHAT: ChatBlock[] = [
     alt: "狗公園拿著嚎大大雞霸的影片",
   },
   { kind: "yours", texts: ["沒帶的那個直接在旁邊變空氣"] },
-  {
-    kind: "mine",
-    texts: ["太慘 我不要跟他一樣", "哪裡買"],
-  },
+  { kind: "mine", texts: ["太慘了哈哈"] },
   {
     kind: "yours",
     texts: [
-      `加 LINE 找 <a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">${BRAND.lineHandle}</a>`,
-      `或直接上 <a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="phone-link">furmosa.com</a>`,
-      "對了 裡面還可以抽狗狗卡牌",
-      "抽到跟自己同品種的 可以免費再來一包欸",
-    ],
-  },
-  { kind: "mine", texts: ["蛤 是什麼意思"] },
-  {
-    kind: "yours",
-    texts: [
-      "哎呀 你直接追蹤他們 IG 就知道了",
+      "你直接追蹤他們 IG 就知道了",
       `<a href="${BRAND.igUrl}" target="_blank" rel="noopener noreferrer" class="phone-link" aria-label="Instagram ${BRAND.igHandle}">${BRAND.igHandle}</a>`,
     ],
   },
