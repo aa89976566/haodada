@@ -15,11 +15,12 @@
   --hero-h:787px;
   --chat-media-width:86%;
   --chat-media-gutter:14%;
+  --chat-photo-max:143px; /* customer-dog 286/2 — DPR2 safe; no higher-res source in repo */
   --scroll-y:0;
   --parallax:0;
   --dog-max-left:356px;   /* eat-bulldog 713/2 */
   --dog-max-right:326px;  /* pomeranian 653/2 */
-  --product-max:420px;    /* product-reference 1022 — display < 511 */
+  --product-max:511px;    /* product-reference 1022/2 — hard ceiling, never exceed */
 }
 
 html{
@@ -243,6 +244,7 @@ img,video{max-width:100%;height:auto;display:block}
   object-position:center 30%;
   max-width:100%;
   max-height:100%;
+  image-rendering:auto;
 }
 /* no scale()>1 — keeps dog+CRT fully inside panel bounds */
 .side-dog-body{opacity:.55;filter:saturate(.85) contrast(1.05)}
@@ -395,6 +397,7 @@ img,video{max-width:100%;height:auto;display:block}
   height:auto;
   object-fit:contain;
   object-position:center bottom;
+  image-rendering:auto;
 }
 @keyframes product-float{
   0%,100%{transform:translateY(0) rotateX(2deg) rotateY(-4deg)}
@@ -530,9 +533,11 @@ img,video{max-width:100%;height:auto;display:block}
 .yours .message.has-image .chat-bubble-photo{
   display:block;
   width:auto;
-  max-width:min(100%, 286px); /* natural 286 — do not upscale past source */
+  max-width:var(--chat-photo-max); /* 286 natural → ≤143 CSS px @ DPR2 */
   height:auto;
   object-fit:contain;
+  object-position:center;
+  image-rendering:auto;
   border-radius:14px;
   background:#e5e5ea;
 }
