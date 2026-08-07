@@ -38,9 +38,9 @@ export type ChatVideoBlock = {
 export type ChatBlock = ChatTextBlock | ChatImageBlock | ChatVideoBlock;
 
 /**
- * Bark / BARKBOX group-chat tone — Taiwan spoken voice.
- * Keep customer dog photo + dogpark video; IG as a normal bubble link.
- * No hard-sell CTAs (LINE / shop URL / 「哪裡買」).
+ * Taiwan mobile group-chat tone — spoken, light punctuation, no ad-speak.
+ * Photo after「坐好」; park video after「你看」; IG as clickable bubble link.
+ * No hard-sell CTAs / purchase buttons.
  */
 export const CHAT: ChatBlock[] = [
   {
@@ -56,32 +56,69 @@ export const CHAT: ChatBlock[] = [
     ],
   },
   { kind: "mine", texts: ["看起來也太大一片"] },
-  { kind: "yours", texts: ["我買過 我家那隻看到袋子就自己坐好"] },
+  {
+    kind: "yours",
+    texts: [
+      "對啊大到拿著很像在吃雞排",
+      "但裡面就只有雞肉",
+      "沒香料沒色素也沒防腐劑",
+      "我買過",
+      "我家那隻看到袋子就自己坐好",
+    ],
+  },
   {
     kind: "yours",
     image: "/images/haodada/customer-dog-product-v3.jpg",
     alt: "使用者的狗狗咬著嚎大大雞霸",
   },
-  { kind: "mine", texts: ["這張也太可愛 拿來當大頭貼都可以"] },
+  {
+    kind: "mine",
+    texts: ["這張太扯了吧", "根本可以拿去當證件照"],
+  },
   {
     kind: "yours",
-    texts: ["而且它完全無添加", "就只有雞肉 沒有香料沒有色素也沒有防腐劑"],
+    texts: ["而且一包價格沒有想像中貴", "我本來以為這麼大片會很盤"],
   },
-  { kind: "mine", texts: ["難怪剛剛去公園整群狗都跑過來"] },
-  { kind: "yours", texts: ["你看剛剛就是這樣"] },
+  { kind: "mine", texts: ["難怪剛剛整群狗都跟著你"] },
+  { kind: "yours", texts: ["你看"] },
   {
     kind: "yours",
     video: "/images/haodada/dogpark-product-v2.mp4",
     alt: "狗公園拿著嚎大大雞霸的影片",
   },
-  { kind: "yours", texts: ["沒帶的那個直接在旁邊變空氣"] },
-  { kind: "mine", texts: ["太慘了哈哈"] },
+  { kind: "yours", texts: ["有帶雞霸的直接變狗王"] },
+  { kind: "mine", texts: ["旁邊那個完全沒狗理"] },
   {
     kind: "yours",
     texts: [
-      "你直接追蹤他們 IG 就知道了",
+      "不要再講了",
+      "他看起來已經快回家反省人生",
+      "欸而且裡面還有狗狗卡牌",
+    ],
+  },
+  { kind: "mine", texts: ["什麼意思"] },
+  {
+    kind: "yours",
+    texts: ["如果抽到跟自己家狗同品種", "可以再換一包"],
+  },
+  {
+    kind: "mine",
+    texts: [
+      "這活動誰想的啦",
+      "狗還要先接受血統考驗是不是",
+      "所以到底去哪買",
+    ],
+  },
+  {
+    kind: "yours",
+    texts: [
+      "你直接看他們 IG 啦",
+      "我解釋下去很像業配",
       `<a href="${BRAND.igUrl}" target="_blank" rel="noopener noreferrer" class="phone-link" aria-label="Instagram ${BRAND.igHandle}">${BRAND.igHandle}</a>`,
     ],
   },
-  { kind: "mine", texts: ["好 先買一包幫牠拍照"] },
+  {
+    kind: "mine",
+    texts: ["好啦我自己看", "不然下次在公園變空氣的是我"],
+  },
 ];
