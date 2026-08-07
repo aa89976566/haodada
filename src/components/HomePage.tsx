@@ -102,7 +102,8 @@ function startMutedAutoplay(video: HTMLVideoElement) {
 }
 
 /**
- * v15 — fixed side panels + scrolling center column.
+ * v15 shell + classic IBM triptych hero:
+ * fixed side posters + scrolling center (classic-hero → chat).
  * Scroll drives CSS custom properties via rAF (max parallax ~14px).
  */
 export function HomePage() {
