@@ -164,9 +164,20 @@ img,video{max-width:100%;height:auto;display:block}
   padding-inline:var(--side-pad-x);
   /* continuous blue — matches classic IBM poster wall */
   background:var(--ink-blue);
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
 }
 .side-left{left:0;right:auto}
 .side-right{right:0;left:auto}
+.side-panel::before,
+.side-panel::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
+}
 
 /* Classic side posters — full CRT+keyboard via contain; never cropped */
 .side-poster-wrap{
@@ -184,6 +195,18 @@ img,video{max-width:100%;height:auto;display:block}
   transform:translate3d(0, calc(var(--parallax) * var(--side-dir, 1) * 1px), 0);
   will-change:transform;
   line-height:0;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
+  background:transparent;
+}
+.side-poster-wrap::before,
+.side-poster-wrap::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
 }
 .side-left .side-poster-wrap{--side-dir:1}
 .side-right .side-poster-wrap{--side-dir:-1}
@@ -195,6 +218,17 @@ img,video{max-width:100%;height:auto;display:block}
   padding:0;
   line-height:0;
   background:transparent;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
+}
+.side-poster::before,
+.side-poster::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
 }
 .side-left .side-poster{max-width:min(100%, var(--side-poster-max-left))}
 .side-right .side-poster{max-width:min(100%, var(--side-poster-max-right))}
@@ -208,10 +242,21 @@ img,video{max-width:100%;height:auto;display:block}
   object-position:top center;
   margin:0 auto;
   background:transparent;
-  border:0;
+  border:0!important;
   border-radius:0;
-  box-shadow:none;
+  outline:none!important;
+  box-shadow:none!important;
+  /* JPEG 資產頂緣／側緣烘焙黑線（非 CSS border）— 僅遮掉框線像素，不改尺寸／object-fit */
+  clip-path:inset(3px 1px 0 1px);
   image-rendering:auto;
+}
+.side-poster-img::before,
+.side-poster-img::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  outline:none!important;
+  box-shadow:none!important;
 }
 .side-left .side-poster-img{aspect-ratio:634 / 1360}
 .side-right .side-poster-img{aspect-ratio:627 / 1360}
