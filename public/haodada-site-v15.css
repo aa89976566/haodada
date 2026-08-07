@@ -12,17 +12,17 @@
   --ink-red:#c41230;
   --ink-deep:#011c91;
   --center-w:414px;
-  --hero-h:744px; /* thisfoot-style first-section rhythm */
   --chat-media-width:86%;
   --chat-media-gutter:14%;
-  --chat-photo-max:143px; /* customer-dog 286/2 — DPR2 safe */
+  --chat-photo-max:143px; /* customer-dog 286/2 — DPR2 safe; no higher-res source in repo */
   --scroll-y:0;
   --parallax:0;
-  /* Side posters ~350px @1324 (ref 350.45); shrink inside narrower panels */
-  --side-poster-max:350px;
-  --side-pad-y:16px;
-  --side-pad-x:16px;
-  --product-max:511px; /* product-reference 1022/2 — hard ceiling */
+  /* Classic IBM posters — DPR2 ceilings (source/2) */
+  --side-poster-max-left:317px;  /* side-dog-left-v3 634/2 */
+  --side-poster-max-right:313px; /* side-dog-right-v3 627/2 */
+  --side-pad-y:max(16px,clamp(16px,3.5vh,48px));
+  --side-pad-x:max(16px,clamp(16px,2.8vw,48px));
+  --product-max:511px; /* retained from PR #34 for any residual refs */
 }
 
 html{
@@ -32,6 +32,7 @@ html{
   -webkit-font-smoothing:antialiased;
   box-sizing:border-box;
   overflow-x:hidden;
+  /* body is the only scroll container — do not scroll html independently */
   overflow-y:visible;
   height:auto;
 }
@@ -43,6 +44,7 @@ body{
   overflow-x:clip;
   overflow-y:auto;
   max-width:100%;
+  /* unique document scroll */
   overscroll-behavior-y:auto;
 }
 a{color:inherit}
@@ -63,7 +65,7 @@ img,video{max-width:100%;height:auto;display:block}
 #SitePreloader .loader-inner .content-wrapper button.enter:hover{background:#f7dc50;color:#ff4d4d}
 #SitePreloader.is-exiting{pointer-events:auto}
 
-/* Kill abandoned architectures (incl. flat hero-center-v2 edge-bleed path) */
+/* Kill abandoned v13/v14/v15 CRT architectures */
 .desktop-master,
 .desktop-master-img,
 .center-flow,
@@ -102,10 +104,7 @@ img,video{max-width:100%;height:auto;display:block}
 .hero-product-float,
 .hero-product,
 .hero-hand,
-.hero-feature,
-.classic-hero-img,
-.classic-hero-picture,
-.furmosa-hotspot{
+.hero-feature{
   display:none!important;
   height:0!important;
   width:0!important;
@@ -117,7 +116,7 @@ img,video{max-width:100%;height:auto;display:block}
   position:static!important;
 }
 
-/* ========== Shell ========== */
+/* ========== Shell (PR #34 geometry retained) ========== */
 .site-mirror{width:100%;min-height:100%}
 .experience-shell{
   position:relative;
@@ -128,6 +127,7 @@ img,video{max-width:100%;height:auto;display:block}
   background:transparent;
 }
 
+/* Center column — ONLY document-flow content; always precisely centered */
 .center-column{
   position:relative;
   z-index:2;
@@ -139,9 +139,14 @@ img,video{max-width:100%;height:auto;display:block}
   display:flex;
   flex-direction:column;
   gap:0;
+  /* never independent scroll */
   overflow:visible;
 }
 
+/*
+  Fixed side panels — each half of remaining viewport beside 414 center.
+  width: calc(50% - center/2) avoids 100vw scrollbar overlap/seam.
+*/
 .side-panel{
   position:fixed;
   top:0;
@@ -152,29 +157,30 @@ img,video{max-width:100%;height:auto;display:block}
   display:flex;
   align-items:flex-start;
   justify-content:center;
-  /* never clip IBM CRT/keyboard corners — size posters to fit instead */
-  overflow:visible;
+  overflow:hidden;
   pointer-events:none;
   box-sizing:border-box;
   padding-block:var(--side-pad-y);
   padding-inline:var(--side-pad-x);
+  /* continuous blue — matches classic IBM poster wall */
   background:var(--ink-blue);
 }
 .side-left{left:0;right:auto}
 .side-right{right:0;left:auto}
 
+/* Classic side posters — full CRT+keyboard via contain; never cropped */
 .side-poster-wrap{
   box-sizing:border-box;
   width:100%;
   max-width:100%;
-  height:auto;
+  height:100%;
   max-height:calc(100svh - 2 * var(--side-pad-y));
   margin:0;
   padding:0;
   display:flex;
   align-items:flex-start;
   justify-content:center;
-  overflow:visible;
+  overflow:hidden;
   transform:translate3d(0, calc(var(--parallax) * var(--side-dir, 1) * 1px), 0);
   will-change:transform;
   line-height:0;
@@ -183,17 +189,19 @@ img,video{max-width:100%;height:auto;display:block}
 .side-right .side-poster-wrap{--side-dir:-1}
 .side-poster{
   display:block;
-  width:auto;
-  max-width:min(100%, var(--side-poster-max));
-  margin:0 auto;
+  width:100%;
+  max-width:100%;
+  margin:0;
   padding:0;
   line-height:0;
   background:transparent;
 }
+.side-left .side-poster{max-width:min(100%, var(--side-poster-max-left))}
+.side-right .side-poster{max-width:min(100%, var(--side-poster-max-right))}
 .side-poster-img{
   display:block;
-  width:auto;
-  max-width:min(100%, var(--side-poster-max));
+  width:100%;
+  max-width:100%;
   height:auto;
   max-height:calc(100svh - 2 * var(--side-pad-y));
   object-fit:contain;
@@ -208,206 +216,61 @@ img,video{max-width:100%;height:auto;display:block}
 .side-left .side-poster-img{aspect-ratio:634 / 1360}
 .side-right .side-poster-img{aspect-ratio:627 / 1360}
 
-/* ========== Layered classic center hero (~744px) ========== */
+/* ========== Classic center hero (hero-center-v2 full poster) ========== */
 .classic-hero{
   position:relative;
   width:100%;
-  height:var(--hero-h);
-  min-height:var(--hero-h);
-  max-height:var(--hero-h);
   margin:0;
   padding:0;
-  overflow:hidden; /* clip only interior layers — no side-computer bleed */
+  overflow:visible;
   background:var(--ink-yellow);
-  flex:0 0 auto;
-  isolation:isolate;
-}
-.classic-hero-stage{
-  position:relative;
-  width:100%;
-  height:100%;
-  margin:0;
-  padding:1.1rem .95rem 1rem;
-  display:flex;
-  flex-direction:column;
-  box-sizing:border-box;
-  /* hard clip any stray layer overflow at the 414 edges */
-  overflow:hidden;
-  background:var(--ink-yellow);
-}
-.classic-hero-atmosphere{
-  position:absolute;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.classic-hero-sky{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg, var(--ink-yellow) 0%, var(--ink-yellow) 46%, #e8c93a 58%, var(--ink-blue) 78%, var(--ink-deep) 100%);
-}
-.classic-hero-grid{
-  position:absolute;
-  left:-18%;
-  right:-18%;
-  bottom:-32%;
-  height:68%;
-  background:
-    linear-gradient(to right, rgba(255,255,255,.22) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.18) 1px, transparent 1px);
-  background-size:44px 44px;
-  transform:perspective(480px) rotateX(62deg);
-  transform-origin:center top;
-  opacity:.55;
-  mask-image:linear-gradient(to top, rgba(0,0,0,.92), transparent 85%);
-}
-
-.classic-hero-copy{
-  position:relative;
-  z-index:2;
-  text-align:left;
-  color:var(--ink-red);
-  max-width:58%;
-  margin:0;
+  line-height:0;
   flex:0 0 auto;
 }
-.classic-hero-title{
-  font-family:SpaceMono Bold,Andale Mono,monospace;
-  font-size:clamp(1.85rem, 6.2vw, 2.45rem);
-  line-height:1.05;
-  letter-spacing:.02em;
-  color:var(--ink-red);
-  margin:0 0 .4rem;
-}
-.classic-hero-lead{
-  font-family:Andale Mono,monospace;
-  font-size:clamp(1rem, 3.3vw, 1.2rem);
-  line-height:1.35;
-  color:#1a1a1a;
-  margin:0 0 .1rem;
-}
-.classic-hero-stat{
-  font-family:SpaceMono Bold,Andale Mono,monospace;
-  font-size:clamp(3rem, 13vw, 4.4rem);
-  line-height:.95;
-  color:var(--ink-blue);
-  margin:.15rem 0 0;
-  letter-spacing:-.02em;
-}
-
-.classic-hero-product-stage{
+.classic-hero-wrap{
   position:relative;
-  z-index:3;
-  margin:.35rem 0 auto auto;
-  width:min(52%, var(--product-max));
-  max-width:var(--product-max);
-  align-self:flex-end;
-  flex:1 1 auto;
-  display:flex;
-  align-items:flex-end;
-  justify-content:flex-end;
-  min-height:0;
-  pointer-events:none;
-}
-.classic-hero-product-float{
   width:100%;
-  max-height:100%;
-  filter:drop-shadow(0 16px 20px rgba(0,20,80,.32));
+  max-width:100%;
+  margin:0;
+  padding:0;
+  overflow:visible;
+  background:var(--ink-yellow);
+  line-height:0;
 }
-.classic-hero-product{
+.classic-hero-picture,
+.classic-hero-img{
+  display:block;
   width:100%;
-  max-width:min(220px, var(--product-max));
-  max-height:340px;
+  max-width:100%;
   height:auto;
+  aspect-ratio:1133 / 1360;
   object-fit:contain;
-  object-position:center bottom;
+  object-position:center center;
+  background:var(--ink-yellow);
+  border:0;
+  border-radius:0;
+  box-shadow:none;
   image-rendering:auto;
 }
 
-.classic-hero-cta-row{
-  position:relative;
-  z-index:4;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.35rem;
-  width:100%;
-  margin:.35rem 0 .55rem;
-  flex:0 0 auto;
-  pointer-events:auto;
-}
-.classic-hero-line{
-  display:inline-flex;
-  align-items:center;
-  gap:.55rem;
-  background:var(--ink-yellow);
-  color:var(--ink-red);
-  border:3px solid #0d3db8;
-  border-radius:999px;
-  padding:.55rem 1.1rem .55rem .65rem;
-  text-decoration:none;
-  font-family:Andale Mono,SpaceMono Bold,monospace;
-  font-size:1.05rem;
-  line-height:1;
-  box-shadow:3px 3px 0 0 #0d3db8;
-  max-width:92%;
-}
-.classic-hero-line:hover{
-  transform:translate(-1px,-1px);
-  box-shadow:4px 4px 0 0 #0d3db8;
-}
-.classic-hero-line-icon{
-  display:inline-flex;
-  width:28px;
-  height:28px;
-  flex:0 0 auto;
-}
-.classic-hero-line-icon svg{display:block;width:28px;height:28px}
-.classic-hero-line-text{white-space:nowrap}
-.classic-hero-hand{
-  display:inline-flex;
-  margin-left:-.15rem;
-  margin-bottom:-.55rem;
-  filter:drop-shadow(0 3px 0 rgba(0,0,0,.3));
-  animation:classic-hand-tap 1.6s ease-in-out infinite;
+/* Hotspot — poster LINE CTA (from classic v12 hero) */
+.furmosa-hotspot{
+  position:absolute;
+  left:14%;
+  top:71%;
+  width:72%;
+  height:10%;
+  z-index:3;
+  display:block;
+  cursor:pointer;
+  background:transparent;
+  border:0;
+  box-shadow:none;
   pointer-events:none;
 }
-.classic-hero-hand-svg{display:block;width:48px;height:48px}
-@keyframes classic-hand-tap{
-  0%,100%{transform:translate(0,0) rotate(-12deg)}
-  40%{transform:translate(-3px,7px) rotate(-18deg) scale(.96)}
-  55%{transform:translate(-1px,3px) rotate(-14deg) scale(1)}
-}
+.page-ready .furmosa-hotspot{pointer-events:auto}
 
-.classic-hero-feature{
-  position:relative;
-  z-index:3;
-  width:100%;
-  margin:0;
-  padding:.85rem .9rem .95rem;
-  border:3px double #0d3db8;
-  border-radius:10px;
-  background:var(--ink-deep);
-  color:var(--ink-yellow);
-  flex:0 0 auto;
-}
-.classic-hero-feature-title{
-  font-family:Andale Mono,monospace;
-  font-size:.95rem;
-  margin:0 0 .4rem;
-  color:var(--ink-yellow);
-}
-.classic-hero-feature-body{
-  font-family:Andale Mono,monospace;
-  font-size:.9rem;
-  line-height:1.45;
-  margin:0;
-  color:#f3e27a;
-}
-
-/* ========== Chat — immediately under hero ========== */
+/* ========== Chat — immediately under hero, no gap ========== */
 .chat-stream{
   position:relative;
   z-index:2;
@@ -473,7 +336,7 @@ img,video{max-width:100%;height:auto;display:block}
 .yours .message.has-image .chat-bubble-photo{
   display:block;
   width:auto;
-  max-width:var(--chat-photo-max);
+  max-width:var(--chat-photo-max); /* 286 natural → ≤143 CSS px @ DPR2 */
   height:auto;
   object-fit:contain;
   object-position:center;
@@ -489,6 +352,7 @@ img,video{max-width:100%;height:auto;display:block}
 .chat-stream .chat .chat-product-video::-webkit-media-controls-enclosure{display:none!important}
 .yours .message a.phone-link{color:var(--ink-blue);text-decoration:underline}
 
+/* Desktop ≥769 */
 @media screen and (min-width:769px){
   .side-panel{
     display:flex;
@@ -500,12 +364,12 @@ img,video{max-width:100%;height:auto;display:block}
     margin-inline:auto;
   }
   .classic-hero{
-    height:var(--hero-h);
-    min-height:var(--hero-h);
-    max-height:var(--hero-h);
+    position:relative;
+    width:100%;
   }
 }
 
+/* Mobile ≤768: hide sides, full-width center, no gap */
 @media screen and (max-width:768px){
   html,body{background:var(--ink-yellow)}
   .side-panel{
@@ -521,20 +385,14 @@ img,video{max-width:100%;height:auto;display:block}
   }
   .classic-hero{
     width:100%;
-    height:auto;
-    min-height:min(var(--hero-h), 100svh);
-    max-height:none;
   }
-  .classic-hero-stage{min-height:min(var(--hero-h), 100svh)}
-  .classic-hero-product{max-height:min(360px, 42vh)}
 }
 
+/* Reduced motion — kill big motions */
 @media (prefers-reduced-motion:reduce){
-  .classic-hero-hand,
   .side-poster-wrap{
-    animation:none!important;
     transform:none!important;
   }
 }
 
-/* hero-proportion-744 20260807 */
+/* classic-ibm-hero-restore 20260807 */
