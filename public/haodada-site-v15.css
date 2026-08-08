@@ -181,7 +181,6 @@ img,video{max-width:100%;height:auto;display:block}
 
 /* Classic side posters — full CRT+keyboard via contain; never cropped */
 .side-poster-wrap{
-  position:relative;
   box-sizing:border-box;
   width:100%;
   max-width:100%;
@@ -201,12 +200,22 @@ img,video{max-width:100%;height:auto;display:block}
   box-shadow:none!important;
   background:transparent;
 }
+.side-poster-frame{
+  position:relative;
+  display:block;
+  width:100%;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  line-height:0;
+}
+.side-left .side-poster-frame{max-width:min(100%, var(--side-poster-max-left))}
 .side-copy-fix{
   position:absolute;
   z-index:2;
   left:50%;
   bottom:5.4%;
-  width:min(78%, var(--side-poster-max-left));
+  width:78%;
   min-height:4.6%;
   display:flex;
   align-items:center;
