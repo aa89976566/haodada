@@ -49,6 +49,7 @@ export function buildSiteHtml(): string {
       <source srcset="/images/side-dog-left-v4.webp" type="image/webp">
       <img class="side-poster-img" src="/images/side-dog-left-v4.jpg" alt="" width="634" height="1360" decoding="async" fetchpriority="high">
     </picture>
+    <span class="side-copy-fix">毛孩吃得單純安心</span>
   </div>
 </aside>
 <section class="center-column">
