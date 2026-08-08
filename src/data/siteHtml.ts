@@ -44,6 +44,7 @@ export function buildSiteHtml(): string {
 
   return `<main class="experience-shell">
 <aside class="side-panel side-left" aria-hidden="true">
+  <span class="side-burst side-burst-round"></span>
   <div class="side-poster-wrap" data-parallax="0.12">
     <div class="side-poster-frame">
       <picture class="side-poster">
@@ -68,6 +69,7 @@ export function buildSiteHtml(): string {
   </section>
 </section>
 <aside class="side-panel side-right" aria-hidden="true">
+  <span class="side-burst side-burst-sharp"></span>
   <div class="side-poster-wrap" data-parallax="-0.12">
     <picture class="side-poster">
       <img class="side-poster-img" src="/images/side-dog-right-v4.jpg" alt="" width="627" height="1360" decoding="async" fetchpriority="high">
