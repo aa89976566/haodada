@@ -55,8 +55,7 @@ export function buildSiteHtml(): string {
   <section class="classic-hero" aria-label="${escapeAttr(BRAND.name)} 實驗結果">
     <div class="classic-hero-wrap">
       <picture class="classic-hero-picture">
-        <source srcset="/images/hero-center-v2.webp" type="image/webp">
-        <img class="classic-hero-img" src="/images/hero-center-v2.jpg" alt="${escapeAttr(BRAND.name)} 實驗結果海報" width="1133" height="1360" decoding="async" fetchpriority="high">
+        <img class="classic-hero-img" src="/images/hero-furmosa-dogs-v1.png" alt="${escapeAttr(BRAND.name)} 實驗結果海報，兩隻狗狗拿著雞排" width="941" height="1672" decoding="async" fetchpriority="high">
       </picture>
       <a class="furmosa-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" aria-label="加入 LINE ${escapeAttr(handle)}"></a>
     </div>
