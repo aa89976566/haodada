@@ -68,7 +68,6 @@ export function buildSiteHtml(): string {
 <aside class="side-panel side-right" aria-hidden="true">
   <div class="side-poster-wrap" data-parallax="-0.12">
     <picture class="side-poster">
-      <source srcset="/images/side-dog-right-v4.webp" type="image/webp">
       <img class="side-poster-img" src="/images/side-dog-right-v4.jpg" alt="" width="627" height="1360" decoding="async" fetchpriority="high">
     </picture>
   </div>
