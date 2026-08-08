@@ -181,6 +181,7 @@ img,video{max-width:100%;height:auto;display:block}
 
 /* Classic side posters — full CRT+keyboard via contain; never cropped */
 .side-poster-wrap{
+  position:relative;
   box-sizing:border-box;
   width:100%;
   max-width:100%;
@@ -199,6 +200,28 @@ img,video{max-width:100%;height:auto;display:block}
   outline:none!important;
   box-shadow:none!important;
   background:transparent;
+}
+.side-copy-fix{
+  position:absolute;
+  z-index:2;
+  left:50%;
+  bottom:5.4%;
+  width:min(78%, var(--side-poster-max-left));
+  min-height:4.6%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:translateX(-50%);
+  box-sizing:border-box;
+  background:var(--ink-blue);
+  color:#ffe052;
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  font-size:clamp(13px,1.38vw,22px);
+  font-weight:800;
+  line-height:1.15;
+  letter-spacing:.025em;
+  white-space:nowrap;
+  text-align:center;
 }
 .side-poster-wrap::before,
 .side-poster-wrap::after{
