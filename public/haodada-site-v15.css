@@ -283,9 +283,9 @@ img,video{max-width:100%;height:auto;display:block}
   line-height:0;
 }
 .classic-hero-picture{
-  width:103%;
-  max-width:none;
-  margin-left:-1.5%;
+  width:100%;
+  max-width:100%;
+  margin-left:0;
 }
 .classic-hero-picture .classic-hero-img{
   width:100%;
@@ -297,7 +297,7 @@ img,video{max-width:100%;height:auto;display:block}
   width:100%;
   max-width:100%;
   height:auto;
-  aspect-ratio:1133 / 1360;
+  aspect-ratio:941 / 1672;
   object-fit:contain;
   object-position:center center;
   background:var(--ink-yellow);
@@ -311,9 +311,9 @@ img,video{max-width:100%;height:auto;display:block}
 .furmosa-hotspot{
   position:absolute;
   left:14%;
-  top:71%;
+  top:67.5%;
   width:72%;
-  height:10%;
+  height:7%;
   z-index:3;
   display:block;
   cursor:pointer;
