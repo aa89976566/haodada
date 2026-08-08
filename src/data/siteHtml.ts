@@ -45,11 +45,13 @@ export function buildSiteHtml(): string {
   return `<main class="experience-shell">
 <aside class="side-panel side-left" aria-hidden="true">
   <div class="side-poster-wrap" data-parallax="0.12">
-    <picture class="side-poster">
-      <source srcset="/images/side-dog-left-v4.webp" type="image/webp">
-      <img class="side-poster-img" src="/images/side-dog-left-v4.jpg" alt="" width="634" height="1360" decoding="async" fetchpriority="high">
-    </picture>
-    <span class="side-copy-fix">毛孩吃得單純安心</span>
+    <div class="side-poster-frame">
+      <picture class="side-poster">
+        <source srcset="/images/side-dog-left-v4.webp" type="image/webp">
+        <img class="side-poster-img" src="/images/side-dog-left-v4.jpg" alt="" width="634" height="1360" decoding="async" fetchpriority="high">
+      </picture>
+      <span class="side-copy-fix">毛孩吃得單純安心</span>
+    </div>
   </div>
 </aside>
 <section class="center-column">
