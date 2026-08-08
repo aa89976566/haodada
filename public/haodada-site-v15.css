@@ -278,9 +278,18 @@ img,video{max-width:100%;height:auto;display:block}
   max-width:100%;
   margin:0;
   padding:0;
-  overflow:visible;
+  overflow:hidden;
   background:var(--ink-yellow);
   line-height:0;
+}
+.classic-hero-picture{
+  width:103%;
+  max-width:none;
+  margin-left:-1.5%;
+}
+.classic-hero-picture .classic-hero-img{
+  width:100%;
+  max-width:100%;
 }
 .classic-hero-picture,
 .classic-hero-img{
