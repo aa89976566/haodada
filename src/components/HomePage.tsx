@@ -13,9 +13,9 @@ function withBase(html: string) {
   const base = basePath();
   if (!base) return html;
   return html
-    .replace(/(src|href)="(\/_nuxt\/[^"]+)"/g, `$1="${base}$2"`)
-    .replace(/(src|href)="(\/img\/[^"]+)"/g, `$1="${base}$2"`)
-    .replace(/(src|href)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(src|href|poster|data-src)="(\/_nuxt\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(src|href|poster|data-src)="(\/img\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/(src|href|poster|data-src)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(srcset)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(src|href)="(\/social\/[^"]+)"/g, `$1="${base}$2"`);
 }
@@ -85,7 +85,7 @@ function Preloader({ onDone }: { onDone: () => void }) {
   );
 }
 
-function startMutedAutoplay(video: HTMLVideoElement) {
+function prepareMutedVideo(video: HTMLVideoElement) {
   video.muted = true;
   video.defaultMuted = true;
   video.playsInline = true;
@@ -93,12 +93,6 @@ function startMutedAutoplay(video: HTMLVideoElement) {
   video.setAttribute("playsinline", "");
   video.setAttribute("webkit-playsinline", "");
   video.removeAttribute("controls");
-  const playAttempt = video.play();
-  if (playAttempt && typeof playAttempt.catch === "function") {
-    playAttempt.catch(() => {
-      /* Autoplay may be blocked until gesture */
-    });
-  }
 }
 
 /**
@@ -117,21 +111,75 @@ export function HomePage() {
 
   useEffect(() => {
     if (!ready) return;
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
     const video = document.querySelector<HTMLVideoElement>(
       "video.chat-product-video",
     );
-    if (video) {
-      if (reduceMotion) {
-        video.removeAttribute("autoplay");
-        video.pause();
-      } else {
-        startMutedAutoplay(video);
+    if (!video) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const playButton = video.parentElement?.querySelector<HTMLButtonElement>(
+      ".chat-video-play",
+    );
+    prepareMutedVideo(video);
+
+    const showPlayButton = () => playButton?.classList.add("is-visible");
+    const hidePlayButton = () => playButton?.classList.remove("is-visible");
+    const loadVideo = () => {
+      if (video.getAttribute("src")) return;
+      const source = video.dataset.src;
+      if (!source) return;
+      video.src = source;
+      video.load();
+    };
+    const playVideo = async () => {
+      loadVideo();
+      try {
+        await video.play();
+        hidePlayButton();
+      } catch {
+        showPlayButton();
       }
-    }
+    };
+    const onManualPlay = () => void playVideo();
+    const onVideoError = () => showPlayButton();
+    const onVideoPlaying = () => hidePlayButton();
+
+    playButton?.addEventListener("click", onManualPlay);
+    video.addEventListener("error", onVideoError);
+    video.addEventListener("stalled", onVideoError);
+    video.addEventListener("playing", onVideoPlaying);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadVideo();
+          if (reduceMotion) showPlayButton();
+          else void playVideo();
+        } else if (!video.paused) {
+          video.pause();
+        }
+      },
+      { rootMargin: "320px 0px", threshold: 0.05 },
+    );
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+      playButton?.removeEventListener("click", onManualPlay);
+      video.removeEventListener("error", onVideoError);
+      video.removeEventListener("stalled", onVideoError);
+      video.removeEventListener("playing", onVideoPlaying);
+      video.pause();
+    };
+  }, [ready]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     if (reduceMotion) {
       document.documentElement.style.setProperty("--scroll-y", "0");
