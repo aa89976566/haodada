@@ -430,12 +430,16 @@ img,video{max-width:100%;height:auto;display:block}
   border-radius:14px;
   background:#e5e5ea;
 }
-.yours .message.has-video{padding:0!important;background:#e5e5ea!important;width:var(--chat-media-width)!important;max-width:var(--chat-media-width)!important}
+.yours .message.has-video{position:relative;padding:0!important;background:#e5e5ea!important;width:var(--chat-media-width)!important;max-width:var(--chat-media-width)!important}
 .chat-stream .chat .chat-product-video{
   display:block;width:100%!important;max-width:100%!important;height:auto;aspect-ratio:9/16;object-fit:cover;background:#111;border:0!important;margin:0!important;border-radius:20px;pointer-events:none;
 }
 .chat-stream .chat .chat-product-video::-webkit-media-controls,
 .chat-stream .chat .chat-product-video::-webkit-media-controls-enclosure{display:none!important}
+.chat-video-play{
+  position:absolute;left:50%;top:50%;z-index:2;display:none;transform:translate(-50%,-50%);padding:.72rem 1rem!important;border:2px solid #fff!important;border-radius:999px!important;background:rgba(1,28,145,.9)!important;color:#fff!important;font-weight:700!important;box-shadow:0 3px 0 rgba(0,0,0,.28);white-space:nowrap;
+}
+.chat-video-play.is-visible{display:block}
 .yours .message a.phone-link{color:var(--ink-blue);text-decoration:underline}
 
 /* Desktop ≥769 */
