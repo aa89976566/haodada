@@ -47,6 +47,9 @@ export function buildSiteHtml(): string {
   <span class="side-burst side-burst-round"></span>
   <div class="side-poster-wrap" data-parallax="0.12">
     <div class="side-poster-frame">
+      <div class="side-custom-title-panel">
+        <img class="side-custom-title" src="/images/taiwan-retro-chicken-title-v1.png" alt="" width="1448" height="1086" decoding="async" fetchpriority="high">
+      </div>
       <picture class="side-poster">
         <source srcset="/images/side-dog-left-v4.webp" type="image/webp">
         <img class="side-poster-img" src="/images/side-dog-left-v4.jpg" alt="" width="634" height="1360" decoding="async" fetchpriority="high">
@@ -71,9 +74,14 @@ export function buildSiteHtml(): string {
 <aside class="side-panel side-right" aria-hidden="true">
   <span class="side-burst side-burst-sharp"></span>
   <div class="side-poster-wrap" data-parallax="-0.12">
-    <picture class="side-poster">
-      <img class="side-poster-img" src="/images/side-dog-right-v4.jpg" alt="" width="627" height="1360" decoding="async" fetchpriority="high">
-    </picture>
+    <div class="side-poster-frame">
+      <div class="side-custom-title-panel">
+        <img class="side-custom-title" src="/images/taiwan-retro-chicken-title-v1.png" alt="" width="1448" height="1086" decoding="async" fetchpriority="high">
+      </div>
+      <picture class="side-poster">
+        <img class="side-poster-img" src="/images/side-dog-right-v4.jpg" alt="" width="627" height="1360" decoding="async" fetchpriority="high">
+      </picture>
+    </div>
   </div>
 </aside>
 </main>`;
