@@ -59,8 +59,9 @@ export function buildSiteHtml(): string {
   <section class="classic-hero" aria-label="${escapeAttr(BRAND.name)} 實驗結果">
     <div class="classic-hero-wrap">
       <picture class="classic-hero-picture">
-        <img class="classic-hero-img" src="/images/hero-furmosa-two-products-v6.png" alt="${escapeAttr(BRAND.name)} 實驗結果海報，兩包真實雞排產品左右對齊" width="941" height="1671" decoding="async" fetchpriority="high">
+        <img class="classic-hero-img" src="/images/hero-furmosa-order-screen-v7.png" alt="${escapeAttr(BRAND.name)} 實驗結果海報，電腦螢幕顯示純雞肉食品資訊與 NT$89 下單介面" width="941" height="1671" decoding="async" fetchpriority="high">
       </picture>
+      <a class="hero-order-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="立即下單 NT$89" aria-label="立即下單，純雞肉雞霸 50 克，NT$89"></a>
       <a class="furmosa-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" aria-label="加入 LINE ${escapeAttr(handle)}"></a>
     </div>
   </section>
