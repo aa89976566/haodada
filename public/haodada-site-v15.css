@@ -375,6 +375,24 @@ img,video{max-width:100%;height:auto;display:block}
   pointer-events:none;
 }
 .page-ready .furmosa-hotspot{pointer-events:auto}
+.hero-order-hotspot{
+  position:absolute;
+  left:38.2%;
+  top:43.7%;
+  width:35.4%;
+  height:5.2%;
+  z-index:4;
+  display:block;
+  cursor:pointer;
+  border-radius:12px;
+  background:transparent;
+  pointer-events:none;
+}
+.page-ready .hero-order-hotspot{pointer-events:auto}
+.hero-order-hotspot:focus-visible{
+  outline:3px solid #fff;
+  outline-offset:2px;
+}
 
 /* ========== Chat — immediately under hero, no gap ========== */
 .chat-stream{
