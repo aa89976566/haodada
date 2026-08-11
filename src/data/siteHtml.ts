@@ -56,13 +56,42 @@ export function buildSiteHtml(): string {
   </div>
 </aside>
 <section class="center-column">
-  <section class="classic-hero" aria-label="${escapeAttr(BRAND.name)} 實驗結果">
-    <div class="classic-hero-wrap">
-      <picture class="classic-hero-picture">
-        <img class="classic-hero-img" src="/images/hero-furmosa-order-screen-v7.png" alt="${escapeAttr(BRAND.name)} 實驗結果海報，電腦螢幕顯示純雞肉食品資訊與 NT$89 下單介面" width="941" height="1671" decoding="async" fetchpriority="high">
-      </picture>
-      <a class="hero-order-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="立即下單 NT$89" aria-label="立即下單，純雞肉雞霸 50 克，NT$89"></a>
-      <a class="furmosa-hotspot" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer" title="加入 ${escapeAttr(handle)}" aria-label="加入 LINE ${escapeAttr(handle)}"></a>
+  <section class="print-lab" aria-label="${escapeAttr(BRAND.name)} 食品資訊列印動畫">
+    <div class="print-lab-sticky">
+      <div class="print-lab-stage">
+        <img class="print-lab-machine" src="/images/hero-factory-printer-base-v8.png" alt="嚎大大雞霸製作與包裝流程機台" width="941" height="1671" decoding="async" fetchpriority="high">
+        <div class="print-status" aria-hidden="true"><span class="print-status-dot"></span><span>SCROLL TO PRINT</span></div>
+        <div class="print-paper-window">
+          <article class="print-paper">
+            <header class="print-paper-head">
+              <span>第 06 號裝備</span>
+              <strong>出廠認證報告</strong>
+            </header>
+            <dl class="print-specs">
+              <div><dt>裝備名稱</dt><dd>嚎大大雞霸</dd></div>
+              <div><dt>核心材料</dt><dd>純雞肉</dd></div>
+              <div><dt>製作方式</dt><dd>整片雞胸肉低溫烘乾</dd></div>
+              <div><dt>裝備重量</dt><dd>50 克</dd></div>
+            </dl>
+            <section class="print-nutrition" aria-label="營養成分">
+              <h3>營養成分</h3>
+              <p><span>粗蛋白</span><b>62%</b></p>
+              <p><span>粗脂肪</span><b>14.5%</b></p>
+              <p><span>粗纖維</span><b>0.5%</b></p>
+            </section>
+            <section class="print-covenant">
+              <span>狗公園公約 #06</span>
+              <strong>帶球 只會開始遊戲</strong>
+              <strong>帶雞霸 才會開始聊天</strong>
+            </section>
+            <p class="print-note">實際產品外觀、內容物與尺寸請以實品為準</p>
+            <a class="print-cta" href="${escapeAttr(line)}" target="_blank" rel="noopener noreferrer">
+              <strong>領取第 06 號裝備 →</strong>
+              <span>前往 LINE ${escapeAttr(handle)} · NT$89</span>
+            </a>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
   <section class="chat-stream">
