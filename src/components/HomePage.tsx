@@ -96,9 +96,8 @@ function prepareMutedVideo(video: HTMLVideoElement) {
 }
 
 /**
- * v15 shell + classic IBM triptych hero:
- * fixed side posters + scrolling center (classic-hero → chat).
- * Scroll drives CSS custom properties via rAF (max parallax ~14px).
+ * Fixed side posters + scroll-driven factory printer hero → chat.
+ * Scroll drives parallax and the paper-feed animation via rAF.
  */
 export function HomePage() {
   const [ready, setReady] = useState(false);
@@ -181,9 +180,13 @@ export function HomePage() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    const printLab = document.querySelector<HTMLElement>(".print-lab");
+
     if (reduceMotion) {
       document.documentElement.style.setProperty("--scroll-y", "0");
       document.documentElement.style.setProperty("--parallax", "0");
+      printLab?.style.setProperty("--print-progress", "1");
+      printLab?.classList.add("is-printed");
       return;
     }
 
@@ -194,6 +197,15 @@ export function HomePage() {
       const root = document.documentElement;
       root.style.setProperty("--scroll-y", String(y));
       root.style.setProperty("--parallax", String(parallax));
+
+      if (printLab) {
+        const rect = printLab.getBoundingClientRect();
+        const travel = Math.max(1, rect.height - window.innerHeight);
+        const progress = Math.max(0, Math.min(1, -rect.top / travel));
+        printLab.style.setProperty("--print-progress", progress.toFixed(4));
+        printLab.classList.toggle("is-printing", progress > 0.015 && progress < 0.985);
+        printLab.classList.toggle("is-printed", progress >= 0.985);
+      }
     };
     const onScroll = () => {
       if (raf) return;
