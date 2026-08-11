@@ -42,7 +42,8 @@ body{
   color:#fff;
   min-height:100%;
   overflow-x:clip;
-  overflow-y:auto;
+  /* Keep window as the only scroll container so position:sticky can track it. */
+  overflow-y:visible;
   max-width:100%;
   /* unique document scroll */
   overscroll-behavior-y:auto;
