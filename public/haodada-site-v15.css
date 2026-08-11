@@ -313,86 +313,184 @@ img,video{max-width:100%;height:auto;display:block}
 .side-left .side-poster-img{aspect-ratio:634 / 1360}
 .side-right .side-poster-img{aspect-ratio:627 / 1360}
 
-/* ========== Classic center hero (hero-center-v2 full poster) ========== */
-.classic-hero{
+/* ========== Scroll printer hero ========== */
+.print-lab{
+  --print-progress:0;
   position:relative;
   width:100%;
+  height:210svh;
+  min-height:1320px;
   margin:0;
   padding:0;
-  overflow:visible;
-  background:var(--ink-yellow);
-  line-height:0;
+  background:#0758e7;
   flex:0 0 auto;
 }
-.classic-hero-wrap{
+.print-lab-sticky{
+  position:sticky;
+  top:0;
+  width:100%;
+  height:100svh;
+  min-height:680px;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  background:#0758e7;
+}
+.print-lab-stage{
   position:relative;
   width:100%;
-  max-width:100%;
-  margin:0;
-  padding:0;
+  aspect-ratio:941 / 1671;
   overflow:hidden;
-  background:var(--ink-yellow);
-  line-height:0;
+  isolation:isolate;
+  background:#0758e7;
 }
-.classic-hero-picture{
-  width:100%;
-  max-width:100%;
-  margin-left:0;
-}
-.classic-hero-picture .classic-hero-img{
-  width:100%;
-  max-width:100%;
-}
-.classic-hero-picture,
-.classic-hero-img{
+.print-lab-machine{
+  position:absolute;
+  inset:0;
+  z-index:1;
   display:block;
   width:100%;
-  max-width:100%;
-  height:auto;
-  aspect-ratio:941 / 1672;
-  object-fit:contain;
-  object-position:center center;
-  background:var(--ink-yellow);
-  border:0;
-  border-radius:0;
-  box-shadow:none;
+  height:100%;
+  object-fit:cover;
   image-rendering:auto;
 }
-
-/* Hotspot — poster LINE CTA (from classic v12 hero) */
-.furmosa-hotspot{
+.print-status{
   position:absolute;
-  left:14%;
-  top:67.5%;
-  width:72%;
-  height:7%;
+  z-index:5;
+  left:50%;
+  top:53.35%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:5px 9px;
+  border:1px solid rgba(255,216,70,.78);
+  background:#061d56;
+  color:#ffdc46;
+  font:700 9px/1 "Courier New",monospace;
+  letter-spacing:.09em;
+  white-space:nowrap;
+  box-shadow:0 2px 0 #031333;
+  transition:opacity .16s ease;
+}
+.print-status-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#ffdc46;
+  box-shadow:0 0 0 2px rgba(255,220,70,.18);
+}
+.print-lab.is-printing .print-status-dot{animation:printerBlink .45s steps(1,end) infinite}
+.print-lab.is-printed .print-status{opacity:0}
+@keyframes printerBlink{50%{background:#ff4e42;box-shadow:0 0 8px #ff4e42}}
+.print-paper-window{
+  position:absolute;
   z-index:3;
-  display:block;
-  cursor:pointer;
-  background:transparent;
-  border:0;
-  box-shadow:none;
+  left:13.8%;
+  top:54.2%;
+  width:72.4%;
+  height:43.2%;
+  overflow:hidden;
+  perspective:900px;
   pointer-events:none;
 }
-.page-ready .furmosa-hotspot{pointer-events:auto}
-.hero-order-hotspot{
+.print-paper-window::before{
+  content:"";
   position:absolute;
-  left:38.2%;
-  top:43.7%;
-  width:35.4%;
-  height:5.2%;
   z-index:4;
-  display:block;
-  cursor:pointer;
-  border-radius:12px;
-  background:transparent;
+  left:0;
+  top:0;
+  width:100%;
+  height:7px;
+  background:linear-gradient(#040914,#16223d 45%,#02040a);
+  box-shadow:0 3px 4px rgba(0,0,0,.55);
+}
+.print-paper{
+  position:relative;
+  z-index:2;
+  width:100%;
+  min-height:96%;
+  box-sizing:border-box;
+  margin:0;
+  padding:18px 18px 14px;
+  transform:translate3d(0,calc(-101% + (var(--print-progress) * 101%)),0) rotateX(calc((1 - var(--print-progress)) * -3deg));
+  transform-origin:top center;
+  background:
+    repeating-linear-gradient(0deg,transparent 0 19px,rgba(10,36,91,.055) 19px 20px),
+    #fffdf3;
+  color:#101b32;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  line-height:1.25;
+  box-shadow:0 8px 14px rgba(0,0,0,.35);
+  will-change:transform;
+  pointer-events:auto;
+}
+.print-paper::after{
+  content:"";
+  position:absolute;
+  inset:0;
   pointer-events:none;
+  opacity:.18;
+  background-image:radial-gradient(#18386f .35px,transparent .5px);
+  background-size:4px 4px;
+  mix-blend-mode:multiply;
 }
-.page-ready .hero-order-hotspot{pointer-events:auto}
-.hero-order-hotspot:focus-visible{
-  outline:3px solid #fff;
-  outline-offset:2px;
+.print-paper-head{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  padding:8px 10px 9px;
+  color:#fff9dc;
+  background:#083895;
+  border-bottom:4px solid #f24c39;
 }
+.print-paper-head span{font-size:10px;font-weight:800;letter-spacing:.12em}
+.print-paper-head strong{font-size:22px;letter-spacing:.08em}
+.print-specs{margin:10px 0 8px;border:2px solid #123d8e}
+.print-specs div{display:grid;grid-template-columns:32% 1fr;border-bottom:1px solid #123d8e}
+.print-specs div:last-child{border-bottom:0}
+.print-specs dt,.print-specs dd{margin:0;padding:4px 6px;font-size:10px}
+.print-specs dt{font-weight:800;color:#fff;background:#123d8e}
+.print-specs dd{font-weight:700}
+.print-nutrition{margin:0 0 9px}
+.print-nutrition h3{margin:0 0 4px;color:#123d8e;font-size:13px;letter-spacing:.08em}
+.print-nutrition p{display:flex;justify-content:space-between;margin:0;padding:2px 5px;border-bottom:1px solid rgba(18,61,142,.3);font-size:10px}
+.print-covenant{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin-top:8px;
+  padding:6px 10px;
+  border:2px solid #123d8e;
+  background:#f9d844;
+  color:#07338b;
+  text-align:center;
+}
+.print-covenant span{font-size:10px;font-weight:900;letter-spacing:.08em}
+.print-covenant strong{font-size:14px;letter-spacing:.04em}
+.print-note{margin:7px 0 8px;color:#4e5563;font-size:8px;text-align:center}
+.print-cta{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding:9px 8px;
+  border:2px solid #8d150d;
+  border-radius:2px;
+  background:#c92718;
+  color:#fff!important;
+  text-decoration:none!important;
+  box-shadow:0 3px 0 #74130d;
+}
+.print-cta strong{font-size:15px;letter-spacing:.09em}
+.print-cta span{font-size:8px;letter-spacing:.04em}
+.print-cta:focus-visible{outline:3px solid #f9d844;outline-offset:2px}
 
 /* ========== Chat — immediately under hero, no gap ========== */
 .chat-stream{
@@ -491,7 +589,7 @@ img,video{max-width:100%;height:auto;display:block}
     width:var(--center-w);
     margin-inline:auto;
   }
-  .classic-hero{
+  .print-lab{
     position:relative;
     width:100%;
   }
@@ -511,7 +609,7 @@ img,video{max-width:100%;height:auto;display:block}
     max-width:100%;
     margin:0;
   }
-  .classic-hero{
+  .print-lab{
     width:100%;
   }
 }
@@ -521,6 +619,10 @@ img,video{max-width:100%;height:auto;display:block}
   .side-poster-wrap{
     transform:none!important;
   }
+  .print-lab{height:auto;min-height:0}
+  .print-lab-sticky{position:relative;height:auto;min-height:0}
+  .print-paper{transform:none!important}
+  .print-status{display:none}
 }
 
 /* classic-ibm-hero-restore 20260807 */
