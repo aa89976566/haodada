@@ -351,12 +351,16 @@ img,video{max-width:100%;height:auto;display:block}
   content:"";
   position:absolute;
   inset:0;
-  z-index:4;
+  z-index:2;
   pointer-events:none;
-  background:url("./images/hero-factory-printer-front-v10.png") center/100% 100% no-repeat;
+  background-color:#0758e7;
+  background-image:url("./images/hero-factory-printer-front-v10.png");
+  background-position:center 3.2%;
+  background-size:100% 100%;
+  background-repeat:no-repeat;
 }
-.print-lab-stage::before{clip-path:polygon(0 77%,27% 77%,27% 100%,0 100%)}
-.print-lab-stage::after{clip-path:polygon(73% 77%,100% 77%,100% 100%,73% 100%)}
+.print-lab-stage::before{clip-path:polygon(0 75%,27% 75%,27% 100%,0 100%)}
+.print-lab-stage::after{clip-path:polygon(73% 75%,100% 75%,100% 100%,73% 100%)}
 .print-lab-machine{
   position:absolute;
   inset:0;
