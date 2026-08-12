@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=outer-side-report-v16`} />
+        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=outer-side-report-v16b`} />
       </head>
       <body>{children}</body>
     </html>
