@@ -346,6 +346,17 @@ img,video{max-width:100%;height:auto;display:block}
   isolation:isolate;
   background:#0758e7;
 }
+.print-lab-stage::before,
+.print-lab-stage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  background:url("./images/hero-factory-printer-front-v10.png") center/100% 100% no-repeat;
+}
+.print-lab-stage::before{clip-path:polygon(0 77%,27% 77%,27% 100%,0 100%)}
+.print-lab-stage::after{clip-path:polygon(73% 77%,100% 77%,100% 100%,73% 100%)}
 .print-lab-machine{
   position:absolute;
   inset:0;
@@ -356,11 +367,30 @@ img,video{max-width:100%;height:auto;display:block}
   object-fit:cover;
   image-rendering:auto;
 }
-.print-status{
+.print-hero-title{
   position:absolute;
   z-index:5;
+  left:0;
+  top:1.9%;
+  width:100%;
+  margin:0;
+  color:#8d160d;
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  font-size:clamp(45px,12.2vw,56px);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:.055em;
+  text-align:center;
+  white-space:nowrap;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+}
+.print-status{
+  position:absolute;
+  z-index:6;
   left:50%;
-  top:53.35%;
+  top:50.85%;
   transform:translateX(-50%);
   display:flex;
   align-items:center;
@@ -389,7 +419,7 @@ img,video{max-width:100%;height:auto;display:block}
   position:absolute;
   z-index:3;
   left:13.8%;
-  top:54.2%;
+  top:51.7%;
   width:72.4%;
   height:43.2%;
   overflow:hidden;
