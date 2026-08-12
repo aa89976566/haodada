@@ -483,8 +483,8 @@ img,video{max-width:100%;height:auto;display:block}
   background:#083895;
   border-bottom:4px solid #f24c39;
 }
-.print-paper-head span{font-size:8px;font-weight:800;letter-spacing:.12em}
-.print-paper-head strong{font-size:18px;letter-spacing:.08em}
+.print-paper-head span{font-size:8px;font-weight:800;letter-spacing:.08em}
+.print-paper-head strong{font-size:15px;letter-spacing:.04em}
 .print-specs{margin:5px 0 4px;border:2px solid #123d8e}
 .print-specs div{display:grid;grid-template-columns:32% 1fr;border-bottom:1px solid #123d8e}
 .print-specs div:last-child{border-bottom:0}
@@ -494,6 +494,16 @@ img,video{max-width:100%;height:auto;display:block}
 .print-nutrition{margin:0 0 4px}
 .print-nutrition h3{margin:0 0 2px;color:#123d8e;font-size:11px;letter-spacing:.08em}
 .print-nutrition p{display:flex;justify-content:space-between;margin:0;padding:1px 5px;border-bottom:1px solid rgba(18,61,142,.3);font-size:9px}
+.print-details{margin:3px 0;border:2px solid #123d8e}
+.print-details p{display:grid;grid-template-columns:27% 1fr;margin:0;border-bottom:1px solid rgba(18,61,142,.35);font-size:7px;line-height:1.25}
+.print-details p:last-child{border-bottom:0}
+.print-details b,.print-details span{padding:2px 4px}
+.print-details b{color:#fff;background:#123d8e}
+.print-details span{font-weight:700}
+.print-features{margin:3px 0;color:#07338b}
+.print-features h3{margin:0 0 2px;font-size:9px;letter-spacing:.08em}
+.print-features div{display:flex;flex-wrap:wrap;gap:2px}
+.print-features span{padding:2px 4px;border:1px solid #123d8e;background:#f9d844;font-size:6.5px;font-weight:800}
 .print-covenant{
   display:flex;
   flex-direction:column;
@@ -523,7 +533,7 @@ img,video{max-width:100%;height:auto;display:block}
   text-decoration:none!important;
   box-shadow:0 3px 0 #74130d;
 }
-.print-cta strong{font-size:12px;letter-spacing:.09em}
+.print-cta strong{font-size:11px;letter-spacing:.06em}
 .print-cta span{font-size:7px;letter-spacing:.04em}
 .print-cta:focus-visible{outline:3px solid #f9d844;outline-offset:2px}
 
