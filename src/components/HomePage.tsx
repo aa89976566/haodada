@@ -186,6 +186,7 @@ export function HomePage() {
       document.documentElement.style.setProperty("--scroll-y", "0");
       document.documentElement.style.setProperty("--parallax", "0");
       printLab?.style.setProperty("--print-progress", "1");
+      printLab?.style.setProperty("--detach-progress", "1");
       printLab?.classList.add("is-printed");
       return;
     }
@@ -202,9 +203,15 @@ export function HomePage() {
         const rect = printLab.getBoundingClientRect();
         const travel = Math.max(1, rect.height - window.innerHeight);
         const progress = Math.max(0, Math.min(1, -rect.top / travel));
-        printLab.style.setProperty("--print-progress", progress.toFixed(4));
-        printLab.classList.toggle("is-printing", progress > 0.015 && progress < 0.985);
-        printLab.classList.toggle("is-printed", progress >= 0.985);
+        const printProgress = Math.max(0, Math.min(1, progress / 0.56));
+        const detachRaw = Math.max(0, Math.min(1, (progress - 0.58) / 0.38));
+        const detachProgress = detachRaw * detachRaw * (3 - 2 * detachRaw);
+        printLab.style.setProperty("--print-progress", printProgress.toFixed(4));
+        printLab.style.setProperty("--detach-progress", detachProgress.toFixed(4));
+        printLab.classList.toggle("is-printing", printProgress > 0.015 && printProgress < 0.985);
+        printLab.classList.toggle("is-printed", printProgress >= 0.985);
+        printLab.classList.toggle("is-detaching", detachProgress > 0.01 && detachProgress < 0.99);
+        printLab.classList.toggle("is-detached", detachProgress >= 0.99);
       }
     };
     const onScroll = () => {
