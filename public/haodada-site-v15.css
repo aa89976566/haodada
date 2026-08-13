@@ -547,28 +547,6 @@ img,video{max-width:100%;height:auto;display:block}
 .print-cta strong{font-size:12px;letter-spacing:.06em}
 .print-cta span{font-size:8px;letter-spacing:.04em}
 .print-cta:focus-visible{outline:3px solid #f9d844;outline-offset:2px}
-.print-landed-info{
-  position:absolute;
-  z-index:5;
-  top:79%;
-  width:29%;
-  box-sizing:border-box;
-  padding:7px 6px;
-  border:2px solid #f9d844;
-  background:#07338b;
-  color:#fffdf3;
-  box-shadow:4px 5px 0 rgba(2,18,73,.42);
-  opacity:var(--detach-progress);
-  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  line-height:1.25;
-  pointer-events:none;
-}
-.print-landed-info-left{left:3.5%;transform:translate3d(calc((1 - var(--detach-progress)) * -90%),calc((1 - var(--detach-progress)) * -80px),0) rotate(calc((1 - var(--detach-progress)) * -8deg))}
-.print-landed-info-right{right:3.5%;transform:translate3d(calc((1 - var(--detach-progress)) * 90%),calc((1 - var(--detach-progress)) * -80px),0) rotate(calc((1 - var(--detach-progress)) * 8deg))}
-.print-landed-info small,.print-landed-info strong,.print-landed-info span{display:block}
-.print-landed-info small{margin-bottom:3px;color:#f9d844;font:700 5.5px/1.1 "Courier New",monospace;letter-spacing:.06em}
-.print-landed-info strong{margin-bottom:4px;font-size:8px;color:#f9d844}
-.print-landed-info span{padding:1px 0;border-top:1px solid rgba(255,255,255,.22);font-size:6.5px;font-weight:700}
 
 /* ========== Chat — immediately under hero, no gap ========== */
 .chat-stream{
@@ -701,7 +679,6 @@ img,video{max-width:100%;height:auto;display:block}
   .print-lab-sticky{position:relative;height:auto;min-height:0}
   .print-paper{transform:none!important}
   .print-paper-window{transform:none!important;opacity:1!important;filter:none!important}
-  .print-landed-info{display:none!important}
   .print-status{display:none}
 }
 
