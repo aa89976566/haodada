@@ -208,7 +208,6 @@ export function HomePage() {
         const detachProgress = detachRaw * detachRaw * (3 - 2 * detachRaw);
         printLab.style.setProperty("--print-progress", printProgress.toFixed(4));
         printLab.style.setProperty("--detach-progress", detachProgress.toFixed(4));
-        root.style.setProperty("--detach-progress", detachProgress.toFixed(4));
         printLab.classList.toggle("is-printing", printProgress > 0.015 && printProgress < 0.985);
         printLab.classList.toggle("is-printed", printProgress >= 0.985);
         printLab.classList.toggle("is-detaching", detachProgress > 0.01 && detachProgress < 0.99);
