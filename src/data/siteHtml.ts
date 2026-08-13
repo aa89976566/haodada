@@ -96,20 +96,6 @@ export function buildSiteHtml(): string {
             </a>
           </article>
         </div>
-        <div class="print-landed-info print-landed-info-left" aria-hidden="true">
-          <small>CHICKEN ORIGINAL</small>
-          <strong>純雞肉・50 克</strong>
-          <span>粗蛋白 62%</span>
-          <span>粗脂肪 14.5%</span>
-          <span>粗纖維 0.5%</span>
-        </div>
-        <div class="print-landed-info print-landed-info-right" aria-hidden="true">
-          <small>FOR DOGS &amp; CATS</small>
-          <strong>6 個月以上犬貓</strong>
-          <span>高蛋白補給</span>
-          <span>單一蛋白質來源</span>
-          <span>依體型適量餵食</span>
-        </div>
       </div>
     </div>
   </section>
