@@ -60,7 +60,6 @@ export function buildSiteHtml(): string {
     <div class="print-lab-sticky">
       <div class="print-lab-stage">
         <img class="print-lab-machine" src="/images/hero-factory-printer-front-v10.png" alt="正面嚎大大雞霸製作與包裝流程印表機" width="941" height="1671" decoding="async" fetchpriority="high">
-        <h1 class="print-hero-title">實驗結果</h1>
         <div class="print-paper-window">
           <article class="print-paper">
             <header class="print-paper-head">
