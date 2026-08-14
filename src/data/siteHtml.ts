@@ -61,75 +61,13 @@ export function buildSiteHtml(): string {
         <img class="print-lab-machine" src="/images/hero-factory-printer-front-v10.png" alt="正面嚎大大雞霸製作與包裝流程印表機" width="941" height="1671" decoding="async" fetchpriority="high">
         <div class="print-paper-window">
           <article class="print-paper">
-            <header class="print-paper-head">
-              <span>雞肉原味｜NT$89</span>
-              <strong>嚎大大雞霸｜食品資訊</strong>
-            </header>
-            <dl class="print-specs">
-              <div><dt>品名</dt><dd>嚎大大雞霸</dd></div>
-              <div><dt>口味</dt><dd>雞肉原味</dd></div>
-              <div><dt>原料</dt><dd>純雞肉</dd></div>
-              <div><dt>製作方式</dt><dd>整片雞胸肉低溫烘乾</dd></div>
-              <div><dt>淨重</dt><dd>50 克</dd></div>
-            </dl>
-            <section class="print-nutrition" aria-label="營養成分分析">
-              <h3>營養成分分析</h3>
-              <p><span>熱量（每 100g）</span><b>315.2 千卡</b></p>
-              <p><span>蛋白質</span><b>84.7%</b></p>
-              <p><span>脂肪</span><b>2.2%</b></p>
-              <p><span>碳水化合物</span><b>0%</b></p>
-              <p><span>鈉</span><b>0.04%</b></p>
-              <p><span>鈣</span><b>0%</b></p>
-              <p><span>磷</span><b>0.22%</b></p>
-              <p><span>鉀</span><b>0.35%</b></p>
-            </section>
-            <section class="print-details" aria-label="適用對象與餵食資訊">
-              <p><b>適用對象</b><span>6 個月以上的狗狗與貓咪</span></p>
-              <p><b>特別適合</b><span>活動量大、需要補給或比較挑嘴的毛孩</span></p>
-              <p><b>餵食方式</b><span>可剪成小段，依犬貓體型調整份量</span></p>
-              <p><b>用途</b><span>日常獎勵零食，需搭配主食與充足飲水</span></p>
-            </section>
-            <section class="print-features" aria-label="產品特色">
-              <h3>產品特色</h3>
-              <div><span>高蛋白補給</span><span>高適口性</span><span>單一蛋白質來源</span><span>大片造型・增加咀嚼感</span></div>
-            </section>
-            <a class="print-cta" href="${escapeAttr(shop)}" target="_blank" rel="noopener noreferrer" aria-label="前往商品頁激情下單">
-              <strong>激情下單</strong>
+            <a class="print-paper-link" href="${escapeAttr(shop)}" target="_blank" rel="noopener noreferrer" aria-label="開啟嚎大大雞霸商品頁激情下單">
+              <img class="print-paper-receipt" src="/images/haodada/product-receipt-v1.jpg" alt="嚎大大雞霸台灣發票式食品資訊與營養分析" width="844" height="1863" decoding="async">
             </a>
           </article>
         </div>
       </div>
     </div>
-  </section>
-  <section class="product-docs" aria-label="嚎大大雞霸食品資訊與發票">
-    <article class="food-info-card">
-      <p class="food-info-kicker">雞肉原味｜NT$89</p>
-      <h2>嚎大大雞霸｜食品資訊</h2>
-      <dl>
-        <div><dt>品名</dt><dd>嚎大大雞霸</dd></div>
-        <div><dt>口味</dt><dd>雞肉原味</dd></div>
-        <div><dt>原料</dt><dd>純雞肉</dd></div>
-        <div><dt>製作方式</dt><dd>整片雞胸肉低溫烘乾</dd></div>
-        <div><dt>淨重</dt><dd>50 克</dd></div>
-      </dl>
-      <h3>營養成分分析</h3>
-      <div class="food-info-nutrition">
-        <p><span>熱量（每 100g）</span><b>315.2 千卡</b></p>
-        <p><span>蛋白質</span><b>84.7%</b></p>
-        <p><span>脂肪</span><b>2.2%</b></p>
-        <p><span>碳水化合物</span><b>0%</b></p>
-        <p><span>鈉</span><b>0.04%</b></p>
-        <p><span>鈣</span><b>0%</b></p>
-        <p><span>磷</span><b>0.22%</b></p>
-        <p><span>鉀</span><b>0.35%</b></p>
-      </div>
-    </article>
-    <article class="receipt-card">
-      <h2>台灣發票式營養標</h2>
-      <a href="${escapeAttr(shop)}" target="_blank" rel="noopener noreferrer" aria-label="開啟嚎大大雞霸商品頁">
-        <img src="/images/haodada/product-receipt-v1.jpg" alt="嚎大大雞霸台灣發票式食品資訊與營養分析，底部激情下單可前往商品頁" width="844" height="1863" loading="lazy" decoding="async">
-      </a>
-    </article>
   </section>
   <section class="chat-stream">
     <div class="chat">${renderChat()}</div>
