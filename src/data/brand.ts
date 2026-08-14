@@ -106,24 +106,18 @@ export const CHAT: ChatBlock[] = [
     texts: [
       "這活動誰想的啦",
       "狗還要先接受血統考驗是不是",
-      "所以到底去哪買",
-    ],
-  },
-  {
-    kind: "yours",
-    texts: ["官網就有啊"],
-  },
-  {
-    kind: "mine",
-    texts: [
-      `<a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="chat-link chat-link-light" aria-label="前往嚎大大雞霸商品網站">有看到網站</a>`,
-      "但是你知道官方 LINE 嗎？",
+      "他們網站好可愛喔",
+      "你有看到嗎",
+      `<a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="chat-link chat-link-light chat-link-url" aria-label="前往嚎大大雞霸商品網站">${BRAND.shopUrl}</a>`,
+      "欸那你知道他們官方 LINE 嗎",
     ],
   },
   {
     kind: "yours",
     texts: [
       `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-link" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}">LINE ${BRAND.lineHandle}</a>`,
+      "你可以直接聯繫他們啊",
+      "感覺他們滿好玩的哈哈",
     ],
   },
 ];
