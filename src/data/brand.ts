@@ -55,7 +55,20 @@ export const CHAT: ChatBlock[] = [
       "其實就是雞胸肉做的雞肉乾",
     ],
   },
-  { kind: "mine", texts: ["看起來也太大一片"] },
+  { kind: "mine", texts: ["看起來也太大一片", "那麼大片是要怎麼吃完啦"] },
+  {
+    kind: "yours",
+    texts: [
+      "中型犬其實一週左右就吃得完",
+      "不然拿去跟朋友家的狗一起分也很剛好",
+      "而且三隻一起等雞排真的超可愛",
+    ],
+  },
+  {
+    kind: "yours",
+    image: "/images/haodada/three-dogs-share-chicken-v2.png",
+    alt: "飼主把一片長方形雞霸撥成小片分給三隻狗狗",
+  },
   {
     kind: "yours",
     texts: [
