@@ -39,8 +39,6 @@ function renderChat() {
  * No CRT / eat-bulldog / pomeranian TV-frame hero.
  */
 export function buildSiteHtml(): string {
-  const shop = BRAND.shopUrl;
-
   return `<main class="experience-shell">
 <aside class="side-panel side-left" aria-hidden="true">
   <span class="side-burst side-burst-round"></span>
@@ -61,10 +59,7 @@ export function buildSiteHtml(): string {
         <img class="print-lab-machine" src="/images/hero-factory-printer-front-v10.png" alt="正面嚎大大雞霸製作與包裝流程印表機" width="941" height="1671" decoding="async" fetchpriority="high">
         <div class="print-paper-window">
           <article class="print-paper">
-            <a class="print-paper-link" href="${escapeAttr(shop)}" target="_blank" rel="noopener noreferrer" aria-label="開啟嚎大大雞霸商品頁激情下單">
-              <img class="print-paper-receipt" src="/images/haodada/product-receipt-v1.jpg" alt="嚎大大雞霸台灣發票式食品資訊與營養分析" width="844" height="1863" decoding="async">
-              <span class="print-paper-cta" aria-hidden="true">激情下單</span>
-            </a>
+            <img class="print-paper-receipt" src="/images/haodada/product-receipt-red-v2.png" alt="嚎大大雞霸紅色墨水台灣發票式食品資訊與營養分析" width="842" height="1867" decoding="async">
           </article>
         </div>
       </div>
