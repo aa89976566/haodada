@@ -18,8 +18,8 @@
   --scroll-y:0;
   --parallax:0;
   /* Classic IBM posters — DPR2 ceilings (source/2) */
-  --side-poster-max-left:317px;  /* side-dog-left-v3 634/2 */
-  --side-poster-max-right:313px; /* side-dog-right-v3 627/2 */
+  --side-poster-max-left:317px;
+  --side-poster-max-right:313px;
   --side-pad-y:max(16px,clamp(16px,3.5vh,48px));
   --side-pad-x:max(16px,clamp(16px,2.8vw,48px));
   --product-max:511px; /* retained from PR #34 for any residual refs */
@@ -311,16 +311,16 @@ img,video{max-width:100%;height:auto;display:block}
   outline:none!important;
   box-shadow:none!important;
 }
-.side-left .side-poster-img{aspect-ratio:634 / 1360}
-.side-right .side-poster-img{aspect-ratio:627 / 1360}
+.side-left .side-poster-img{aspect-ratio:858 / 1833}
+.side-right .side-poster-img{aspect-ratio:852 / 1846}
 
 /* ========== Scroll printer hero ========== */
 .print-lab{
   --print-progress:0;
   position:relative;
   width:100%;
-  height:260svh;
-  min-height:1800px;
+  height:285svh;
+  min-height:1950px;
   margin:0;
   padding:0;
   background:#0758e7;
@@ -330,7 +330,7 @@ img,video{max-width:100%;height:auto;display:block}
   position:sticky;
   top:0;
   width:100%;
-  height:100svh;
+  height:auto;
   min-height:680px;
   overflow:hidden;
   display:flex;
@@ -341,7 +341,7 @@ img,video{max-width:100%;height:auto;display:block}
 .print-lab-stage{
   position:relative;
   width:100%;
-  aspect-ratio:941 / 1671;
+  aspect-ratio:941 / 2250;
   overflow:hidden;
   isolation:isolate;
   background:#0758e7;
@@ -350,11 +350,12 @@ img,video{max-width:100%;height:auto;display:block}
 .print-lab-stage::after{
   content:"";
   position:absolute;
-  inset:0;
+  inset:0 0 auto;
+  aspect-ratio:941 / 1671;
   z-index:2;
   pointer-events:none;
   background-color:#0758e7;
-  background-image:url("./images/hero-factory-printer-front-v11.png");
+  background-image:url("./images/hero-factory-printer-front-v12.png");
   background-position:center 3.2%;
   background-size:100% 100%;
   background-repeat:no-repeat;
@@ -367,8 +368,8 @@ img,video{max-width:100%;height:auto;display:block}
   z-index:1;
   display:block;
   width:100%;
-  height:100%;
-  object-fit:cover;
+  height:auto;
+  object-fit:contain;
   image-rendering:auto;
 }
 .print-hero-title{
@@ -423,9 +424,9 @@ img,video{max-width:100%;height:auto;display:block}
   position:absolute;
   z-index:3;
   left:13.8%;
-  top:51.7%;
+  top:38.4%;
   width:72.4%;
-  height:48.3%;
+  height:61.6%;
   overflow:hidden;
   perspective:900px;
   pointer-events:none;
