@@ -45,7 +45,7 @@ export function buildSiteHtml(): string {
   <div class="side-poster-wrap" data-parallax="0.12">
     <div class="side-poster-frame">
       <picture class="side-poster">
-        <img class="side-poster-img" src="/images/side-chicken-left-v5.png" alt="" width="857" height="1836" decoding="async" fetchpriority="high">
+        <img class="side-poster-img" src="/images/side-chicken-left-v6.png" alt="" width="858" height="1833" decoding="async" fetchpriority="high">
       </picture>
       <span class="side-copy-fix">毛孩吃得單純安心</span>
     </div>
@@ -55,10 +55,10 @@ export function buildSiteHtml(): string {
   <section class="print-lab" aria-label="${escapeAttr(BRAND.name)} 食品資訊列印動畫">
     <div class="print-lab-sticky">
       <div class="print-lab-stage">
-        <img class="print-lab-machine" src="/images/hero-factory-printer-front-v11.png" alt="正面嚎大大雞霸製作與包裝流程印表機，下方為完整藍色網格地板" width="941" height="1671" decoding="async" fetchpriority="high">
+        <img class="print-lab-machine" src="/images/hero-factory-printer-front-v12.png" alt="正面嚎大大雞霸製作與包裝流程印表機，前兩站為原肉絞製與鋪平塑形，下方為完整藍色網格地板" width="941" height="1671" decoding="async" fetchpriority="high">
         <div class="print-paper-window">
           <article class="print-paper">
-            <img class="print-paper-receipt" src="/images/haodada/product-receipt-compact-red-v5.png" alt="嚎大大雞霸與雞肉原味同列的精簡紅墨發票，包含價格、淨重、成分、營養分析與開封前後保存期限" width="941" height="1672" decoding="async">
+            <img class="print-paper-receipt" src="/images/haodada/product-receipt-compact-red-white-v6.png" alt="純白底紅墨嚎大大雞霸食品資訊發票，包含價格、淨重、成分、營養分析與開封前後保存期限" width="941" height="1672" decoding="async">
           </article>
         </div>
       </div>
@@ -73,7 +73,7 @@ export function buildSiteHtml(): string {
   <div class="side-poster-wrap" data-parallax="-0.12">
     <div class="side-poster-frame">
       <picture class="side-poster">
-        <img class="side-poster-img" src="/images/side-chicken-right-v5.png" alt="" width="851" height="1847" decoding="async" fetchpriority="high">
+        <img class="side-poster-img" src="/images/side-chicken-right-v6.png" alt="" width="852" height="1846" decoding="async" fetchpriority="high">
       </picture>
     </div>
   </div>
