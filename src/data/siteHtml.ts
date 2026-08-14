@@ -63,6 +63,7 @@ export function buildSiteHtml(): string {
           <article class="print-paper">
             <a class="print-paper-link" href="${escapeAttr(shop)}" target="_blank" rel="noopener noreferrer" aria-label="開啟嚎大大雞霸商品頁激情下單">
               <img class="print-paper-receipt" src="/images/haodada/product-receipt-v1.jpg" alt="嚎大大雞霸台灣發票式食品資訊與營養分析" width="844" height="1863" decoding="async">
+              <span class="print-paper-cta" aria-hidden="true">激情下單</span>
             </a>
           </article>
         </div>
