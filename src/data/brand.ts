@@ -7,8 +7,8 @@ export const BRAND = {
   furmosa: "FURMOSA",
   description:
     "嚎大大雞霸——匠寵 FURMOSA 寵物雞肉零食。整片雞胸肉低溫烘乾，無添加，給毛孩大口咬才夠味。",
-  lineUrl: "https://line.me/R/ti/p/@furmosa",
-  lineHandle: "@FURMOSA",
+  lineUrl: "https://line.me/R/ti/p/%40furmosa",
+  lineHandle: "@furmosa",
   shopUrl:
     "https://furmosa.com/products/chicken-fillet?variant=56882074419577",
   igUrl: "https://www.instagram.com/furmosa_food/",
@@ -39,7 +39,7 @@ export type ChatBlock = ChatTextBlock | ChatImageBlock | ChatVideoBlock;
 
 /**
  * Taiwan mobile group-chat tone — spoken, light punctuation, no ad-speak.
- * Photo after「坐好」; park video after「你看」; IG as clickable bubble link.
+ * Photo after「坐好」; park video after「你看」; product and LINE links in the closing exchange.
  * No hard-sell CTAs / purchase buttons.
  */
 export const CHAT: ChatBlock[] = [
@@ -111,14 +111,19 @@ export const CHAT: ChatBlock[] = [
   },
   {
     kind: "yours",
-    texts: [
-      "你直接看他們 IG 啦",
-      "我解釋下去很像業配",
-      `<a href="${BRAND.igUrl}" target="_blank" rel="noopener noreferrer" class="phone-link" aria-label="Instagram ${BRAND.igHandle}">${BRAND.igHandle}</a>`,
-    ],
+    texts: ["官網就有啊"],
   },
   {
     kind: "mine",
-    texts: ["好啦我自己看", "不然下次在公園變空氣的是我"],
+    texts: [
+      `<a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="chat-link chat-link-light" aria-label="前往嚎大大雞霸商品網站">有看到網站</a>`,
+      "但是你知道官方 LINE 嗎？",
+    ],
+  },
+  {
+    kind: "yours",
+    texts: [
+      `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-link" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}">LINE ${BRAND.lineHandle}</a>`,
+    ],
   },
 ];
