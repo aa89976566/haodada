@@ -317,11 +317,10 @@ img,video{max-width:100%;height:auto;display:block}
 /* ========== Scroll printer hero ========== */
 .print-lab{
   --print-progress:0;
-  --detach-progress:0;
   position:relative;
   width:100%;
-  height:300svh;
-  min-height:1900px;
+  height:220svh;
+  min-height:1400px;
   margin:0;
   padding:0;
   background:#0758e7;
@@ -430,10 +429,9 @@ img,video{max-width:100%;height:auto;display:block}
   overflow:hidden;
   perspective:900px;
   pointer-events:none;
-  transform:translate3d(0,calc(var(--detach-progress) * 72%),0) rotate(calc(var(--detach-progress) * -2deg));
-  transform-origin:top center;
-  opacity:calc(1 - (var(--detach-progress) * .92));
-  filter:drop-shadow(0 calc(var(--detach-progress) * 14px) calc(4px + (var(--detach-progress) * 8px)) rgba(0,0,0,.35));
+  transform:none;
+  opacity:1;
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.28));
 }
 .print-paper-window::before{
   content:"";
@@ -445,12 +443,6 @@ img,video{max-width:100%;height:auto;display:block}
   height:7px;
   background:linear-gradient(#040914,#16223d 45%,#02040a);
   box-shadow:0 3px 4px rgba(0,0,0,.55);
-}
-.print-lab.is-detaching .print-paper-window::before,
-.print-lab.is-detached .print-paper-window::before{
-  height:4px;
-  background:repeating-linear-gradient(90deg,#fffdf3 0 7px,transparent 7px 12px);
-  box-shadow:0 -1px 0 rgba(5,27,69,.4);
 }
 .print-paper{
   position:relative;
@@ -473,8 +465,26 @@ img,video{max-width:100%;height:auto;display:block}
   will-change:transform;
   pointer-events:auto;
 }
-.print-paper-link{display:block;text-decoration:none}
-.print-paper-receipt{display:block;width:100%;height:auto}
+.print-paper-link{display:block;overflow:hidden;background:#fffdf3;text-decoration:none}
+.print-paper-receipt{display:block;width:100%;height:auto;clip-path:inset(0 0 10% 0);margin-bottom:-10%}
+.print-paper-cta{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:104px;
+  margin:0 5.5% 4%;
+  border:4px double #fff7e8;
+  outline:3px solid #8f251b;
+  outline-offset:-1px;
+  background:#a92d21;
+  color:#fff8e8;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:clamp(28px,8.5vw,42px);
+  font-weight:900;
+  letter-spacing:.24em;
+  line-height:1;
+  text-indent:.24em;
+}
 .print-paper-link:focus-visible{outline:5px solid #c92718;outline-offset:-5px}
 .print-paper-head{
   display:flex;
