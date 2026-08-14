@@ -35,7 +35,24 @@ export type ChatVideoBlock = {
   alt: string;
 };
 
-export type ChatBlock = ChatTextBlock | ChatImageBlock | ChatVideoBlock;
+export type ChatPreviewBlock = {
+  kind: "mine";
+  preview: {
+    url: string;
+    image: string;
+    imageAlt: string;
+    eyebrow: string;
+    title: string;
+    description: string;
+    domain: string;
+  };
+};
+
+export type ChatBlock =
+  | ChatTextBlock
+  | ChatImageBlock
+  | ChatVideoBlock
+  | ChatPreviewBlock;
 
 /**
  * Taiwan mobile group-chat tone — spoken, light punctuation, no ad-speak.
@@ -75,9 +92,12 @@ export const CHAT: ChatBlock[] = [
       "對啊大到拿著很像在吃雞排",
       "但裡面就只有雞肉",
       "沒香料沒色素也沒防腐劑",
-      "我買過",
-      "我家那隻看到袋子就自己坐好",
     ],
+  },
+  { kind: "mine", texts: ["所以是無添加喔"] },
+  {
+    kind: "yours",
+    texts: ["對啊 無添加", "快快吃，快快分享", "我買過", "我家那隻看到袋子就自己坐好"],
   },
   {
     kind: "yours",
@@ -121,10 +141,21 @@ export const CHAT: ChatBlock[] = [
       "狗還要先接受血統考驗是不是",
       "他們網站好可愛喔",
       "你有看到嗎",
-      `<a href="${BRAND.shopUrl}" target="_blank" rel="noopener noreferrer" class="chat-link chat-link-light chat-link-url" aria-label="前往嚎大大雞霸商品網站">${BRAND.shopUrl}</a>`,
-      "欸那你知道他們官方 LINE 嗎",
     ],
   },
+  {
+    kind: "mine",
+    preview: {
+      url: BRAND.shopUrl,
+      image: "/images/hero-furmosa-real-package-v2.jpg",
+      imageAlt: "嚎大大雞霸商品與復古電腦的品牌主視覺",
+      eyebrow: "匠寵 FURMOSA",
+      title: "嚎大大雞霸｜雞肉原味",
+      description: "整片雞胸肉低溫烘乾・無添加",
+      domain: "furmosa.com",
+    },
+  },
+  { kind: "mine", texts: ["欸那你知道他們官方 LINE 嗎"] },
   {
     kind: "yours",
     texts: [
