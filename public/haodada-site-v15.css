@@ -338,6 +338,7 @@ img,video{max-width:100%;height:auto;display:block}
   justify-content:center;
   background:#0758e7;
 }
+.print-lab.is-printed .print-lab-sticky{background:var(--ink-yellow)}
 .print-lab-stage{
   position:relative;
   width:100%;
@@ -616,6 +617,7 @@ img,video{max-width:100%;height:auto;display:block}
 .yours .message a.phone-link{color:var(--ink-blue);text-decoration:underline}
 .message a.chat-link{color:var(--ink-blue);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .mine .message a.chat-link-light{color:#fff}
+.message a.chat-link-url{overflow-wrap:anywhere;font-size:.9em}
 
 /* Desktop ≥769 */
 @media screen and (min-width:769px){
