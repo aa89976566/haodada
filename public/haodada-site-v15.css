@@ -465,27 +465,7 @@ img,video{max-width:100%;height:auto;display:block}
   will-change:transform;
   pointer-events:auto;
 }
-.print-paper-link{display:block;overflow:hidden;background:#fffdf3;text-decoration:none}
-.print-paper-receipt{display:block;width:100%;height:auto;clip-path:inset(0 0 10% 0);margin-bottom:-10%}
-.print-paper-cta{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:104px;
-  margin:0 5.5% 4%;
-  border:4px double #fff7e8;
-  outline:3px solid #8f251b;
-  outline-offset:-1px;
-  background:#a92d21;
-  color:#fff8e8;
-  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  font-size:clamp(28px,8.5vw,42px);
-  font-weight:900;
-  letter-spacing:.24em;
-  line-height:1;
-  text-indent:.24em;
-}
-.print-paper-link:focus-visible{outline:5px solid #c92718;outline-offset:-5px}
+.print-paper-receipt{display:block;width:100%;height:auto}
 .print-paper-head{
   display:flex;
   flex-direction:column;
@@ -634,6 +614,8 @@ img,video{max-width:100%;height:auto;display:block}
 }
 .chat-video-play.is-visible{display:block}
 .yours .message a.phone-link{color:var(--ink-blue);text-decoration:underline}
+.message a.chat-link{color:var(--ink-blue);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+.mine .message a.chat-link-light{color:#fff}
 
 /* Desktop ≥769 */
 @media screen and (min-width:769px){
