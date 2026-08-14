@@ -341,7 +341,8 @@ img,video{max-width:100%;height:auto;display:block}
 .print-lab-stage{
   position:relative;
   width:100%;
-  aspect-ratio:941 / 2250;
+  /* Receipt window now ends with the stage: no empty blue tail below it. */
+  aspect-ratio:941 / 1966;
   overflow:hidden;
   isolation:isolate;
   background:#0758e7;
@@ -426,7 +427,8 @@ img,video{max-width:100%;height:auto;display:block}
   left:13.8%;
   top:38.4%;
   width:72.4%;
-  height:61.6%;
+  height:auto;
+  aspect-ratio:941 / 1672;
   overflow:hidden;
   perspective:900px;
   pointer-events:none;
@@ -618,6 +620,69 @@ img,video{max-width:100%;height:auto;display:block}
 .message a.chat-link{color:var(--ink-blue);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .mine .message a.chat-link-light{color:#fff}
 .message a.chat-link-url{overflow-wrap:anywhere;font-size:.9em}
+.mine .message.has-link-preview{
+  width:86%;
+  max-width:86%;
+  margin-left:14%;
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(5,30,102,.18);
+  border-radius:20px;
+  background:#fff;
+  color:#132257;
+  box-shadow:0 3px 0 rgba(5,30,102,.16);
+}
+.mine .message.has-link-preview.last:before{background:#fff}
+.chat-preview-card{
+  display:block;
+  color:#132257!important;
+  text-decoration:none!important;
+  background:#fff;
+}
+.chat-preview-image{
+  display:block;
+  width:100%;
+  height:138px;
+  object-fit:cover;
+  object-position:center 47%;
+  background:#f7dc50;
+  border-bottom:1px solid rgba(5,30,102,.12);
+}
+.chat-preview-body{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:12px 13px 13px;
+}
+.chat-preview-eyebrow{
+  color:#3158c4;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+.chat-preview-body strong{
+  color:#111b3f;
+  font-size:17px;
+  line-height:1.25;
+}
+.chat-preview-description{
+  color:#5a627a;
+  font-size:13px;
+  line-height:1.35;
+}
+.chat-preview-domain{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:5px;
+  padding-top:9px;
+  border-top:1px solid #e6e9f2;
+  color:#6a7289;
+  font-size:12px;
+}
+.chat-preview-domain b{color:#214ac1;font-size:12px;white-space:nowrap}
+.chat-preview-card:focus-visible{outline:3px solid #c41230;outline-offset:-3px}
 
 /* Desktop ≥769 */
 @media screen and (min-width:769px){
