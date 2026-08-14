@@ -548,6 +548,79 @@ img,video{max-width:100%;height:auto;display:block}
 .print-cta span{font-size:8px;letter-spacing:.04em}
 .print-cta:focus-visible{outline:3px solid #f9d844;outline-offset:2px}
 
+/* ========== Food information + Taiwan receipt ========== */
+.product-docs{
+  position:relative;
+  z-index:2;
+  display:grid;
+  gap:18px;
+  width:100%;
+  padding:24px 16px 32px;
+  background:var(--ink-yellow);
+  color:#10285f;
+}
+.food-info-card,
+.receipt-card{
+  width:100%;
+  border:3px solid #0b3288;
+  box-shadow:5px 5px 0 #0b3288;
+}
+.food-info-card{
+  padding:16px;
+  background:#fffdf3;
+}
+.food-info-kicker{
+  margin:0 0 5px;
+  color:#c92718;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.food-info-card h2{
+  margin:0 0 12px;
+  padding-bottom:9px;
+  border-bottom:4px solid #f24c39;
+  color:#0b3288;
+  font-size:20px;
+  line-height:1.25;
+}
+.food-info-card dl{margin:0 0 14px;border:2px solid #0b3288}
+.food-info-card dl div{display:grid;grid-template-columns:34% 1fr;border-bottom:1px solid #0b3288}
+.food-info-card dl div:last-child{border-bottom:0}
+.food-info-card dt,.food-info-card dd{margin:0;padding:7px 8px;font-size:12px}
+.food-info-card dt{background:#0b3288;color:#fff;font-weight:900}
+.food-info-card dd{font-weight:800}
+.food-info-card h3{
+  margin:0 0 6px;
+  color:#0b3288;
+  font-size:16px;
+  letter-spacing:.08em;
+}
+.food-info-nutrition p{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin:0;
+  padding:5px 2px;
+  border-bottom:1px dotted #0b3288;
+  font-size:12px;
+}
+.food-info-nutrition p:first-child{color:#b31f15;font-weight:900}
+.food-info-nutrition b{white-space:nowrap}
+.receipt-card{overflow:hidden;background:#fffdf3}
+.receipt-card h2{
+  margin:0;
+  padding:10px 12px;
+  background:#0b3288;
+  color:#fff;
+  font-size:17px;
+  letter-spacing:.08em;
+  text-align:center;
+}
+.receipt-card a{display:block;text-decoration:none}
+.receipt-card img{display:block;width:100%;height:auto}
+.receipt-card a:focus-visible{outline:5px solid #c92718;outline-offset:-5px}
+
 /* ========== Chat — immediately under hero, no gap ========== */
 .chat-stream{
   position:relative;
