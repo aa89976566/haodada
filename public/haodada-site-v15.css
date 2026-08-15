@@ -355,7 +355,7 @@ img,video{max-width:100%;height:auto;display:block}
   z-index:2;
   pointer-events:none;
   background-color:#0758e7;
-  background-image:url("./images/hero-factory-printer-front-v12.png");
+  background-image:url("./images/hero-factory-printer-front-v13.png");
   background-position:center 3.2%;
   background-size:100% 100%;
   background-repeat:no-repeat;
@@ -372,6 +372,25 @@ img,video{max-width:100%;height:auto;display:block}
   object-fit:contain;
   image-rendering:auto;
 }
+.process-label{
+  position:absolute;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  color:#111;
+  background:#fff;
+  border:1.5px solid #111;
+  border-radius:4px;
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:clamp(6px,1.7vw,8px);
+  font-weight:900;
+  line-height:1;
+  white-space:nowrap;
+  pointer-events:none;
+}
+.process-label-one{left:10.55%;top:20.9%;width:11.75%;height:1.55%}
 .print-hero-title{
   position:absolute;
   z-index:5;
