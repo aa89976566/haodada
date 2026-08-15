@@ -345,7 +345,12 @@ img,video{max-width:100%;height:auto;display:block}
   aspect-ratio:941 / 2075;
   overflow:hidden;
   isolation:isolate;
-  background:#0758e7;
+  /* receipt-grid-extension: the machine artwork is opaque; this grid continues below it */
+  background-color:#0758e7;
+  background-image:
+    linear-gradient(rgba(255,216,70,.18) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,216,70,.18) 1px,transparent 1px);
+  background-size:42px 42px;
 }
 .print-lab-stage::before,
 .print-lab-stage::after{
