@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=complete-receipt-chat-share-v33`} />
+        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=receipt-slot-aligned-v34`} />
       </head>
       <body>{children}</body>
     </html>
