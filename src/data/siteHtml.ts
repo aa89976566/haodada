@@ -59,8 +59,8 @@ export function buildSiteHtml(): string {
   <section class="print-lab" aria-label="${escapeAttr(BRAND.name)} 食品資訊列印動畫">
     <div class="print-lab-sticky">
       <div class="print-lab-stage">
-        <img class="print-lab-machine" src="/images/hero-factory-printer-front-v13.png" alt="正面嚎大大雞霸製作與包裝流程印表機，第一站使用小型桌上絞肉機進行雞肉絞製，第二站鋪平塑形，下方為完整藍色網格地板" width="941" height="1671" decoding="async" fetchpriority="high">
-        <span class="process-label process-label-one">1. 雞肉絞製</span>
+        <img class="print-lab-machine" src="/images/hero-factory-printer-front-v13.png" alt="正面嚎大大雞霸製作與包裝流程印表機，第一站使用小型桌上絞肉機將原肉製泥，第二站鋪平塑形，下方為完整藍色網格地板" width="941" height="1671" decoding="async" fetchpriority="high">
+        <span class="process-label process-label-one">1. 原肉製泥</span>
         <div class="print-paper-window">
           <article class="print-paper">
             <img class="print-paper-receipt" src="/images/haodada/product-receipt-sectioned-red-white-v7.png" alt="純白底紅墨嚎大大雞霸食品資訊發票，包含價格、淨重、成分、營養分析及獨立框線保存期限" width="941" height="1672" decoding="async">
