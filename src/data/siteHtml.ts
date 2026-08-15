@@ -62,7 +62,7 @@ export function buildSiteHtml(): string {
         <img class="print-lab-machine" src="/images/hero-factory-printer-front-v12.png" alt="正面嚎大大雞霸製作與包裝流程印表機，前兩站為原肉絞製與鋪平塑形，下方為完整藍色網格地板" width="941" height="1671" decoding="async" fetchpriority="high">
         <div class="print-paper-window">
           <article class="print-paper">
-            <img class="print-paper-receipt" src="/images/haodada/product-receipt-compact-red-white-v6.png" alt="純白底紅墨嚎大大雞霸食品資訊發票，包含價格、淨重、成分、營養分析與開封前後保存期限" width="941" height="1672" decoding="async">
+            <img class="print-paper-receipt" src="/images/haodada/product-receipt-sectioned-red-white-v7.png" alt="純白底紅墨嚎大大雞霸食品資訊發票，包含價格、淨重、成分、營養分析及獨立框線保存期限" width="941" height="1672" decoding="async">
           </article>
         </div>
       </div>
