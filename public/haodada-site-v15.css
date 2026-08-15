@@ -48,8 +48,6 @@ body{
   /* unique document scroll */
   overscroll-behavior-y:auto;
 }
-.experience-shell,
-.experience-shell *{cursor:none!important}
 a{color:inherit}
 a.button,button{background:unset;border:0;cursor:pointer;font:inherit}
 img,video{max-width:100%;height:auto;display:block}
@@ -327,9 +325,7 @@ img,video{max-width:100%;height:auto;display:block}
   padding:0;
   background:#0758e7;
   flex:0 0 auto;
-  cursor:none;
 }
-.print-lab *{cursor:none!important}
 .print-lab-sticky{
   position:sticky;
   top:0;
