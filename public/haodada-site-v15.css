@@ -342,7 +342,7 @@ img,video{max-width:100%;height:auto;display:block}
   position:relative;
   width:100%;
   /* Receipt window now ends with the stage: no empty blue tail below it. */
-  aspect-ratio:941 / 1966;
+  aspect-ratio:941 / 2075;
   overflow:hidden;
   isolation:isolate;
   background:#0758e7;
@@ -425,7 +425,7 @@ img,video{max-width:100%;height:auto;display:block}
   position:absolute;
   z-index:3;
   left:13.8%;
-  top:38.4%;
+  top:41.63%;
   width:72.4%;
   height:auto;
   aspect-ratio:941 / 1672;
