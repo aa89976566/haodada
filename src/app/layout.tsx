@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=hide-site-cursor-v39`} />
+        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=restore-native-cursor-v40`} />
       </head>
       <body>{children}</body>
     </html>
