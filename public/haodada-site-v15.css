@@ -243,7 +243,7 @@ img,video{max-width:100%;height:auto;display:block}
   align-items:flex-start;
   justify-content:center;
   box-sizing:border-box;
-  background:radial-gradient(ellipse at 50% 0%,#174bd3 0%,#1243c8 58%,#0b35b2 100%);
+  background:radial-gradient(ellipse at 50% 0%,#174bd3 0%,var(--ink-blue) 76%);
   color:#ffe052;
   font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
   font-size:clamp(13px,1.38vw,22px);
@@ -302,6 +302,8 @@ img,video{max-width:100%;height:auto;display:block}
   /* JPEG 資產頂緣／側緣烘焙黑線（非 CSS border）— 僅遮掉框線像素，不改尺寸／object-fit */
   clip-path:inset(3px 1px 0 1px);
   image-rendering:auto;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 5.5%,#000 94.5%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0,#000 5.5%,#000 94.5%,transparent 100%);
 }
 .side-poster-img::before,
 .side-poster-img::after{
