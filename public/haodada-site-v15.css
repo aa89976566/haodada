@@ -17,7 +17,7 @@
   --chat-photo-max:143px; /* customer-dog 286/2 — DPR2 safe; no higher-res source in repo */
   --scroll-y:0;
   --parallax:0;
-  /* Classic IBM posters — DPR2 ceilings (source/2) */
+  /* Classic IBM posters — DPR2 ceilings (side-dog-*-v3 source/2) */
   --side-poster-max-left:317px;
   --side-poster-max-right:313px;
   --side-pad-y:max(16px,clamp(16px,3.5vh,48px));
@@ -199,7 +199,7 @@ img,video{max-width:100%;height:auto;display:block}
   box-shadow:none!important;
 }
 
-/* Classic side posters — full CRT+keyboard via contain; never cropped */
+/* Classic IBM side posters — full CRT+keyboard via contain; no fade / crop */
 .side-poster-wrap{
   box-sizing:border-box;
   width:100%;
@@ -211,7 +211,7 @@ img,video{max-width:100%;height:auto;display:block}
   display:flex;
   align-items:flex-start;
   justify-content:center;
-  overflow:hidden;
+  overflow:visible;
   transform:translate3d(0, calc(var(--parallax) * var(--side-dir, 1) * 1px), 0);
   will-change:transform;
   line-height:0;
@@ -223,36 +223,16 @@ img,video{max-width:100%;height:auto;display:block}
 .side-poster-frame{
   position:relative;
   display:block;
-  width:100%;
+  width:auto;
   max-width:100%;
+  max-height:100%;
   margin:0;
   padding:0;
   line-height:0;
 }
 .side-left .side-poster-frame{max-width:min(100%, var(--side-poster-max-left))}
 .side-right .side-poster-frame{max-width:min(100%, var(--side-poster-max-right))}
-.side-copy-fix{
-  position:absolute;
-  z-index:2;
-  left:0;
-  bottom:0;
-  width:100%;
-  min-height:10.6%;
-  padding-top:2%;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  box-sizing:border-box;
-  background:radial-gradient(ellipse at 50% 0%,#174bd3 0%,var(--ink-blue) 76%);
-  color:#ffe052;
-  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
-  font-size:clamp(13px,1.38vw,22px);
-  font-weight:800;
-  line-height:1.15;
-  letter-spacing:.025em;
-  white-space:nowrap;
-  text-align:center;
-}
+.side-copy-fix{display:none!important}
 .side-poster-wrap::before,
 .side-poster-wrap::after{
   content:none!important;
@@ -265,8 +245,9 @@ img,video{max-width:100%;height:auto;display:block}
 .side-right .side-poster-wrap{--side-dir:-1}
 .side-poster{
   display:block;
-  width:100%;
+  width:auto;
   max-width:100%;
+  height:auto;
   margin:0;
   padding:0;
   line-height:0;
@@ -287,25 +268,26 @@ img,video{max-width:100%;height:auto;display:block}
 .side-right .side-poster{max-width:min(100%, var(--side-poster-max-right))}
 .side-poster-img{
   display:block;
-  width:100%;
-  max-width:100%;
+  width:auto;
   height:auto;
+  max-width:100%;
   max-height:calc(100svh - 2 * var(--side-pad-y));
   object-fit:contain;
   object-position:top center;
   margin:0 auto;
-  background:transparent;
+  background:var(--ink-blue);
   border:0!important;
   border-radius:0;
   outline:none!important;
   box-shadow:none!important;
-  /* JPEG 資產頂緣／側緣烘焙黑線（非 CSS border）— 僅遮掉框線像素，不改尺寸／object-fit */
-  clip-path:inset(3px 1px 0 1px);
   image-rendering:auto;
-  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 3.2%,#000 97%,transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 3.2%,#000 97%,transparent 100%);
-  mask-composite:intersect;
+  -webkit-mask-image:none;
+  mask-image:none;
+  -webkit-mask-composite:unset;
+  mask-composite:unset;
+  clip-path:none;
+  opacity:1;
+  filter:none;
 }
 .side-poster-img::before,
 .side-poster-img::after{
@@ -315,8 +297,8 @@ img,video{max-width:100%;height:auto;display:block}
   outline:none!important;
   box-shadow:none!important;
 }
-.side-left .side-poster-img{aspect-ratio:858 / 1833}
-.side-right .side-poster-img{aspect-ratio:852 / 1846}
+.side-left .side-poster-img{aspect-ratio:634 / 1360}
+.side-right .side-poster-img{aspect-ratio:627 / 1360}
 
 /* ========== Scroll printer hero ========== */
 .print-lab{
