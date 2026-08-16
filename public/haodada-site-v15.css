@@ -302,8 +302,10 @@ img,video{max-width:100%;height:auto;display:block}
   /* JPEG 資產頂緣／側緣烘焙黑線（非 CSS border）— 僅遮掉框線像素，不改尺寸／object-fit */
   clip-path:inset(3px 1px 0 1px);
   image-rendering:auto;
-  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 5.5%,#000 94.5%,transparent 100%);
-  mask-image:linear-gradient(to right,transparent 0,#000 5.5%,#000 94.5%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 3.2%,#000 97%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 3.2%,#000 97%,transparent 100%);
+  mask-composite:intersect;
 }
 .side-poster-img::before,
 .side-poster-img::after{
