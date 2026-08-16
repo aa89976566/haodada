@@ -49,9 +49,8 @@ export function buildSiteHtml(): string {
   <div class="side-poster-wrap" data-parallax="0.12">
     <div class="side-poster-frame">
       <picture class="side-poster">
-        <img class="side-poster-img" src="/images/side-chicken-left-v6.png" alt="" width="858" height="1833" decoding="async" fetchpriority="high">
+        <img class="side-poster-img" src="/images/side-dog-left-v3.jpg" alt="" width="634" height="1360" decoding="async" fetchpriority="high">
       </picture>
-      <span class="side-copy-fix">毛孩吃得單純安心</span>
     </div>
   </div>
 </aside>
@@ -78,7 +77,7 @@ export function buildSiteHtml(): string {
   <div class="side-poster-wrap" data-parallax="-0.12">
     <div class="side-poster-frame">
       <picture class="side-poster">
-        <img class="side-poster-img" src="/images/side-chicken-right-v6.png" alt="" width="852" height="1846" decoding="async" fetchpriority="high">
+        <img class="side-poster-img" src="/images/side-dog-right-v3.jpg" alt="" width="627" height="1360" decoding="async" fetchpriority="high">
       </picture>
     </div>
   </div>
