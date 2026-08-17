@@ -1,4 +1,4 @@
-iside-ibm-restore-v48side-borderless-tw-v49mport type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 import { BRAND } from "@/data/brand";
 import { asset } from "@/lib/asset";
 import "./globals.css";
@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=side-ibm-restore-v48`} />
+        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=side-borderless-tw-v49`} />
       </head>
       <body>{children}</body>
     </html>
