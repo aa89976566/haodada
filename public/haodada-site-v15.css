@@ -1,3 +1,39 @@
+
+
+/* v49: borderless side posters + localized Taiwanese copy */
+.side-poster-frame::after{
+  content:""!important;
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:block!important;
+  pointer-events:none;
+  box-shadow:inset 0 0 0 3px var(--ink-blue);
+  background:linear-gradient(var(--ink-blue),var(--ink-blue)) center 4.1% / 100% .7% no-repeat;
+}
+.side-left .side-poster-frame::before{
+  content:"不加有的沒的\A毛孩吃得安心又涮嘴"!important;
+  position:absolute;
+  z-index:5;
+  left:10%;
+  bottom:4.5%;
+  width:80%;
+  min-height:16%;
+  padding:1.2% 2% 0;
+  box-sizing:border-box;
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  background:var(--ink-blue);
+  color:var(--ink-yellow);
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  font-size:clamp(14px,1.55vw,24px);
+  font-weight:800;
+  line-height:1.45;
+  letter-spacing:.035em;
+  text-align:center;
+  white-space:pre-line;
+}
 @font-face{font-family:SpaceMono Bold;src:url(./_nuxt/fonts/6202525.ttf)}
 @font-face{font-family:SpaceMono BoldItalic;src:url(./_nuxt/fonts/599d113.ttf)}
 @font-face{font-family:SpaceMono Italic;src:url(./_nuxt/fonts/2ae5486.ttf)}
