@@ -13,6 +13,22 @@ npm run dev
 
 ## 部署
 
-推送到 `main` 後由 GitHub Actions 發佈至：
+正式站只由 `.github/workflows/deploy-pages.yml` 發布到 `gh-pages` branch
+（repository Pages source 目前是 legacy / `gh-pages`，不是 GitHub Actions）。
+PR 檢查走 `.github/workflows/ci.yml`，不會發布正式站。
 
 https://aa89976566.github.io/haodada/
+
+## 分析事件
+
+沒有內建第三方追蹤。若要接正式 provider，在 runtime 提供：
+
+```js
+window.haodadaAnalytics = {
+  track(event, payload) {
+    // enter_clicked | print_completed | product_clicked | line_clicked | video_played
+  },
+};
+```
+
+未提供時 production 為 no-op，不收集個資。

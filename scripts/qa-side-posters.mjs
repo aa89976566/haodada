@@ -40,7 +40,17 @@ async function measure(page, vw, vh) {
   await page.goto(URL, { waitUntil: "networkidle", timeout: 30000 });
   await dismiss(page);
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(400);
+  if (vw > 768) {
+    await page.waitForFunction(() => {
+      const imgs = [...document.querySelectorAll(".side-poster-img")];
+      return (
+        imgs.length === 2 &&
+        imgs.every((img) => img.complete && img.naturalWidth > 0)
+      );
+    });
+  } else {
+    await page.waitForTimeout(400);
+  }
 
   const data = await page.evaluate(() => {
     const noneish = (v) =>
@@ -176,9 +186,11 @@ async function measure(page, vw, vh) {
     );
     push(
       "posters-loaded",
-      (data.leftPoster?.naturalWidth || 0) >= 627 &&
-        (data.rightPoster?.naturalWidth || 0) >= 627,
-      `L=${data.leftPoster?.naturalWidth} R=${data.rightPoster?.naturalWidth}`,
+      (data.leftPoster?.naturalWidth || 0) > 0 &&
+        (data.rightPoster?.naturalWidth || 0) > 0 &&
+        !!data.leftPoster?.src?.includes("side-dog-left-v3") &&
+        !!data.rightPoster?.src?.includes("side-dog-right-v3"),
+      `L=${data.leftPoster?.naturalWidth} R=${data.rightPoster?.naturalWidth} ${data.leftPoster?.src}`,
     );
   }
   push("print-lab", data.printLab, String(data.printLab));

@@ -1,0 +1,55 @@
+# PR / main verification only. Does not publish the live site.
+# Live publishing stays in deploy-pages.yml → gh-pages branch.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: haodada-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        env:
+          GITHUB_ACTIONS: "true"
+          NEXT_PUBLIC_BASE_PATH: /haodada
+        run: npm run build
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Production QA
+        env:
+          QA_URL: http://127.0.0.1:4173/haodada/
+        run: |
+          set -euo pipefail
+          # GitHub project Pages serves branch root at /haodada/.
+          # Next basePath=/haodada, so nest the export the same way.
+          rm -rf /tmp/pages-root
+          mkdir -p /tmp/pages-root
+          cp -a out /tmp/pages-root/haodada
+          python3 -m http.server 4173 --directory /tmp/pages-root &
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:4173/haodada/ >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          node scripts/qa-production.mjs
+          node scripts/qa-interaction.mjs
+          node scripts/qa-side-posters.mjs

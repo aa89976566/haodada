@@ -108,6 +108,7 @@ img,video{max-width:100%;height:auto;display:block}
 #SitePreloader .loader-inner .content-wrapper h1{color:#ff0400}
 #SitePreloader .loader-inner .content-wrapper button.enter{margin-top:2rem;border:0;background:#fff;color:#000;padding:.85rem 1.5rem;text-transform:uppercase;font-family:Andale Mono,monospace;font-size:1rem;width:100%;max-width:280px}
 #SitePreloader .loader-inner .content-wrapper button.enter:hover{background:#f7dc50;color:#ff4d4d}
+#SitePreloader .loader-inner .content-wrapper button.enter:focus-visible{outline:3px solid #f9d844;outline-offset:4px}
 #SitePreloader.is-exiting{pointer-events:auto}
 
 /* Kill abandoned v13/v14/v15 CRT architectures */
@@ -385,13 +386,14 @@ img,video{max-width:100%;height:auto;display:block}
   z-index:2;
   pointer-events:none;
   background-color:#0758e7;
-  background-image:url("./images/hero-factory-printer-front-v14-4k.png");
+  background-image:url("./images/hero-factory-printer-front-v14-828.webp");
   background-position:center 3.2%;
   background-size:100% 100%;
   background-repeat:no-repeat;
 }
 .print-lab-stage::before{clip-path:polygon(0 75%,27% 75%,27% 100%,0 100%)}
 .print-lab-stage::after{clip-path:polygon(73% 75%,100% 75%,100% 100%,73% 100%)}
+.print-lab-machine-picture,
 .print-lab-machine{
   position:absolute;
   inset:0;
@@ -399,6 +401,8 @@ img,video{max-width:100%;height:auto;display:block}
   display:block;
   width:100%;
   height:auto;
+}
+.print-lab-machine{
   object-fit:contain;
   image-rendering:auto;
 }
@@ -515,6 +519,7 @@ img,video{max-width:100%;height:auto;display:block}
   will-change:transform;
   pointer-events:auto;
 }
+.print-paper picture,
 .print-paper-receipt{display:block;width:100%;height:auto}
 .print-paper-head{
   display:flex;
@@ -663,6 +668,12 @@ img,video{max-width:100%;height:auto;display:block}
   position:absolute;left:50%;top:50%;z-index:2;display:none;transform:translate(-50%,-50%);padding:.72rem 1rem!important;border:2px solid #fff!important;border-radius:999px!important;background:rgba(1,28,145,.9)!important;color:#fff!important;font-weight:700!important;box-shadow:0 3px 0 rgba(0,0,0,.28);white-space:nowrap;
 }
 .chat-video-play.is-visible{display:block}
+.chat-video-play:focus-visible,
+a.chat-preview-card:focus-visible,
+a.chat-link:focus-visible{
+  outline:3px solid #1a42c2;
+  outline-offset:3px;
+}
 .yours .message a.phone-link{color:var(--ink-blue);text-decoration:underline}
 .message a.chat-link{color:var(--ink-blue);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .mine .message a.chat-link-light{color:#fff}

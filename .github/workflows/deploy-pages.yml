@@ -1,3 +1,7 @@
+# Production Pages source is the gh-pages BRANCH (verified 2026-08-17 via
+# GET /repos/aa89976566/haodada/pages: build_type=legacy, source.branch=gh-pages).
+# Official actions/deploy-pages is unused by that setting and raced this job.
+# Keep a single force-push publisher until a human switches Pages source to GitHub Actions.
 name: Deploy to GitHub Pages
 
 on:
@@ -8,8 +12,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: haodada-pages-deploy
@@ -19,18 +21,25 @@ jobs:
   publish-gh-pages:
     runs-on: ubuntu-latest
     steps:
-      - name: Build and publish gh-pages
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install and build
         env:
-          GH_TOKEN: ${{ github.token }}
           GITHUB_ACTIONS: "true"
           NEXT_PUBLIC_BASE_PATH: /haodada
         run: |
           set -euo pipefail
-          git clone --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" repo
-          cd repo
           npm ci
           npm run build
           touch out/.nojekyll
+      - name: Publish gh-pages branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
           cd out
           git init -b gh-pages
           git config user.name "github-actions[bot]"
@@ -38,34 +47,3 @@ jobs:
           git add -A
           git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
-
-  build-pages:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-      - name: Install and build
-        run: |
-          npm ci
-          export NEXT_PUBLIC_BASE_PATH=/haodada
-          npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-  deploy-pages:
-    needs: build-pages
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          timeout: 1800000
-# retrigger: v14 fixed-master deploy
