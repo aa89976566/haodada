@@ -1,5 +1,13 @@
 
 
+/* v50: keep the 無添加 headline fully visible */
+.side-left .side-poster-frame::before{
+  min-height:11%;
+  padding:.5% 2% 0;
+  font-size:clamp(13px,1.35vw,22px);
+}
+
+
 /* v49: borderless side posters + localized Taiwanese copy */
 .side-poster-frame::after{
   content:""!important;
