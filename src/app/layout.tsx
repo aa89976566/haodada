@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { BRAND } from "@/data/brand";
+import { SITE_URL } from "@/data/site";
 import { asset } from "@/lib/asset";
 import "./globals.css";
 
 const TITLE = `${BRAND.name}｜${BRAND.studio} ${BRAND.furmosa}`;
 const DESCRIPTION = BRAND.description;
-const SITE_URL = "https://aa89976566.github.io/haodada/";
+const OG_IMAGE = `${SITE_URL}social/sharecard-facebook.png`;
+const TW_IMAGE = `${SITE_URL}social/sharecard-twitter.png`;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
   keywords: [
@@ -21,6 +24,13 @@ export const metadata: Metadata = {
     "無添加",
   ],
   authors: [{ name: `${BRAND.studio} ${BRAND.furmosa}` }],
+  alternates: {
+    canonical: SITE_URL,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -28,13 +38,13 @@ export const metadata: Metadata = {
     siteName: BRAND.name,
     type: "website",
     locale: "zh_TW",
-    images: [{ url: `${SITE_URL}social/sharecard-facebook.png` }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: TITLE }],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: [`${SITE_URL}social/sharecard-twitter.png`],
+    images: [TW_IMAGE],
   },
 };
 
@@ -47,6 +57,35 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: `${BRAND.studio} ${BRAND.furmosa}`,
+      url: "https://furmosa.com/",
+      sameAs: [BRAND.igUrl, BRAND.lineUrl],
+    },
+    {
+      "@type": "Product",
+      name: BRAND.name,
+      description: BRAND.description,
+      image: OG_IMAGE,
+      url: BRAND.shopUrl,
+      brand: {
+        "@type": "Brand",
+        name: `${BRAND.studio} ${BRAND.furmosa}`,
+      },
+      offers: {
+        "@type": "Offer",
+        url: BRAND.shopUrl,
+        priceCurrency: "TWD",
+        price: "89",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,7 +94,14 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant">
       <head>
-        <link rel="stylesheet" href={`${asset("/haodada-site-v15.css")}?v=side-borderless-tw-v51`} />
+        <link
+          rel="stylesheet"
+          href={`${asset("/haodada-site-v15.css")}?v=prod-harden-v52`}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>{children}</body>
     </html>

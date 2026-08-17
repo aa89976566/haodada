@@ -65,3 +65,12 @@ video {
 #SitePreloader .loader-inner .content-wrapper button.enter:disabled {
   opacity: 0.85;
 }
+
+#SitePreloader .loader-inner .content-wrapper button.enter:focus-visible,
+.chat-video-play:focus-visible,
+a.chat-preview-card:focus-visible,
+a.chat-link:focus-visible,
+a.chat-link-light:focus-visible {
+  outline: 3px solid #f7dc50;
+  outline-offset: 3px;
+}

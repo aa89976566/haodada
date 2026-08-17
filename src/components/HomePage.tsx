@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BRAND } from "@/data/brand";
-import { buildSiteHtml } from "@/data/siteHtml";
+import { buildSiteHtml, sidePosterInnerHtml } from "@/data/siteHtml";
+import { track } from "@/lib/analytics";
 
 function basePath() {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -16,7 +17,9 @@ function withBase(html: string) {
     .replace(/(src|href|poster|data-src)="(\/_nuxt\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(src|href|poster|data-src)="(\/img\/[^"]+)"/g, `$1="${base}$2"`)
     .replace(/(src|href|poster|data-src)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
-    .replace(/(srcset)="(\/images\/[^"]+)"/g, `$1="${base}$2"`)
+    .replace(/srcset="([^"]+)"/g, (_m, value: string) => {
+      return `srcset="${value.replaceAll("/images/", `${base}/images/`)}"`;
+    })
     .replace(/(src|href)="(\/social\/[^"]+)"/g, `$1="${base}$2"`);
 }
 
@@ -74,6 +77,7 @@ function Preloader({ onDone }: { onDone: () => void }) {
               if (exiting) return;
               markEntered();
               setExiting(true);
+              track("enter_clicked");
               window.setTimeout(() => onDone(), 320);
             }}
           >
@@ -99,9 +103,22 @@ function prepareMutedVideo(video: HTMLVideoElement) {
  * Fixed side posters + scroll-driven factory printer hero → chat.
  * Scroll drives parallax and the paper-feed animation via rAF.
  */
+function syncSidePosters(enabled: boolean) {
+  document.querySelectorAll<HTMLElement>("picture.side-poster").forEach((picture) => {
+    const side = picture.dataset.side === "right" ? "right" : "left";
+    if (!enabled) {
+      picture.replaceChildren();
+      return;
+    }
+    if (picture.querySelector("img")) return;
+    picture.innerHTML = withBase(sidePosterInnerHtml(side));
+  });
+}
+
 export function HomePage() {
   const [ready, setReady] = useState(false);
   const html = useMemo(() => withBase(buildSiteHtml()), []);
+  const printedRef = useRef(false);
 
   useEffect(() => {
     document.body.classList.toggle("page-ready", ready);
@@ -137,6 +154,7 @@ export function HomePage() {
       try {
         await video.play();
         hidePlayButton();
+        track("video_played");
       } catch {
         showPlayButton();
       }
@@ -176,6 +194,37 @@ export function HomePage() {
 
   useEffect(() => {
     if (!ready) return;
+    const desktop = window.matchMedia("(min-width: 769px)");
+    const apply = () => syncSidePosters(desktop.matches);
+    apply();
+    desktop.addEventListener("change", apply);
+    return () => {
+      desktop.removeEventListener("change", apply);
+      syncSidePosters(false);
+    };
+  }, [ready]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const onClick = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const product = target.closest("a.chat-preview-card");
+      if (product instanceof HTMLAnchorElement) {
+        track("product_clicked", { href: product.href });
+        return;
+      }
+      const line = target.closest('a[href*="line.me"]');
+      if (line instanceof HTMLAnchorElement) {
+        track("line_clicked", { href: line.href });
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [ready]);
+
+  useEffect(() => {
+    if (!ready) return;
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -187,6 +236,10 @@ export function HomePage() {
       document.documentElement.style.setProperty("--parallax", "0");
       printLab?.style.setProperty("--print-progress", "1");
       printLab?.classList.add("is-printed");
+      if (!printedRef.current) {
+        printedRef.current = true;
+        track("print_completed");
+      }
       return;
     }
 
@@ -205,7 +258,12 @@ export function HomePage() {
         const printProgress = progress;
         printLab.style.setProperty("--print-progress", printProgress.toFixed(4));
         printLab.classList.toggle("is-printing", printProgress > 0.015 && printProgress < 0.985);
-        printLab.classList.toggle("is-printed", printProgress >= 0.985);
+        const printed = printProgress >= 0.985;
+        printLab.classList.toggle("is-printed", printed);
+        if (printed && !printedRef.current) {
+          printedRef.current = true;
+          track("print_completed");
+        }
       }
     };
     const onScroll = () => {

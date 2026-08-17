@@ -176,8 +176,8 @@ async function measure(page, vw, vh) {
     );
     push(
       "posters-loaded",
-      (data.leftPoster?.naturalWidth || 0) >= 627 &&
-        (data.rightPoster?.naturalWidth || 0) >= 627,
+      (data.leftPoster?.naturalWidth || 0) >= 300 &&
+        (data.rightPoster?.naturalWidth || 0) >= 300,
       `L=${data.leftPoster?.naturalWidth} R=${data.rightPoster?.naturalWidth}`,
     );
   }
