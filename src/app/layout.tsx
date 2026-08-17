@@ -96,7 +96,7 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href={`${asset("/haodada-site-v15.css")}?v=prod-harden-v53`}
+          href={`${asset("/haodada-site-v15.css")}?v=prod-cover-v54`}
         />
         <script
           type="application/ld+json"

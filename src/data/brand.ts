@@ -147,8 +147,8 @@ export const CHAT: ChatBlock[] = [
     kind: "mine",
     preview: {
       url: BRAND.shopUrl,
-      image: "/images/hero-furmosa-real-package-v2.jpg",
-      imageAlt: "嚎大大雞霸商品與復古電腦的品牌主視覺",
+      image: "/images/haodada/product-reference.jpeg",
+      imageAlt: "嚎大大雞霸雞肉原味包裝，白色紙套與透明袋中的整片雞胸肉乾",
       eyebrow: "匠寵 FURMOSA",
       title: "嚎大大雞霸｜雞肉原味",
       description: "整片雞胸肉低溫烘乾・無添加",

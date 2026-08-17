@@ -53,3 +53,4 @@ jobs:
           node scripts/qa-production.mjs
           node scripts/qa-interaction.mjs
           node scripts/qa-side-posters.mjs
+          node scripts/qa-product-cover.mjs
