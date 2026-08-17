@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+iside-ibm-restore-v48side-borderless-tw-v49mport type { Metadata, Viewport } from "next";
 import { BRAND } from "@/data/brand";
 import { asset } from "@/lib/asset";
 import "./globals.css";
