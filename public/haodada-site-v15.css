@@ -108,6 +108,7 @@ img,video{max-width:100%;height:auto;display:block}
 #SitePreloader .loader-inner .content-wrapper h1{color:#ff0400}
 #SitePreloader .loader-inner .content-wrapper button.enter{margin-top:2rem;border:0;background:#fff;color:#000;padding:.85rem 1.5rem;text-transform:uppercase;font-family:Andale Mono,monospace;font-size:1rem;width:100%;max-width:280px}
 #SitePreloader .loader-inner .content-wrapper button.enter:hover{background:#f7dc50;color:#ff4d4d}
+#SitePreloader .loader-inner .content-wrapper button.enter:focus-visible{outline:3px solid #f9d844;outline-offset:4px}
 #SitePreloader.is-exiting{pointer-events:auto}
 
 /* Kill abandoned v13/v14/v15 CRT architectures */

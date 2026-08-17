@@ -22,6 +22,8 @@ declare global {
  * Optional first-party event adapter.
  * Production is a no-op unless window.haodadaAnalytics is provided at runtime.
  * Do not add third-party pixels or invented measurement IDs here.
+ *
+ * Events: enter_clicked, print_completed, product_clicked, line_clicked, video_played.
  */
 export function track(
   event: AnalyticsEvent,
