@@ -717,3 +717,11 @@ img,video{max-width:100%;height:auto;display:block}
 }
 
 /* classic-ibm-hero-restore 20260807 */
+
+
+/* v51 final copy placement */
+.side-left .side-poster-frame::before{
+  min-height:11%;
+  padding:.5% 2% 0;
+  font-size:clamp(13px,1.35vw,22px);
+}
