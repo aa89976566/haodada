@@ -17,6 +17,9 @@ npm run dev
 （repository Pages source 目前是 legacy / `gh-pages`，不是 GitHub Actions）。
 PR 檢查走 `.github/workflows/ci.yml`，不會發布正式站。
 
+正式網址：https://www.furmosa.com/haodada/
+
+GitHub Pages 仍作為靜態來源，尚未關閉：
 https://aa89976566.github.io/haodada/
 
 ## 分析事件
