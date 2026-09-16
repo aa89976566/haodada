@@ -74,9 +74,7 @@ export function buildSiteHtml(): string {
         <div class="print-paper-window">
           <article class="print-paper">
             <picture>
-              <source type="image/avif" srcset="/images/haodada/product-receipt-sectioned-red-white-v7-480.avif 480w, /images/haodada/product-receipt-sectioned-red-white-v7-941.avif 941w" sizes="(max-width: 768px) 72vw, 280px">
-              <source type="image/webp" srcset="/images/haodada/product-receipt-sectioned-red-white-v7-480.webp 480w, /images/haodada/product-receipt-sectioned-red-white-v7-941.webp 941w" sizes="(max-width: 768px) 72vw, 280px">
-              <img class="print-paper-receipt" src="/images/haodada/product-receipt-sectioned-red-white-v7-941.webp" alt="純白底紅墨嚎大大雞霸食品資訊發票，包含價格、淨重、成分、營養分析及獨立框線保存期限" width="941" height="1672" loading="lazy" decoding="async">
+              <img class="print-paper-receipt" src="/images/haodada/product-receipt-sectioned-red-white-v8-99-941.jpg" srcset="/images/haodada/product-receipt-sectioned-red-white-v8-99-480.jpg 480w, /images/haodada/product-receipt-sectioned-red-white-v8-99-941.jpg 941w" sizes="(max-width: 768px) 72vw, 280px" alt="純白底紅墨嚎大大雞霸食品資訊發票，售價 NT$99，包含淨重、成分、營養分析及獨立框線保存期限" width="941" height="1672" loading="lazy" decoding="async">
             </picture>
           </article>
         </div>
