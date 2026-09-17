@@ -174,6 +174,8 @@ export const CHAT: ChatBlock[] = [
       { image: "/images/haodada/ugc-xiaomi-original.jpg", alt: "許小咪張著嘴，前方放著雞霸雞排" },
       { image: "/images/haodada/ugc-fagui-biting-original.jpg", alt: "發貴咬著飼主手中紙袋裡的雞霸雞排" },
       { image: "/images/haodada/ugc-oppa-original.jpg", alt: "歐巴在家中與雞霸雞排紙袋合照" },
+      { image: "/images/haodada/ugc-white-french-bulldog-original.png", alt: "白色法鬥閉著眼睛咬雞排" },
+      { image: "/images/haodada/ugc-french-bulldog-original.png", alt: "黑色法鬥與紙袋中的雞排合照" },
     ],
   },
   { kind: "yours", texts: ["好好笑，別人家也把狗養成夜市咖"] },
