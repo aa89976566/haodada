@@ -121,6 +121,41 @@ export function HomePage() {
   const printedRef = useRef(false);
 
   useEffect(() => {
+    const carousel = document.querySelector<HTMLElement>(".has-carousel");
+    const track = carousel?.querySelector<HTMLElement>(".chat-carousel-track");
+    if (!carousel || !track) return;
+    const buttons = Array.from(carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-step]"));
+    const count = carousel.querySelector<HTMLElement>(".chat-carousel-count");
+    const total = track.children.length;
+    const index = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    const update = () => {
+      const current = index();
+      if (count) count.textContent = `${current + 1} / ${total}`;
+      buttons[0].disabled = current === 0;
+      buttons[1].disabled = current === total - 1;
+    };
+    const move = (step: number) => {
+      const next = Math.max(0, Math.min(total - 1, index() + step));
+      track.scrollTo({ left: next * track.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    };
+    const click = (event: Event) => move(Number((event.currentTarget as HTMLButtonElement).dataset.carouselStep));
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      move(event.key === "ArrowLeft" ? -1 : 1);
+    };
+    buttons.forEach(button => button.addEventListener("click", click));
+    track.addEventListener("scroll", update, { passive: true });
+    track.addEventListener("keydown", keydown);
+    update();
+    return () => {
+      buttons.forEach(button => button.removeEventListener("click", click));
+      track.removeEventListener("scroll", update);
+      track.removeEventListener("keydown", keydown);
+    };
+  }, []);
+
+  useEffect(() => {
     document.body.classList.toggle("page-ready", ready);
     return () => document.body.classList.remove("page-ready");
   }, [ready]);

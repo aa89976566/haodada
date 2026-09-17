@@ -17,6 +17,10 @@ function renderTexts(texts: string[], markLast: boolean) {
 }
 
 function renderChatBlock(block: ChatBlock): string {
+  if ("photos" in block) {
+    const slides = block.photos.map((photo, i) => `<div class="chat-carousel-slide" role="group" aria-roledescription="投影片" aria-label="${i + 1} / ${block.photos.length}"><img src="${escapeAttr(photo.image)}" alt="${escapeAttr(photo.alt)}" loading="lazy" decoding="async" width="720" height="960"></div>`).join("");
+    return `<div class="yours messages"><div class="message has-carousel last" role="region" aria-roledescription="輪播" aria-label="毛孩與雞霸照片"><div class="chat-carousel-track" tabindex="0" aria-label="左右滑動或使用方向鍵翻閱照片">${slides}</div><div class="chat-carousel-controls"><button type="button" data-carousel-step="-1" aria-label="上一張照片" disabled>‹</button><span class="chat-carousel-count" aria-live="polite" aria-atomic="true">1 / ${block.photos.length}</span><button type="button" data-carousel-step="1" aria-label="下一張照片">›</button></div></div></div>`;
+  }
   if ("preview" in block) {
     const preview = block.preview;
     return `<div class="mine messages"><div class="message has-link-preview last"><a href="${escapeAttr(preview.url)}" target="_blank" rel="noopener noreferrer" class="chat-preview-card" aria-label="前往${escapeAttr(preview.title)}商品頁"><img src="${escapeAttr(preview.image)}" alt="${escapeAttr(preview.imageAlt)}" class="chat-preview-image" width="1022" height="1602" loading="lazy" decoding="async"><span class="chat-preview-body"><span class="chat-preview-eyebrow">${escapeAttr(preview.eyebrow)}</span><strong>${escapeAttr(preview.title)}</strong><span class="chat-preview-description">${escapeAttr(preview.description)}</span><span class="chat-preview-domain"><span>${escapeAttr(preview.domain)}</span><b>查看商品 ↗</b></span></span></a></div></div>`;

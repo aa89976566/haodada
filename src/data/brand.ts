@@ -49,6 +49,7 @@ export type ChatPreviewBlock = {
 };
 
 export type ChatBlock =
+  | { kind: "yours"; photos: { image: string; alt: string }[] }
   | ChatTextBlock
   | ChatImageBlock
   | ChatVideoBlock
@@ -164,4 +165,18 @@ export const CHAT: ChatBlock[] = [
       "感覺他們滿好玩的哈哈",
     ],
   },
+  { kind: "yours", texts: ["你看他們分享的這幾隻"] },
+  {
+    kind: "yours",
+    photos: [
+      { image: "/images/haodada/ugc-cooper.jpg", alt: "Cooper 咬著紙袋中的雞霸雞排" },
+      { image: "/images/haodada/ugc-naisu.jpg", alt: "奶酥貴妃吃雞霸雞排的近拍" },
+      { image: "/images/haodada/ugc-xiaomi.jpg", alt: "許小咪張著嘴，前方放著雞霸雞排" },
+      { image: "/images/haodada/ugc-fagui.jpg", alt: "發貴趴在藤椅上，前腳之間放著雞霸雞排" },
+      { image: "/images/haodada/ugc-oppa.jpg", alt: "歐巴在家中與雞霸雞排紙袋合照" },
+    ],
+  },
+  { kind: "yours", texts: ["好好笑，別人家也把狗養成夜市咖"] },
+  { kind: "mine", texts: ["宵夜團總不能少牠"] },
+  { kind: "yours", texts: ["好，週末算牠一份"] },
 ];
