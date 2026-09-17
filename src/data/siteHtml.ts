@@ -18,8 +18,7 @@ function renderTexts(texts: string[], markLast: boolean) {
 
 function renderChatBlock(block: ChatBlock): string {
   if ("photos" in block) {
-    const slides = block.photos.map((photo, i) => `<div class="chat-carousel-slide" role="group" aria-roledescription="投影片" aria-label="${i + 1} / ${block.photos.length}"><img src="${escapeAttr(photo.image)}" alt="${escapeAttr(photo.alt)}" loading="lazy" decoding="async" width="720" height="960"></div>`).join("");
-    return `<div class="yours messages"><div class="message has-carousel last" role="region" aria-roledescription="輪播" aria-label="毛孩與雞霸照片"><div class="chat-carousel-track" tabindex="0" aria-label="左右滑動或使用方向鍵翻閱照片">${slides}</div><div class="chat-carousel-controls"><button type="button" data-carousel-step="-1" aria-label="上一張照片" disabled>‹</button><span class="chat-carousel-count" aria-live="polite" aria-atomic="true">1 / ${block.photos.length}</span><button type="button" data-carousel-step="1" aria-label="下一張照片">›</button></div></div></div>`;
+    return block.photos.map((photo) => `<div class="yours messages"><div class="message has-shared-photo last"><img src="${escapeAttr(photo.image)}" alt="${escapeAttr(photo.alt)}" loading="lazy" decoding="async"></div></div>`).join("");
   }
   if ("preview" in block) {
     const preview = block.preview;
