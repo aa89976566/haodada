@@ -36,7 +36,7 @@ export type ChatVideoBlock = {
 };
 
 export type ChatPreviewBlock = {
-  kind: "mine";
+  kind: "mine" | "yours";
   preview: {
     url: string;
     image: string;
@@ -101,7 +101,7 @@ export const CHAT: ChatBlock[] = [
   { kind: "yours", texts: ["99 元，一包 50g", "運費結帳時再看"] },
   { kind: "mine", texts: ["好，週末算牠一份", "雞排哪裡買"] },
   {
-    kind: "mine",
+    kind: "yours",
     preview: {
       url: BRAND.shopUrl,
       image: "/images/haodada/product-reference.jpeg",
