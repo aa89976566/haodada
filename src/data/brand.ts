@@ -170,7 +170,6 @@ export const CHAT: ChatBlock[] = [
     kind: "yours",
     photos: [
       { image: "/images/haodada/ugc-cooper-original.jpg", alt: "Cooper 咬著紙袋中的雞霸雞排" },
-      { image: "/images/haodada/ugc-naisu-original.jpg", alt: "奶酥貴妃吃雞霸雞排的近拍" },
       { image: "/images/haodada/ugc-xiaomi-original.jpg", alt: "許小咪張著嘴，前方放著雞霸雞排" },
       { image: "/images/haodada/ugc-fagui-biting-original.jpg", alt: "發貴咬著飼主手中紙袋裡的雞霸雞排" },
       { image: "/images/haodada/ugc-oppa-original.jpg", alt: "歐巴在家中與雞霸雞排紙袋合照" },
