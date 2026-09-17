@@ -6,11 +6,11 @@ export const BRAND = {
   studio: "匠寵",
   furmosa: "FURMOSA",
   description:
-    "嚎大大雞霸——匠寵 FURMOSA 寵物雞肉零食。整片雞胸肉低溫烘乾，無添加，給毛孩大口咬才夠味。",
+    "嚎大大雞霸——匠寵 FURMOSA 寵物雞肉零食。純雞肉製泥、鋪平塑形，做成夜市雞排模樣；無添加香料、色素與防腐劑。",
   lineUrl: "https://line.me/R/ti/p/%40furmosa",
   lineHandle: "@furmosa",
   shopUrl:
-    "https://furmosa.com/products/chicken-fillet?variant=56882074419577",
+    "https://furmosa.com/products/chicken-fillet",
   igUrl: "https://www.instagram.com/furmosa_food/",
   igHandle: "@furmosa_food",
   features: ["無添加", "純雞情", "低溫烘乾", "狗公園社交"] as const,
@@ -55,129 +55,62 @@ export type ChatBlock =
   | ChatVideoBlock
   | ChatPreviewBlock;
 
-/**
- * Taiwan mobile group-chat tone — spoken, light punctuation, no ad-speak.
- * Photo after「坐好」; park video after「你看」; product and LINE links in the closing exchange.
- * No hard-sell CTAs / purchase buttons.
- */
+/** Short chat: curiosity, practical answers, shared ritual, then purchase. */
 export const CHAT: ChatBlock[] = [
-  {
-    kind: "mine",
-    texts: ["欸你們剛剛是在餵狗雞排嗎", "這樣不好吧"],
-  },
-  {
-    kind: "yours",
-    texts: [
-      "不是人吃的那種啦",
-      "那是狗狗吃的雞排",
-      "其實就是雞胸肉做的雞肉乾",
-    ],
-  },
-  { kind: "mine", texts: ["看起來也太大一片", "那麼大片是要怎麼吃完啦"] },
-  {
-    kind: "yours",
-    texts: [
-      "中型犬其實一週左右就吃得完",
-      "不然拿去跟朋友家的狗一起分也很剛好",
-      "而且牠們等雞排的表情真的超可愛",
-    ],
-  },
-  {
-    kind: "yours",
-    image: "/images/haodada/ugc-oppa-original.jpg",
-    alt: "歐巴在家中與雞霸雞排紙袋合照",
-  },
-  {
-    kind: "yours",
-    texts: [
-      "對啊大到拿著很像在吃雞排",
-      "但裡面就只有雞肉",
-      "沒香料沒色素也沒防腐劑",
-    ],
-  },
-  { kind: "mine", texts: ["所以是無添加喔"] },
-  {
-    kind: "yours",
-    texts: ["對啊 無添加", "快快吃，快快分享", "我買過", "我家那隻看到袋子就自己坐好"],
-  },
-  {
-    kind: "yours",
-    image: "/images/haodada/ugc-cooper-original.jpg",
-    alt: "使用者的狗狗咬著嚎大大雞霸",
-  },
-  {
-    kind: "mine",
-    texts: ["這張太扯了吧", "根本可以拿去當證件照"],
-  },
-  {
-    kind: "yours",
-    texts: ["而且一包價格沒有想像中貴", "我本來以為這麼大片會很盤"],
-  },
-  { kind: "mine", texts: ["難怪剛剛整群狗都跟著你"] },
-  { kind: "yours", texts: ["你看"] },
-  {
-    kind: "yours",
-    video: "/images/haodada/dogpark-product-v2.mp4",
-    alt: "狗公園拿著嚎大大雞霸的影片",
-  },
-  { kind: "yours", texts: ["有帶雞霸的直接變狗王"] },
-  { kind: "mine", texts: ["旁邊那個完全沒狗理"] },
-  {
-    kind: "yours",
-    texts: [
-      "不要再講了",
-      "他看起來已經快回家反省人生",
-      "欸而且裡面還有狗狗卡牌",
-    ],
-  },
-  { kind: "mine", texts: ["什麼意思"] },
-  {
-    kind: "yours",
-    texts: ["如果抽到跟自己家狗同品種", "可以再換一包"],
-  },
-  {
-    kind: "mine",
-    texts: [
-      "這活動誰想的啦",
-      "狗還要先接受血統考驗是不是",
-      "他們網站好可愛喔",
-      "你有看到嗎",
-    ],
-  },
-  {
-    kind: "mine",
-    preview: {
-      url: BRAND.shopUrl,
-      image: "/images/haodada/product-reference.jpeg",
-      imageAlt: "嚎大大雞霸雞肉原味包裝，白色紙套與透明袋中的整片雞胸肉乾",
-      eyebrow: "匠寵 FURMOSA",
-      title: "嚎大大雞霸｜雞肉原味",
-      description: "整片雞胸肉低溫烘乾・無添加",
-      domain: "furmosa.com",
-    },
-  },
-  { kind: "mine", texts: ["欸那你知道他們官方 LINE 嗎"] },
-  {
-    kind: "yours",
-    texts: [
-      `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-link" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}">LINE ${BRAND.lineHandle}</a>`,
-      "你可以直接聯繫他們啊",
-      "感覺他們滿好玩的哈哈",
-    ],
-  },
+  { kind: "mine", texts: ["等一下", "牠怎麼也有雞排"] },
+  { kind: "yours", texts: ["牠的啦，狗狗吃的雞肉乾", "只是長得很像我們的宵夜"] },
+  { kind: "mine", texts: ["連紙袋都有也太像", "所以不是炸的喔？"] },
+  { kind: "yours", texts: ["不是啦，雞肉製泥再鋪平塑形", "純雞肉，沒加香料、色素、防腐劑"] },
+  { kind: "mine", texts: ["認真做成雞排欸"] },
   { kind: "yours", texts: ["你看他們分享的這幾隻"] },
   {
     kind: "yours",
     photos: [
       { image: "/images/haodada/ugc-cooper-original.jpg", alt: "Cooper 咬著紙袋中的雞霸雞排" },
       { image: "/images/haodada/ugc-xiaomi-original.jpg", alt: "許小咪張著嘴，前方放著雞霸雞排" },
+    ],
+  },
+  { kind: "mine", texts: ["這個表情", "跟我等鹽酥雞一模一樣"] },
+  { kind: "mine", texts: ["但這麼大，牠要怎麼吃"] },
+  { kind: "yours", texts: ["可以剪小段，照體型調整份量", "當零食慢慢餵，不是一次吃完啦"] },
+  { kind: "mine", texts: ["那開了能放多久？"] },
+  { kind: "yours", texts: ["商品頁寫未開封一個月，開封後兩週", "也可以跟朋友家的狗分"] },
+  {
+    kind: "yours",
+    photos: [
       { image: "/images/haodada/ugc-fagui-biting-original.jpg", alt: "發貴咬著飼主手中紙袋裡的雞霸雞排" },
       { image: "/images/haodada/ugc-oppa-original.jpg", alt: "歐巴在家中與雞霸雞排紙袋合照" },
+    ],
+  },
+  { kind: "mine", texts: ["好好笑，別人家也把狗養成夜市咖"] },
+  { kind: "yours", texts: ["出門會多算牠一位的那種"] },
+  { kind: "mine", texts: ["對啊，我找餐廳都先問狗能不能去"] },
+  { kind: "yours", texts: ["那你看這個"] },
+  { kind: "yours", video: "/images/haodada/dogpark-product-v2.mp4", alt: "狗公園拿著嚎大大雞霸的影片" },
+  { kind: "mine", texts: ["有帶雞霸的直接變狗王"] },
+  { kind: "yours", texts: ["週末聚會知道要帶什麼了吧"] },
+  {
+    kind: "yours",
+    photos: [
       { image: "/images/haodada/ugc-white-french-bulldog-original.png", alt: "白色法鬥閉著眼睛咬雞排" },
       { image: "/images/haodada/ugc-french-bulldog-original.png", alt: "黑色法鬥與紙袋中的雞排合照" },
     ],
   },
-  { kind: "yours", texts: ["好好笑，別人家也把狗養成夜市咖"] },
-  { kind: "mine", texts: ["宵夜團總不能少牠"] },
-  { kind: "yours", texts: ["好，週末算牠一份"] },
+  { kind: "mine", texts: ["閉眼那張太懂吃了", "宵夜團總不能少牠"] },
+  { kind: "mine", texts: ["一包多少？"] },
+  { kind: "yours", texts: ["99 元，一包 50g", "運費結帳時再看"] },
+  { kind: "mine", texts: ["好，週末算牠一份", "雞排哪裡買"] },
+  {
+    kind: "mine",
+    preview: {
+      url: BRAND.shopUrl,
+      image: "/images/haodada/product-reference.jpeg",
+      imageAlt: "嚎大大雞霸雞肉原味產品包裝",
+      eyebrow: "匠寵 FURMOSA",
+      title: "嚎大大雞霸｜雞肉原味",
+      description: "NT$99／50g・純雞肉製成",
+      domain: "furmosa.com",
+    },
+  },
+  { kind: "yours", texts: ["有問題也可以直接問他們", `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-link" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}">LINE ${BRAND.lineHandle}</a>`] },
 ];
