@@ -79,13 +79,13 @@ export const CHAT: ChatBlock[] = [
     texts: [
       "中型犬其實一週左右就吃得完",
       "不然拿去跟朋友家的狗一起分也很剛好",
-      "而且三隻一起等雞排真的超可愛",
+      "而且牠們等雞排的表情真的超可愛",
     ],
   },
   {
     kind: "yours",
-    image: "/images/haodada/three-dogs-share-chicken-v3.png",
-    alt: "飼主拿著雞霸，三隻狗狗一起期待分享",
+    image: "/images/haodada/ugc-oppa-original.jpg",
+    alt: "歐巴在家中與雞霸雞排紙袋合照",
   },
   {
     kind: "yours",
@@ -102,7 +102,7 @@ export const CHAT: ChatBlock[] = [
   },
   {
     kind: "yours",
-    image: "/images/haodada/customer-dog-product-v3.jpg",
+    image: "/images/haodada/ugc-cooper-original.jpg",
     alt: "使用者的狗狗咬著嚎大大雞霸",
   },
   {
@@ -169,11 +169,11 @@ export const CHAT: ChatBlock[] = [
   {
     kind: "yours",
     photos: [
-      { image: "/images/haodada/ugc-cooper.jpg", alt: "Cooper 咬著紙袋中的雞霸雞排" },
-      { image: "/images/haodada/ugc-naisu.jpg", alt: "奶酥貴妃吃雞霸雞排的近拍" },
-      { image: "/images/haodada/ugc-xiaomi.jpg", alt: "許小咪張著嘴，前方放著雞霸雞排" },
-      { image: "/images/haodada/ugc-fagui.jpg", alt: "發貴趴在藤椅上，前腳之間放著雞霸雞排" },
-      { image: "/images/haodada/ugc-oppa.jpg", alt: "歐巴在家中與雞霸雞排紙袋合照" },
+      { image: "/images/haodada/ugc-cooper-original.jpg", alt: "Cooper 咬著紙袋中的雞霸雞排" },
+      { image: "/images/haodada/ugc-naisu-original.jpg", alt: "奶酥貴妃吃雞霸雞排的近拍" },
+      { image: "/images/haodada/ugc-xiaomi-original.jpg", alt: "許小咪張著嘴，前方放著雞霸雞排" },
+      { image: "/images/haodada/ugc-fagui-original.jpg", alt: "發貴趴在藤椅上，前腳之間放著雞霸雞排" },
+      { image: "/images/haodada/ugc-oppa-original.jpg", alt: "歐巴在家中與雞霸雞排紙袋合照" },
     ],
   },
   { kind: "yours", texts: ["好好笑，別人家也把狗養成夜市咖"] },
