@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aa89976566.github.io/haodada/sitemap.xml
-Host: https://aa89976566.github.io/haodada/
+Sitemap: https://www.furmosa.com/haodada/sitemap.xml
+Host: https://www.furmosa.com/haodada/

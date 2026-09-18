@@ -1,0 +1,71 @@
+From 7baefc66f617807c63d5f68af5fc006bf7b48e13 Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Tue, 18 Aug 2026 09:57:48 +0000
+Subject: [PATCH] Proxy /haodada on www.furmosa.com to the existing Pages site
+
+Rewrite /haodada to aa89976566.github.io/haodada so the chicken brand
+site lives on the same Vercel domain path. Keep Shopify apex untouched.
+---
+ README.md         |  1 +
+ next.config.ts    | 14 ++++++++++++++
+ src/data/works.ts |  3 +--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/README.md b/README.md
+index c42ac40..3c31f57 100644
+--- a/README.md
++++ b/README.md
+@@ -15,6 +15,7 @@ npm run dev
+ 
+ - `/` — 凍乾目錄首頁（編號清單、關於匠寵）
+ - `/challenge` — 嗷嗚計劃：青蛙誰在怕
++- `/haodada` — 反向代理到 GitHub Pages 上的嚎大大雞霸形象站
+ 
+ ## 技術
+ 
+diff --git a/next.config.ts b/next.config.ts
+index 0349f73..075200a 100644
+--- a/next.config.ts
++++ b/next.config.ts
+@@ -1,7 +1,21 @@
+ import type { NextConfig } from "next";
+ 
++const HAODADA_ORIGIN = "https://aa89976566.github.io/haodada";
++
+ const nextConfig: NextConfig = {
+   allowedDevOrigins: ["127.0.0.1", "localhost"],
++  async rewrites() {
++    return [
++      {
++        source: "/haodada",
++        destination: `${HAODADA_ORIGIN}/`,
++      },
++      {
++        source: "/haodada/:path*",
++        destination: `${HAODADA_ORIGIN}/:path*`,
++      },
++    ];
++  },
+ };
+ 
+ export default nextConfig;
+diff --git a/src/data/works.ts b/src/data/works.ts
+index f98d8e3..73d6b75 100644
+--- a/src/data/works.ts
++++ b/src/data/works.ts
+@@ -30,11 +30,10 @@ export const WORKS_ROWS: WorksRow[] = [
+     kind: "link",
+     index: 2,
+     label: "嚎大大雞霸",
+-    href: "https://aa89976566.github.io/haodada/",
++    href: "/haodada",
+     color: "yellow",
+     latest: true,
+     hoverText: "活動↗",
+-    external: true,
+   },
+   {
+     kind: "link",
+-- 
+2.43.0
+
