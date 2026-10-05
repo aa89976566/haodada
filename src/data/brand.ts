@@ -112,5 +112,5 @@ export const CHAT: ChatBlock[] = [
       domain: "furmosa.com",
     },
   },
-  { kind: "yours", texts: ["有問題也可以直接問他們", `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-link" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}">LINE ${BRAND.lineHandle}</a>`] },
+  { kind: "yours", texts: ["有問題也可以直接問他們", `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-line-cta" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}"><span class="line-official-icon" aria-hidden="true">LINE</span><span>官方LINE下單99元促銷</span></a>`] },
 ];
