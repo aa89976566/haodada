@@ -16,10 +16,12 @@ export const BRAND = {
   features: ["無添加", "純雞情", "低溫烘乾", "狗公園社交"] as const,
 } as const;
 
+
 export type ChatTextBlock = {
   kind: "mine" | "yours";
   texts: string[];
 };
+
 
 /** Exactly one image bubble in the thread (left / yours). */
 export type ChatImageBlock = {
@@ -28,12 +30,14 @@ export type ChatImageBlock = {
   alt: string;
 };
 
+
 /** Exactly one video bubble in the thread (left / yours) — chat media card. */
 export type ChatVideoBlock = {
   kind: "yours";
   video: string;
   alt: string;
 };
+
 
 export type ChatPreviewBlock = {
   kind: "mine" | "yours";
@@ -48,12 +52,14 @@ export type ChatPreviewBlock = {
   };
 };
 
+
 export type ChatBlock =
   | { kind: "yours"; photos: { image: string; alt: string }[] }
   | ChatTextBlock
   | ChatImageBlock
   | ChatVideoBlock
   | ChatPreviewBlock;
+
 
 /** Short chat: curiosity, practical answers, shared ritual, then purchase. */
 export const CHAT: ChatBlock[] = [
@@ -112,5 +118,5 @@ export const CHAT: ChatBlock[] = [
       domain: "furmosa.com",
     },
   },
-  { kind: "yours", texts: ["有問題也可以直接問他們", `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-line-cta" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}"><span class="line-official-icon" aria-hidden="true">LINE</span><span>官方LINE下單99元促銷</span></a>`] },
+  { kind: "yours", texts: ["有問題也可以直接問他們", `<a href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" class="chat-link" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}">LINE ${BRAND.lineHandle}</a>`] },
 ];
