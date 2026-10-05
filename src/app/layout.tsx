@@ -4,10 +4,12 @@ import { SITE_URL } from "@/data/site";
 import { asset } from "@/lib/asset";
 import "./globals.css";
 
+
 const TITLE = `${BRAND.name}｜${BRAND.studio} ${BRAND.furmosa}`;
 const DESCRIPTION = BRAND.description;
 const OG_IMAGE = `${SITE_URL}social/sharecard-facebook.png`;
 const TW_IMAGE = `${SITE_URL}social/sharecard-twitter.png`;
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -48,6 +50,7 @@ export const metadata: Metadata = {
   },
 };
 
+
 export const viewport: Viewport = {
   themeColor: "#1a42c2",
   width: "device-width",
@@ -56,6 +59,7 @@ export const viewport: Viewport = {
   minimumScale: 1,
   userScalable: true,
 };
+
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -86,6 +90,7 @@ const jsonLd = {
   ],
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -96,7 +101,7 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href={`${asset("/haodada-site-v15.css")}?v=line-cta-v55`}
+          href={`${asset("/haodada-site-v15.css")}?v=floating-line-v56`}
         />
         <script
           type="application/ld+json"
