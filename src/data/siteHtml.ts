@@ -1,12 +1,16 @@
 import { BRAND, CHAT, type ChatBlock } from "@/data/brand";
 
 
+
+
 function escapeAttr(s: string) {
   return s
     .replace(/&/g, "&amp;")
     .replace(/"/g, "&quot;")
     .replace(/</g, "&lt;");
 }
+
+
 
 
 function renderTexts(texts: string[], markLast: boolean) {
@@ -17,6 +21,8 @@ function renderTexts(texts: string[], markLast: boolean) {
     })
     .join("");
 }
+
+
 
 
 function renderChatBlock(block: ChatBlock): string {
@@ -40,9 +46,13 @@ function renderChatBlock(block: ChatBlock): string {
 }
 
 
+
+
 function renderChat() {
   return CHAT.map(renderChatBlock).join("");
 }
+
+
 
 
 export function sidePosterInnerHtml(side: "left" | "right"): string {
@@ -52,6 +62,8 @@ export function sidePosterInnerHtml(side: "left" | "right"): string {
   const sizes = "(max-width: 1024px) 24vw, 317px";
   return `<source type="image/avif" srcset="/images/${file}-320.avif 320w, /images/${file}-${width}.avif ${width}w" sizes="${sizes}"><source type="image/webp" srcset="/images/${file}-320.webp 320w, /images/${file}-${width}.webp ${width}w" sizes="${sizes}"><img class="side-poster-img" src="/images/${file}.jpg" alt="" width="${width}" height="1360" decoding="async" loading="lazy" fetchpriority="low">`;
 }
+
+
 
 
 /**
@@ -102,6 +114,6 @@ export function buildSiteHtml(): string {
     </div>
   </div>
 </aside>
-<a class="floating-line-cta" href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}"><span class="line-official-icon" aria-hidden="true">LINE</span><span>官方LINE下單99元促銷</span></a>
+<a class="floating-line-cta" href="${BRAND.lineUrl}" target="_blank" rel="noopener noreferrer" aria-label="加入 LINE 官方帳號 ${BRAND.lineHandle}"><span class="line-official-icon" aria-hidden="true">LINE</span><span>官方帳號</span></a>
 </main>`;
 }
