@@ -804,3 +804,35 @@ a.chat-link:focus-visible{
 /* Each shared photo is a separate message in the conversation. */
 .yours .message.has-shared-photo{width:286px;max-width:calc(100% - 24px);margin-right:0;padding:8px;background:#e5e5ea;min-width:0}
 .has-shared-photo img{display:block;width:100%;height:auto;border-radius:14px}
+
+/* Official LINE promo CTA */
+.message a.chat-line-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+  padding:.42rem .7rem .42rem .48rem;
+  border-radius:999px;
+  background:#06c755;
+  color:#fff!important;
+  font-weight:800;
+  line-height:1.1;
+  text-decoration:none!important;
+  box-shadow:0 2px 0 rgba(0,0,0,.16);
+}
+.message a.chat-line-cta:hover{
+  background:#05b84e;
+  transform:translateY(-1px);
+}
+.line-official-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:2.5rem;
+  height:1.35rem;
+  padding:0 .35rem;
+  border-radius:999px;
+  background:#fff;
+  color:#06c755;
+  font:900 .65rem/1 Arial,sans-serif;
+  letter-spacing:.02em;
+}
