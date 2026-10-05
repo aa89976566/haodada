@@ -17,10 +17,14 @@ export const BRAND = {
 } as const;
 
 
+
+
 export type ChatTextBlock = {
   kind: "mine" | "yours";
   texts: string[];
 };
+
+
 
 
 /** Exactly one image bubble in the thread (left / yours). */
@@ -31,12 +35,16 @@ export type ChatImageBlock = {
 };
 
 
+
+
 /** Exactly one video bubble in the thread (left / yours) — chat media card. */
 export type ChatVideoBlock = {
   kind: "yours";
   video: string;
   alt: string;
 };
+
+
 
 
 export type ChatPreviewBlock = {
@@ -53,12 +61,16 @@ export type ChatPreviewBlock = {
 };
 
 
+
+
 export type ChatBlock =
   | { kind: "yours"; photos: { image: string; alt: string }[] }
   | ChatTextBlock
   | ChatImageBlock
   | ChatVideoBlock
   | ChatPreviewBlock;
+
+
 
 
 /** Short chat: curiosity, practical answers, shared ritual, then purchase. */
@@ -104,7 +116,7 @@ export const CHAT: ChatBlock[] = [
   },
   { kind: "mine", texts: ["閉眼那張太懂吃了", "宵夜團總不能少牠"] },
   { kind: "mine", texts: ["一包多少？"] },
-  { kind: "yours", texts: ["99 元，一包 50g", "運費結帳時再看"] },
+  { kind: "yours", texts: ["165 元，一包 50g", "運費結帳時再看"] },
   { kind: "mine", texts: ["好，週末算牠一份", "雞排哪裡買"] },
   {
     kind: "yours",
@@ -114,7 +126,7 @@ export const CHAT: ChatBlock[] = [
       imageAlt: "嚎大大雞霸雞肉原味產品包裝",
       eyebrow: "匠寵 FURMOSA",
       title: "嚎大大雞霸｜雞肉原味",
-      description: "NT$99／50g・純雞肉製成",
+      description: "NT$165／50g・純雞肉製成",
       domain: "furmosa.com",
     },
   },
