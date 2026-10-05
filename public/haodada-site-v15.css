@@ -836,3 +836,43 @@ a.chat-link:focus-visible{
   font:900 .65rem/1 Arial,sans-serif;
   letter-spacing:.02em;
 }
+
+
+
+/* Floating official LINE promo CTA */
+.floating-line-cta{
+  position:fixed;
+  right:clamp(14px,3vw,32px);
+  bottom:clamp(14px,3vw,32px);
+  z-index:20;
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+  padding:.5rem .78rem .5rem .52rem;
+  border-radius:999px;
+  background:#06c755;
+  color:#fff!important;
+  font:800 14px/1.1 Arial,"Noto Sans TC",sans-serif;
+  text-decoration:none!important;
+  box-shadow:0 4px 12px rgba(0,0,0,.28);
+  transition:transform .16s ease,background .16s ease;
+}
+.floating-line-cta:hover{
+  background:#05b84e;
+  transform:translateY(-2px);
+}
+.floating-line-cta:focus-visible{
+  outline:3px solid #f7dc50;
+  outline-offset:3px;
+}
+.floating-line-cta .line-official-icon{
+  flex:0 0 auto;
+}
+@media screen and (max-width:480px){
+  .floating-line-cta{
+    right:12px;
+    bottom:12px;
+    max-width:calc(100vw - 24px);
+    font-size:12px;
+  }
+}
